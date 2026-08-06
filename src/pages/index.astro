@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TrackCard from '../components/TrackCard.astro';
+import type { Track } from '../types/music';
+
+// Fetch SSR de canciones desde nuestra API interna
+let tracks: Track[] = [];
+try {
+  const origin = Astro.url.origin;
+  const res = await fetch(`${origin}/api/tracks`);
+  if (res.ok) {
+    tracks = await res.json();
+  }
+} catch (e) {
+  console.error('Error cargando biblioteca:', e);
+}
+---
+
+<Layout title="Biblioteca de Música | Musicaneta">
+  <section class="space-y-8">
+    {/* Banner Hero */}
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-950 via-zinc-900 to-zinc-950 border border-zinc-800/80 p-8 md:p-12 shadow-2xl">
+      <div class="relative z-10 max-w-2xl space-y-4">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          Cloudflare R2 + Astro SSR
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+          Escucha tu música sin pausas ni interrupciones
+        </h1>
+        <p class="text-zinc-400 text-sm md:text-base leading-relaxed">
+          Navega libremente por la plataforma gracias a las View Transitions nativas. El reproductor global persistirá tu reproducción sin cortes.
+        </p>
+      </div>
+      <div class="absolute -right-10 -bottom-10 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    </div>
+
+    {/* Grid de Pistas de Música */}
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold text-white tracking-tight">Pistas Disponibles</h2>
+        <span class="text-xs font-mono text-zinc-500">{tracks.length} canciones</span>
+      </div>
+
+      {tracks.length === 0 ? (
+        <div class="text-center py-16 bg-zinc-900/40 rounded-2xl border border-zinc-800/50">
+          <p class="text-zinc-400 text-sm">No hay canciones disponibles en este momento.</p>
+          <a href="/upload" class="inline-block mt-4 text-emerald-400 text-sm font-semibold hover:underline">
+            Subir la primera canción a R2 &rarr;
+          </a>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {tracks.map((track) => (
+            <TrackCard track={track} />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

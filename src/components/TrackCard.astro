@@ -1,0 +1,66 @@
+---
+import type { Track } from '../types/music';
+
+interface Props {
+  track: Track;
+}
+
+const { track } = Astro.props;
+---
+
+<div className="group relative bg-zinc-900/60 hover:bg-zinc-800/80 p-4 rounded-xl transition-all duration-300 border border-zinc-800/50 hover:border-zinc-700/50 flex flex-col justify-between shadow-lg">
+  <div className="relative aspect-square w-full rounded-lg overflow-hidden mb-4 bg-zinc-950">
+    <img
+      src={track.coverUrl}
+      alt={track.title}
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      loading="lazy"
+    />
+    
+    <!-- Botón Play Hover -->
+    <button
+      data-track={JSON.stringify(track)}
+      class="play-btn absolute bottom-3 right-3 w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-xl shadow-emerald-500/30"
+      aria-label={`Reproducir ${track.title}`}
+    >
+      <svg class="w-6 h-6 fill-current ml-0.5" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div>
+    <h3 class="font-bold text-base text-zinc-100 truncate group-hover:text-emerald-400 transition-colors">
+      {track.title}
+    </h3>
+    <p class="text-sm text-zinc-400 truncate mt-1">
+      {track.artist} {track.album && `• ${track.album}`}
+    </p>
+  </div>
+</div>
+
+<script>
+  import { playTrack } from '../stores/playerStore';
+
+  function attachPlayListeners() {
+    const buttons = document.querySelectorAll('.play-btn');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const trackData = btn.getAttribute('data-track');
+        if (trackData) {
+          try {
+            const track = JSON.parse(trackData);
+            playTrack(track);
+          } catch (err) {
+            console.error('Error al reproducir pista:', err);
+          }
+        }
+      });
+    });
+  }
+
+  // Ejecutar en carga inicial y después de cada View Transition
+  attachPlayListeners();
+  document.addEventListener('astro:page-load', attachPlayListeners);
+</script>

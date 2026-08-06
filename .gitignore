@@ -1,0 +1,14 @@
+# Build & output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Cloudflare & Wrangler
+.wrangler/
+.dev.vars
+
+# Logs & temp
+*.log
+.DS_Store
