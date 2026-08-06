@@ -107,9 +107,18 @@ export default function AudioPlayer() {
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selectedList = Array.from(e.target.files).filter((f) =>
-        f.name.toLowerCase().endsWith('.mp3') || f.type.startsWith('audio/')
-      );
+      const selectedList = Array.from(e.target.files).filter((f) => {
+        const name = f.name.toLowerCase();
+        return (
+          f.type.startsWith('audio/') ||
+          name.endsWith('.mp3') ||
+          name.endsWith('.wav') ||
+          name.endsWith('.m4a') ||
+          name.endsWith('.flac') ||
+          name.endsWith('.ogg') ||
+          name.endsWith('.aac')
+        );
+      });
       setFiles(selectedList);
 
       if (selectedList.length === 1 && !singleTitle) {
@@ -467,6 +476,7 @@ export default function AudioPlayer() {
                   </label>
                   <input
                     type="file"
+                    accept="audio/*"
                     {...({ webkitdirectory: '', directory: '', multiple: true } as any)}
                     required
                     onChange={handleFileSelect}
@@ -474,7 +484,7 @@ export default function AudioPlayer() {
                   />
                   {files.length > 0 && (
                     <p className="text-xs text-emerald-400 font-mono mt-2">
-                      ✓ {files.length} archivos MP3 detectados en la carpeta.
+                      ✓ {files.length} archivos de audio (.wav, .mp3) detectados en la carpeta.
                     </p>
                   )}
                 </div>
