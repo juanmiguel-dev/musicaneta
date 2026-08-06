@@ -13,7 +13,6 @@ import {
   seekTo,
   setVolume,
   toggleMute,
-  $duration as setDurationStore,
 } from '../stores/playerStore';
 
 function formatTime(seconds: number): string {

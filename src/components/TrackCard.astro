@@ -8,12 +8,12 @@ interface Props {
 const { track } = Astro.props;
 ---
 
-<div className="group relative bg-zinc-900/60 hover:bg-zinc-800/80 p-4 rounded-xl transition-all duration-300 border border-zinc-800/50 hover:border-zinc-700/50 flex flex-col justify-between shadow-lg">
-  <div className="relative aspect-square w-full rounded-lg overflow-hidden mb-4 bg-zinc-950">
+<div class="group relative bg-zinc-900/60 hover:bg-zinc-800/80 p-4 rounded-xl transition-all duration-300 border border-zinc-800/50 hover:border-zinc-700/50 flex flex-col justify-between shadow-lg">
+  <div class="relative aspect-square w-full rounded-lg overflow-hidden mb-4 bg-zinc-950">
     <img
       src={track.coverUrl}
       alt={track.title}
-      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
       loading="lazy"
     />
     

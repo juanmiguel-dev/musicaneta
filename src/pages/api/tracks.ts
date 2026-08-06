@@ -41,7 +41,7 @@ export const GET: APIRoute = async ({ locals }) => {
       const objects = await env.MUSIC_BUCKET.list({ limit: 100 });
       const publicDomain = env.R2_PUBLIC_DOMAIN || '';
 
-      const r2Tracks: Track[] = objects.objects.map((obj, index) => ({
+      const r2Tracks: Track[] = objects.objects.map((obj) => ({
         id: obj.key,
         title: obj.customMetadata?.title || obj.key.replace(/\.[^/.]+$/, ''),
         artist: obj.customMetadata?.artist || 'Artista Desconocido',

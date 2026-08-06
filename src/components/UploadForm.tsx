@@ -48,7 +48,7 @@ export default function UploadForm() {
         throw new Error('Error al solicitar la presigned URL de subida a R2');
       }
 
-      const { uploadUrl, directKey, isDirectUpload } = await res.json();
+      const { uploadUrl, isDirectUpload } = await res.json();
       setProgress(40);
 
       // 2. Subir directamente el binario a Cloudflare R2 vía Presigned URL (o directamente al Worker)
