@@ -39,14 +39,17 @@ export default function AudioPlayer() {
 
   const [showPlaylist, setShowPlaylist] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [uploadMode, setUploadMode] = useState<'single' | 'folder'>('folder');
 
   // Estados de subida
-  const [file, setFile] = useState<File | null>(null);
-  const [title, setTitle] = useState('');
-  const [artist, setArtist] = useState('');
-  const [album, setAlbum] = useState('');
+  const [files, setFiles] = useState<File[]>([]);
+  const [singleTitle, setSingleTitle] = useState('');
+  const [singleArtist, setSingleArtist] = useState('');
+  const [singleAlbum, setSingleAlbum] = useState('');
+
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
   const [uploadMsg, setUploadMsg] = useState('');
+  const [uploadProgress, setUploadProgress] = useState({ current: 0, total: 0, currentName: '' });
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -102,52 +105,100 @@ export default function AudioPlayer() {
     seekTo(val);
   };
 
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const selectedList = Array.from(e.target.files).filter((f) =>
+        f.name.toLowerCase().endsWith('.mp3') || f.type.startsWith('audio/')
+      );
+      setFiles(selectedList);
+
+      if (selectedList.length === 1 && !singleTitle) {
+        setSingleTitle(selectedList[0].name.replace(/\.[^/.]+$/, ''));
+      }
+    }
+  };
+
   const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) return;
+    if (files.length === 0) return;
+
     try {
       setUploadStatus('uploading');
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filename: file.name, contentType: file.type, title, artist, album }),
-      });
-      if (!res.ok) throw new Error('Error al conectar con la API de subida.');
+      setUploadProgress({ current: 0, total: files.length, currentName: '' });
 
-      const { uploadUrl, isDirectUpload } = await res.json();
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        setUploadProgress({ current: i + 1, total: files.length, currentName: file.name });
 
-      if (isDirectUpload) {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('title', title);
-        formData.append('artist', artist);
-        formData.append('album', album);
-        const upRes = await fetch('/api/upload', { method: 'PUT', body: formData });
-        if (!upRes.ok) throw new Error('Error al subir a Cloudflare R2.');
-      } else {
-        const upRes = await fetch(uploadUrl, {
-          method: 'PUT',
-          headers: { 'Content-Type': file.type || 'audio/mpeg' },
-          body: file,
+        // Extraer artista/álbum/título de la ruta si es subida por carpeta (ej. "Artista/Album/Cancion.mp3")
+        let itemTitle = singleTitle;
+        let itemArtist = singleArtist;
+        let itemAlbum = singleAlbum;
+
+        if (uploadMode === 'folder' && file.webkitRelativePath) {
+          const parts = file.webkitRelativePath.split('/');
+          if (parts.length >= 3) {
+            itemArtist = parts[parts.length - 3];
+            itemAlbum = parts[parts.length - 2];
+            itemTitle = parts[parts.length - 1].replace(/\.[^/.]+$/, '');
+          } else if (parts.length === 2) {
+            itemArtist = parts[0];
+            itemTitle = parts[1].replace(/\.[^/.]+$/, '');
+          } else {
+            itemTitle = file.name.replace(/\.[^/.]+$/, '');
+          }
+        } else if (!itemTitle) {
+          itemTitle = file.name.replace(/\.[^/.]+$/, '');
+        }
+
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            filename: file.name,
+            contentType: file.type || 'audio/mpeg',
+            title: itemTitle,
+            artist: itemArtist,
+            album: itemAlbum,
+          }),
         });
-        if (!upRes.ok) throw new Error('Error subiendo binario a R2.');
+
+        if (!res.ok) throw new Error(`Error en API para ${file.name}`);
+        const { uploadUrl, isDirectUpload } = await res.json();
+
+        if (isDirectUpload) {
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('title', itemTitle);
+          formData.append('artist', itemArtist || 'Artista');
+          formData.append('album', itemAlbum || 'Single');
+          const upRes = await fetch('/api/upload', { method: 'PUT', body: formData });
+          if (!upRes.ok) throw new Error(`Error al subir ${file.name} a R2.`);
+        } else {
+          const upRes = await fetch(uploadUrl, {
+            method: 'PUT',
+            headers: { 'Content-Type': file.type || 'audio/mpeg' },
+            body: file,
+          });
+          if (!upRes.ok) throw new Error(`Error subiendo binario R2 para ${file.name}`);
+        }
       }
 
       setUploadStatus('success');
-      setFile(null);
-      setTitle('');
-      setArtist('');
-      setAlbum('');
+      setFiles([]);
+      setSingleTitle('');
+      setSingleArtist('');
+      setSingleAlbum('');
 
-      // Recargar playlist
+      // Recargar playlist actualizada
       const trackRes = await fetch('/api/tracks');
       if (trackRes.ok) {
         const fresh: Track[] = await trackRes.json();
-        setPlaylist(fresh, fresh.length - 1);
+        setPlaylist(fresh, 0);
       }
     } catch (err: any) {
       setUploadStatus('error');
-      setUploadMsg(err.message || 'Error en la subida');
+      setUploadMsg(err.message || 'Error durante la subida masiva.');
     }
   };
 
@@ -185,17 +236,16 @@ export default function AudioPlayer() {
         <button
           onClick={() => setShowUploadModal(true)}
           className="p-2.5 rounded-full glass-pill text-zinc-400 hover:text-white transition-all transform hover:scale-105"
-          title="Subir canción (Admin)"
+          title="Subir carpeta de música (Admin)"
         >
           <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
+            <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10zM13 9h-2v3H8v2h3v3h2v-3h3v-2h-3z" />
           </svg>
         </button>
       </header>
 
-      {/* Centro Imersivo: Arte de Tapa & Información de la Canción */}
+      {/* Centro Immersivo: Arte de Tapa & Información */}
       <main className="w-full max-w-md my-auto flex flex-col items-center z-10 space-y-8">
-        {/* Carátula del Álbum con Estilo Apple Music Glass / Vinyl */}
         <div className="relative group">
           <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-88 md:h-88 rounded-3xl overflow-hidden shadow-2xl transition-all duration-700 transform group-hover:scale-[1.02] border border-white/10 relative">
             <img
@@ -204,7 +254,6 @@ export default function AudioPlayer() {
               className="w-full h-full object-cover"
             />
 
-            {/* Micro Ecualizador Visualizador */}
             {isPlaying && (
               <div className="absolute bottom-4 right-4 flex items-end space-x-1 glass-pill px-3 py-2 rounded-xl">
                 <span className="w-1 bg-emerald-400 rounded-full animate-[bounce_0.8s_infinite_100ms] h-4" />
@@ -216,7 +265,6 @@ export default function AudioPlayer() {
           </div>
         </div>
 
-        {/* Título y Artista */}
         <div className="text-center space-y-1 max-w-sm">
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white truncate">
             {currentTrack?.title || 'Selecciona una canción'}
@@ -226,7 +274,6 @@ export default function AudioPlayer() {
           </p>
         </div>
 
-        {/* Timeline Seekbar Interactivo Futuro */}
         <div className="w-full space-y-2">
           <input
             type="range"
@@ -243,10 +290,9 @@ export default function AudioPlayer() {
         </div>
       </main>
 
-      {/* Barra Flotante Inferior de Controles Futurist Apple Panel */}
+      {/* Barra Flotante Inferior */}
       <footer className="w-full max-w-xl z-20 mb-4">
         <div className="glass-panel rounded-full px-6 py-4 flex items-center justify-between space-x-4 shadow-2xl">
-          {/* Botón Lista de Reproducción */}
           <button
             onClick={() => setShowPlaylist(!showPlaylist)}
             className={`p-2.5 rounded-full transition-colors ${
@@ -259,7 +305,6 @@ export default function AudioPlayer() {
             </svg>
           </button>
 
-          {/* Controles Principales */}
           <div className="flex items-center space-x-6">
             <button
               onClick={playPrevious}
@@ -298,7 +343,6 @@ export default function AudioPlayer() {
             </button>
           </div>
 
-          {/* Control de Volumen Integrado */}
           <div className="flex items-center space-x-2">
             <button onClick={toggleMute} className="text-zinc-400 hover:text-white">
               {isMuted || volume === 0 ? (
@@ -326,13 +370,10 @@ export default function AudioPlayer() {
 
       {/* Drawer Desplegable de Playlist Glass Panel */}
       {showPlaylist && (
-        <div className="fixed inset-y-0 right-0 w-full sm:w-96 glass-panel border-l border-white/10 z-40 p-6 flex flex-col animate-[slideIn_0.3s_ease-out]">
+        <div className="fixed inset-y-0 right-0 w-full sm:w-96 glass-panel border-l border-white/10 z-40 p-6 flex flex-col">
           <div className="flex items-center justify-between pb-4 border-b border-white/10">
             <h3 className="font-bold text-lg text-white">Lista de Canciones</h3>
-            <button
-              onClick={() => setShowPlaylist(false)}
-              className="p-1 text-zinc-400 hover:text-white"
-            >
+            <button onClick={() => setShowPlaylist(false)} className="p-1 text-zinc-400 hover:text-white">
               ✕
             </button>
           </div>
@@ -364,7 +405,7 @@ export default function AudioPlayer() {
         </div>
       )}
 
-      {/* Modal Discreto de Carga para el Administrador */}
+      {/* Modal Admin: Subida Masiva por Carpetas o Archivos */}
       {showUploadModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-xl z-50 flex items-center justify-center p-4">
           <div className="glass-panel w-full max-w-md rounded-3xl p-6 space-y-6 relative border border-white/15">
@@ -375,72 +416,131 @@ export default function AudioPlayer() {
               ✕
             </button>
 
-            <h2 className="text-xl font-bold text-white">Subir MP3 a Cloudflare R2</h2>
+            <div>
+              <h2 className="text-xl font-bold text-white">Subir Música a R2</h2>
+              <p className="text-xs text-zinc-400 mt-1">Sube carpetas enteras de álbumes o temas sueltos.</p>
+            </div>
+
+            {/* Pestañas de Modo de Carga */}
+            <div className="flex p-1 bg-white/5 rounded-xl border border-white/10">
+              <button
+                type="button"
+                onClick={() => {
+                  setUploadMode('folder');
+                  setFiles([]);
+                }}
+                className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  uploadMode === 'folder' ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                Carpeta Completa
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setUploadMode('single');
+                  setFiles([]);
+                }}
+                className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                  uploadMode === 'single' ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                Archivo Suelto
+              </button>
+            </div>
 
             <form onSubmit={handleUploadSubmit} className="space-y-4">
               {uploadStatus === 'success' && (
                 <div className="p-3 bg-emerald-500/20 text-emerald-300 rounded-xl text-xs">
-                  ¡Canción cargada con éxito a R2!
+                  ¡Carga completada con éxito en Cloudflare R2!
                 </div>
               )}
               {uploadStatus === 'error' && (
-                <div className="p-3 bg-red-500/20 text-red-300 rounded-xl text-xs">
-                  {uploadMsg}
+                <div className="p-3 bg-red-500/20 text-red-300 rounded-xl text-xs">{uploadMsg}</div>
+              )}
+
+              {/* Selector por Carpeta Completa con webkitdirectory */}
+              {uploadMode === 'folder' ? (
+                <div>
+                  <label className="text-xs font-semibold text-zinc-400 block mb-1">
+                    Selecciona una carpeta con archivos MP3
+                  </label>
+                  <input
+                    type="file"
+                    {...({ webkitdirectory: '', directory: '', multiple: true } as any)}
+                    required
+                    onChange={handleFileSelect}
+                    className="w-full text-xs text-zinc-300 bg-white/5 border border-white/10 rounded-xl p-3 cursor-pointer"
+                  />
+                  {files.length > 0 && (
+                    <p className="text-xs text-emerald-400 font-mono mt-2">
+                      ✓ {files.length} archivos MP3 detectados en la carpeta.
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-400 block mb-1">Archivo MP3</label>
+                    <input
+                      type="file"
+                      accept="audio/mp3,audio/mpeg"
+                      required
+                      onChange={handleFileSelect}
+                      className="w-full text-xs text-zinc-300 bg-white/5 border border-white/10 rounded-xl p-3"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-400 block mb-1">Título</label>
+                    <input
+                      type="text"
+                      required
+                      value={singleTitle}
+                      onChange={(e) => setSingleTitle(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-zinc-400 block mb-1">Artista</label>
+                    <input
+                      type="text"
+                      required
+                      value={singleArtist}
+                      onChange={(e) => setSingleArtist(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none"
+                    />
+                  </div>
+                </>
+              )}
+
+              {/* Barra de Progreso Masivo */}
+              {uploadStatus === 'uploading' && (
+                <div className="space-y-1.5">
+                  <div className="flex justify-between text-xs font-mono text-zinc-400">
+                    <span className="truncate max-w-[200px]">{uploadProgress.currentName}</span>
+                    <span>
+                      {uploadProgress.current} / {uploadProgress.total}
+                    </span>
+                  </div>
+                  <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                    <div
+                      className="bg-emerald-400 h-full transition-all duration-300"
+                      style={{
+                        width: `${(uploadProgress.current / uploadProgress.total) * 100}%`,
+                      }}
+                    />
+                  </div>
                 </div>
               )}
 
-              <div>
-                <label className="text-xs font-semibold text-zinc-400 block mb-1">Archivo MP3</label>
-                <input
-                  type="file"
-                  accept="audio/mp3,audio/mpeg"
-                  required
-                  onChange={(e) => e.target.files && setFile(e.target.files[0])}
-                  className="w-full text-xs text-zinc-300 bg-white/5 border border-white/10 rounded-xl p-3"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs font-semibold text-zinc-400 block mb-1">Título</label>
-                <input
-                  type="text"
-                  required
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
-                  placeholder="Título del track"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs font-semibold text-zinc-400 block mb-1">Artista</label>
-                <input
-                  type="text"
-                  required
-                  value={artist}
-                  onChange={(e) => setArtist(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
-                  placeholder="Nombre del artista"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs font-semibold text-zinc-400 block mb-1">Álbum</label>
-                <input
-                  type="text"
-                  value={album}
-                  onChange={(e) => setAlbum(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none"
-                  placeholder="Álbum"
-                />
-              </div>
-
               <button
                 type="submit"
-                disabled={uploadStatus === 'uploading'}
-                className="w-full py-3 bg-white hover:bg-zinc-200 text-black font-bold rounded-xl transition-all shadow-lg"
+                disabled={uploadStatus === 'uploading' || files.length === 0}
+                className="w-full py-3 bg-white hover:bg-zinc-200 disabled:bg-zinc-800 text-black font-bold rounded-xl transition-all shadow-lg"
               >
-                {uploadStatus === 'uploading' ? 'Subiendo...' : 'Subir Pista'}
+                {uploadStatus === 'uploading'
+                  ? `Subiendo ${uploadProgress.current} de ${uploadProgress.total}...`
+                  : 'Subir a Cloudflare R2'}
               </button>
             </form>
           </div>
