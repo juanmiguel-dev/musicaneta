@@ -81,15 +81,18 @@ async function uploadFolder() {
       const { uploadUrl, isDirectUpload } = await res.json();
 
       if (isDirectUpload) {
-        const formData = new FormData();
-        const blob = new Blob([fileBuffer], { type: contentType });
-        formData.append('file', blob, fileName);
-        formData.append('title', title);
-        formData.append('artist', artist);
-        formData.append('album', album);
-
-        const upRes = await fetch(API_URL, { method: 'PUT', body: formData });
-        if (!upRes.ok) console.error(`❌ Error al subir ${fileName}`);
+        const upRes = await fetch(API_URL, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': contentType,
+            'x-filename': encodeURIComponent(fileName),
+            'x-title': encodeURIComponent(title),
+            'x-artist': encodeURIComponent(artist),
+            'x-album': encodeURIComponent(album),
+          },
+          body: fileBuffer,
+        });
+        if (!upRes.ok) console.error(`   ❌ Error R2 al subir ${fileName}`);
         else console.log(`   ✔ Exitoso`);
       } else {
         const upRes = await fetch(uploadUrl, {
@@ -97,11 +100,11 @@ async function uploadFolder() {
           headers: { 'Content-Type': contentType },
           body: fileBuffer,
         });
-        if (!upRes.ok) console.error(`❌ Error al subir ${fileName}`);
+        if (!upRes.ok) console.error(`   ❌ Error S3 Presigned URL al subir ${fileName}`);
         else console.log(`   ✔ Exitoso`);
       }
     } catch (err) {
-      console.error(`❌ Error procesando ${fileName}:`, err);
+      console.error(`   ❌ Omitiendo ${fileName} por error:`, err);
     }
   }
 

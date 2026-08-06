@@ -131,15 +131,19 @@ export default function AudioPlayer() {
     e.preventDefault();
     if (files.length === 0) return;
 
-    try {
-      setUploadStatus('uploading');
-      setUploadProgress({ current: 0, total: files.length, currentName: '' });
+    setUploadStatus('uploading');
+    setUploadProgress({ current: 0, total: files.length, currentName: '' });
+    setUploadMsg('');
 
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        setUploadProgress({ current: i + 1, total: files.length, currentName: file.name });
+    let successCount = 0;
+    let failedCount = 0;
+    const errors: string[] = [];
 
-        // Extraer artista/álbum/título de la ruta si es subida por carpeta (ej. "Artista/Album/Cancion.mp3")
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      setUploadProgress({ current: i + 1, total: files.length, currentName: file.name });
+
+      try {
         let itemTitle = singleTitle;
         let itemArtist = singleArtist;
         let itemAlbum = singleAlbum;
@@ -151,7 +155,7 @@ export default function AudioPlayer() {
             itemAlbum = parts[parts.length - 2];
             itemTitle = parts[parts.length - 1].replace(/\.[^/.]+$/, '');
           } else if (parts.length === 2) {
-            itemArtist = parts[0];
+            itemAlbum = parts[0];
             itemTitle = parts[1].replace(/\.[^/.]+$/, '');
           } else {
             itemTitle = file.name.replace(/\.[^/.]+$/, '');
@@ -160,54 +164,85 @@ export default function AudioPlayer() {
           itemTitle = file.name.replace(/\.[^/.]+$/, '');
         }
 
+        const contentType = file.name.toLowerCase().endsWith('.wav') ? 'audio/wav' : file.type || 'audio/mpeg';
+
+        // 1. Iniciar solicitud
         const res = await fetch('/api/upload', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             filename: file.name,
-            contentType: file.type || 'audio/mpeg',
+            contentType,
             title: itemTitle,
-            artist: itemArtist,
-            album: itemAlbum,
+            artist: itemArtist || 'Soundraw',
+            album: itemAlbum || 'Soundraw Pack',
           }),
         });
 
-        if (!res.ok) throw new Error(`Error en API para ${file.name}`);
+        if (!res.ok) {
+          throw new Error(`Error en API para ${file.name}`);
+        }
+
         const { uploadUrl, isDirectUpload } = await res.json();
 
         if (isDirectUpload) {
-          const formData = new FormData();
-          formData.append('file', file);
-          formData.append('title', itemTitle);
-          formData.append('artist', itemArtist || 'Artista');
-          formData.append('album', itemAlbum || 'Single');
-          const upRes = await fetch('/api/upload', { method: 'PUT', body: formData });
-          if (!upRes.ok) throw new Error(`Error al subir ${file.name} a R2.`);
+          // Enviar binario directo con headers codificados
+          const upRes = await fetch('/api/upload', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': contentType,
+              'x-filename': encodeURIComponent(file.name),
+              'x-title': encodeURIComponent(itemTitle),
+              'x-artist': encodeURIComponent(itemArtist || 'Soundraw'),
+              'x-album': encodeURIComponent(itemAlbum || 'Soundraw Pack'),
+            },
+            body: file,
+          });
+
+          if (!upRes.ok) {
+            throw new Error(`Error R2 para ${file.name}`);
+          }
         } else {
           const upRes = await fetch(uploadUrl, {
             method: 'PUT',
-            headers: { 'Content-Type': file.type || 'audio/mpeg' },
+            headers: { 'Content-Type': contentType },
             body: file,
           });
-          if (!upRes.ok) throw new Error(`Error subiendo binario R2 para ${file.name}`);
+          if (!upRes.ok) {
+            throw new Error(`Error S3 Presigned URL para ${file.name}`);
+          }
         }
-      }
 
+        successCount++;
+      } catch (fileErr: any) {
+        console.warn(`Error al subir ${file.name}:`, fileErr);
+        failedCount++;
+        errors.push(file.name);
+        // Continuar con los siguientes archivos sin detener el lote!
+      }
+    }
+
+    if (successCount > 0) {
       setUploadStatus('success');
+      setUploadMsg(
+        `¡Completado! ${successCount} archivo(s) subidos con éxito.${
+          failedCount > 0 ? ` (${failedCount} omitido(s) por error)` : ''
+        }`
+      );
       setFiles([]);
       setSingleTitle('');
       setSingleArtist('');
       setSingleAlbum('');
 
-      // Recargar playlist actualizada
+      // Recargar catálogo
       const trackRes = await fetch('/api/tracks');
       if (trackRes.ok) {
         const fresh: Track[] = await trackRes.json();
         setPlaylist(fresh, 0);
       }
-    } catch (err: any) {
+    } else {
       setUploadStatus('error');
-      setUploadMsg(err.message || 'Error durante la subida masiva.');
+      setUploadMsg('No se pudo subir ningún archivo de la lista.');
     }
   };
 
