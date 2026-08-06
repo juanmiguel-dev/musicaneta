@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import fs from 'node:fs';
+import path from 'node:path';
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
@@ -14,7 +16,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const key = `tracks/${Date.now()}-${filename.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
 
-    // Opción A: S3 Presigned URL si existen credenciales S3 R2
+    // Opción A: S3 Presigned URL si existen credenciales S3 R2 en producción
     if (
       env?.R2_ACCOUNT_ID &&
       env?.R2_ACCESS_KEY_ID &&
@@ -53,7 +55,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
-    // Opción B: Subida binaria directa a la API
+    // Opción B: Carga directa
     return new Response(
       JSON.stringify({
         uploadUrl: '/api/upload',
@@ -63,25 +65,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error: any) {
-    console.error('Error al generar la URL de subida:', error);
-    return new Response(
-      JSON.stringify({ error: error.message || 'Error en servidor al preparar la subida.' }),
-      { status: 500 }
-    );
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
 };
 
-// Carga binaria optimizada en streaming sin límites de FormData para archivos WAV pesados (20-50MB)
 export const PUT: APIRoute = async ({ request, locals }) => {
   try {
     const env = locals.runtime?.env;
-    if (!env || !env.MUSIC_BUCKET) {
-      return new Response(
-        JSON.stringify({ error: 'Binding R2 MUSIC_BUCKET no disponible.' }),
-        { status: 500 }
-      );
-    }
-
     const contentType = request.headers.get('content-type') || 'audio/wav';
     const title = decodeURIComponent(request.headers.get('x-title') || '');
     const artist = decodeURIComponent(request.headers.get('x-artist') || '');
@@ -89,51 +79,60 @@ export const PUT: APIRoute = async ({ request, locals }) => {
     const filename = decodeURIComponent(request.headers.get('x-filename') || 'track.wav');
 
     const key = `tracks/${Date.now()}-${filename.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+    const arrayBuffer = await request.arrayBuffer();
 
-    // Si la petición viene con FormData (compatibilidad anterior)
-    if (contentType.includes('multipart/form-data')) {
-      const formData = await request.formData();
-      const file = formData.get('file') as File;
-      const formTitle = formData.get('title') as string;
-      const formArtist = formData.get('artist') as string;
-      const formAlbum = formData.get('album') as string;
-
-      if (!file) {
-        return new Response(JSON.stringify({ error: 'No file uploaded' }), { status: 400 });
-      }
-
-      const buffer = await file.arrayBuffer();
-      await env.MUSIC_BUCKET.put(key, buffer, {
-        httpMetadata: { contentType: file.type || 'audio/wav' },
+    // 1. Si existe el binding R2 en Cloudflare Worker (Producción)
+    if (env && env.MUSIC_BUCKET) {
+      await env.MUSIC_BUCKET.put(key, arrayBuffer, {
+        httpMetadata: { contentType },
         customMetadata: {
-          title: formTitle || file.name,
-          artist: formArtist || 'Soundraw',
-          album: formAlbum || 'Soundraw Pack',
+          title: title || filename,
+          artist: artist || 'Soundraw',
+          album: album || 'Soundraw Pack',
         },
       });
-
       return new Response(JSON.stringify({ success: true, key }), { status: 200 });
     }
 
-    // Direct Binary Stream Push (mucho más rápido y eficiente)
-    const arrayBuffer = await request.arrayBuffer();
+    // 2. Fallback para Desarrollo Local (npm run dev): Guarda en public/uploads/
+    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
 
-    await env.MUSIC_BUCKET.put(key, arrayBuffer, {
-      httpMetadata: { contentType },
-      customMetadata: {
-        title: title || filename,
-        artist: artist || 'Soundraw',
-        album: album || 'Soundraw Pack',
-      },
+    const cleanFileName = filename.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const localFileName = `${Date.now()}-${cleanFileName}`;
+    const localFilePath = path.join(uploadsDir, localFileName);
+    fs.writeFileSync(localFilePath, Buffer.from(arrayBuffer));
+
+    // Guardar metadata en un JSON local para desarrollo
+    const metaPath = path.join(uploadsDir, 'metadata.json');
+    let metaList: any[] = [];
+    if (fs.existsSync(metaPath)) {
+      try {
+        metaList = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
+      } catch (e) {}
+    }
+
+    metaList.push({
+      id: localFileName,
+      title: title || filename.replace(/\.[^/.]+$/, ''),
+      artist: artist || 'Soundraw',
+      album: album || 'Soundraw Pack',
+      duration: 180,
+      audioUrl: `/uploads/${localFileName}`,
+      coverUrl: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80',
     });
 
-    return new Response(JSON.stringify({ success: true, key }), {
+    fs.writeFileSync(metaPath, JSON.stringify(metaList, null, 2));
+
+    return new Response(JSON.stringify({ success: true, key: localFileName, local: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (err: any) {
-    console.error('Error en carga R2:', err);
-    return new Response(JSON.stringify({ error: err.message || 'Error al guardar archivo en R2.' }), {
+    console.error('Error al procesar archivo:', err);
+    return new Response(JSON.stringify({ error: err.message || 'Error guardando archivo' }), {
       status: 500,
     });
   }
