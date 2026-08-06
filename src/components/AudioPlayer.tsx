@@ -468,23 +468,26 @@ export default function AudioPlayer() {
                 <div className="p-3 bg-red-500/20 text-red-300 rounded-xl text-xs">{uploadMsg}</div>
               )}
 
-              {/* Selector por Carpeta Completa con webkitdirectory */}
+              {/* Selector por Carpeta Completa (Sin accept para forzar selector de carpetas OS) */}
               {uploadMode === 'folder' ? (
                 <div>
                   <label className="text-xs font-semibold text-zinc-400 block mb-1">
-                    Selecciona una carpeta con archivos MP3
+                    Haz clic para elegir la carpeta (Sounddraw)
                   </label>
                   <input
                     type="file"
-                    accept="audio/*"
-                    {...({ webkitdirectory: '', directory: '', multiple: true } as any)}
+                    {...({ webkitdirectory: '', directory: '', mozdirectory: '', multiple: true } as any)}
                     required
                     onChange={handleFileSelect}
-                    className="w-full text-xs text-zinc-300 bg-white/5 border border-white/10 rounded-xl p-3 cursor-pointer"
+                    className="w-full text-xs text-zinc-300 bg-white/5 border border-white/10 rounded-xl p-3 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-white file:text-black hover:file:bg-zinc-200"
                   />
-                  {files.length > 0 && (
+                  {files.length > 0 ? (
                     <p className="text-xs text-emerald-400 font-mono mt-2">
                       ✓ {files.length} archivos de audio (.wav, .mp3) detectados en la carpeta.
+                    </p>
+                  ) : (
+                    <p className="text-[11px] text-zinc-500 mt-1.5">
+                      Soporta subcarpetas. Al seleccionar la carpeta, Windows te pedirá confirmar "Subir".
                     </p>
                   )}
                 </div>
