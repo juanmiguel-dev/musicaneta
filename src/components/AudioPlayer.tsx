@@ -180,7 +180,8 @@ export default function AudioPlayer() {
         });
 
         if (!res.ok) {
-          throw new Error(`Error en API para ${file.name}`);
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || `Error HTTP ${res.status} al iniciar carga`);
         }
 
         const { uploadUrl, isDirectUpload } = await res.json();
@@ -200,7 +201,8 @@ export default function AudioPlayer() {
           });
 
           if (!upRes.ok) {
-            throw new Error(`Error R2 para ${file.name}`);
+            const errData = await upRes.json().catch(() => ({}));
+            throw new Error(errData.error || `Error HTTP ${upRes.status} guardando en R2/servidor`);
           }
         } else {
           const upRes = await fetch(uploadUrl, {
@@ -209,7 +211,7 @@ export default function AudioPlayer() {
             body: file,
           });
           if (!upRes.ok) {
-            throw new Error(`Error S3 Presigned URL para ${file.name}`);
+            throw new Error(`Error S3 Presigned URL (${upRes.status})`);
           }
         }
 
@@ -217,8 +219,7 @@ export default function AudioPlayer() {
       } catch (fileErr: any) {
         console.warn(`Error al subir ${file.name}:`, fileErr);
         failedCount++;
-        errors.push(file.name);
-        // Continuar con los siguientes archivos sin detener el lote!
+        errors.push(`${file.name}: ${fileErr?.message || fileErr}`);
       }
     }
 
@@ -226,7 +227,7 @@ export default function AudioPlayer() {
       setUploadStatus('success');
       setUploadMsg(
         `¡Completado! ${successCount} archivo(s) subidos con éxito.${
-          failedCount > 0 ? ` (${failedCount} omitido(s) por error)` : ''
+          failedCount > 0 ? ` (${failedCount} omitido(s): ${errors.join(', ')})` : ''
         }`
       );
       setFiles([]);
@@ -242,7 +243,11 @@ export default function AudioPlayer() {
       }
     } else {
       setUploadStatus('error');
-      setUploadMsg('No se pudo subir ningún archivo de la lista.');
+      setUploadMsg(
+        errors.length > 0
+          ? `Error al subir: ${errors.join(' | ')}`
+          : 'No se pudo subir ningún archivo de la lista.'
+      );
     }
   };
 
@@ -470,8 +475,10 @@ export default function AudioPlayer() {
               <button
                 type="button"
                 onClick={() => {
-                  setUploadMode('folder');
-                  setFiles([]);
+                  if (uploadMode !== 'folder') {
+                    setUploadMode('folder');
+                    setFiles([]);
+                  }
                 }}
                 className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                   uploadMode === 'folder' ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'
@@ -482,8 +489,10 @@ export default function AudioPlayer() {
               <button
                 type="button"
                 onClick={() => {
-                  setUploadMode('single');
-                  setFiles([]);
+                  if (uploadMode !== 'single') {
+                    setUploadMode('single');
+                    setFiles([]);
+                  }
                 }}
                 className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                   uploadMode === 'single' ? 'bg-white text-black' : 'text-zinc-400 hover:text-white'

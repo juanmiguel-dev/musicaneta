@@ -1,0 +1,578 @@
+[
+  {
+    "id": "1786544592937-A_Joyful_Thing.mp3",
+    "title": "A Joyful Thing",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544592937-A_Joyful_Thing.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544592971-A_Star_Beneath_My_Drum__Pt._1.mp3",
+    "title": "A Star Beneath My Drum, Pt. 1",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544592971-A_Star_Beneath_My_Drum__Pt._1.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544592981-Ancestors_Spirit.mp3",
+    "title": "Ancestors Spirit",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544592981-Ancestors_Spirit.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593012-Beauty_In_Music_Louie_Gonnie.mp3",
+    "title": "Beauty In Music Louie Gonnie",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593012-Beauty_In_Music_Louie_Gonnie.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593039-Beauty_In_Music.mp3",
+    "title": "Beauty In Music",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593039-Beauty_In_Music.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593076-Cecile_Moosomin__vocals_.mp3",
+    "title": "Cecile Moosomin [vocals]",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593076-Cecile_Moosomin__vocals_.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593118-Cecile_Moosomin.mp3",
+    "title": "Cecile Moosomin",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593118-Cecile_Moosomin.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593134-Charity_-_Kevin_Yazzie.mp3",
+    "title": "Charity - Kevin Yazzie",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593134-Charity_-_Kevin_Yazzie.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593154-Dreamscapes_Louie_Gonnie.mp3",
+    "title": "Dreamscapes Louie Gonnie",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593154-Dreamscapes_Louie_Gonnie.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593180-Envisionment.mp3",
+    "title": "Envisionment",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593180-Envisionment.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593198-Fallen_Dreams_Upon_A_Star__1_.mp3",
+    "title": "Fallen Dreams Upon A Star (1)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593198-Fallen_Dreams_Upon_A_Star__1_.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593224-Fallen_Dreams_Upon_A_Star.mp3",
+    "title": "Fallen Dreams Upon A Star",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593224-Fallen_Dreams_Upon_A_Star.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593254-Feldspar.mp3",
+    "title": "Feldspar",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593254-Feldspar.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593281-Fires_of_Our_Ancestors.mp3",
+    "title": "Fires of Our Ancestors",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593281-Fires_of_Our_Ancestors.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593331-Florals_and_Firelight__Pt._2.mp3",
+    "title": "Florals and Firelight, Pt. 2",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593331-Florals_and_Firelight__Pt._2.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593337-Happy_Birthday.mp3",
+    "title": "Happy Birthday",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593337-Happy_Birthday.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593346-Holy_Moments.mp3",
+    "title": "Holy Moments",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593346-Holy_Moments.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593365-Home_recording__Winnebago_Nebraska._Adrian_Primeaux___Paul_brown__.mp3",
+    "title": "Home recording, Winnebago Nebraska. Adrian Primeaux & Paul brown🎶",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593365-Home_recording__Winnebago_Nebraska._Adrian_Primeaux___Paul_brown__.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593387-Kambosito.mp3",
+    "title": "Kambosito",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593387-Kambosito.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593430-Light_of_My_Life__Pt._1.mp3",
+    "title": "Light of My Life, Pt. 1",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593430-Light_of_My_Life__Pt._1.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593438-Light_of_My_Life__Pt._3__128kbps_.mp3",
+    "title": "Light of My Life, Pt. 3 (128kbps)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593438-Light_of_My_Life__Pt._3__128kbps_.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593445-Light_of_My_Life__Pt._4.mp3",
+    "title": "Light of My Life, Pt. 4",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593445-Light_of_My_Life__Pt._4.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593455-mahto_1.mp3",
+    "title": "mahto 1",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593455-mahto_1.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593483-mahto_2.mp3",
+    "title": "mahto 2",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593483-mahto_2.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593514-Mahto_Akicita__Tiwahe__Wokiksuye_Lakota__Native_American_Downtempo.mp3",
+    "title": "Mahto Akicita  Tiwahe  Wokiksuye Lakota  Native American Downtempo",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593514-Mahto_Akicita__Tiwahe__Wokiksuye_Lakota__Native_American_Downtempo.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593561-Medicine_Shield.mp3",
+    "title": "Medicine Shield",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593561-Medicine_Shield.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593592-Meditate.mp3",
+    "title": "Meditate",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593592-Meditate.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593610-NAC_Compliation.mp3",
+    "title": "NAC Compliation",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593610-NAC_Compliation.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593699-Nac_Set_Three__Pt._2.mp3",
+    "title": "Nac Set Three, Pt. 2",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593699-Nac_Set_Three__Pt._2.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593715-NAC.mp3",
+    "title": "NAC",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593715-NAC.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593794-Our_Hope_for_the_Future.mp3",
+    "title": "Our Hope for the Future",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593794-Our_Hope_for_the_Future.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593808-Sage_and_Blessings__Pt._2.mp3",
+    "title": "Sage and Blessings, Pt. 2",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593808-Sage_and_Blessings__Pt._2.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593823-Set_4_-_Kevin_Yazzie.mp3",
+    "title": "Set 4 - Kevin Yazzie",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593823-Set_4_-_Kevin_Yazzie.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593844-Set_6_Kevin_yazzie.mp3",
+    "title": "Set 6 Kevin yazzie",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593844-Set_6_Kevin_yazzie.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593867-Shanise_Rowan__Okeymow_Maskiki_Vol_1__Part_1.mp3",
+    "title": "Shanise Rowan  Okeymow Maskiki Vol 1  Part 1",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593867-Shanise_Rowan__Okeymow_Maskiki_Vol_1__Part_1.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593882-Shanise_Rowan__Okeymow_Maskiki_Vol_1_Part_2.mp3",
+    "title": "Shanise Rowan  Okeymow Maskiki Vol 1 Part 2",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593882-Shanise_Rowan__Okeymow_Maskiki_Vol_1_Part_2.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593889-Shanise_Rowan__Okeymow_Maskiki_Vol_1_Part_4.mp3",
+    "title": "Shanise Rowan  Okeymow Maskiki Vol 1 Part 4",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593889-Shanise_Rowan__Okeymow_Maskiki_Vol_1_Part_4.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544593973-Shanise_Rowan__Okeymow_Maskiki_Vol1_Part_5.mp3",
+    "title": "Shanise Rowan  Okeymow Maskiki Vol1 Part 5",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544593973-Shanise_Rowan__Okeymow_Maskiki_Vol1_Part_5.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544594016-Shanise_Rowan__Okeymow_Maskiki_Vol1_Part_6.mp3",
+    "title": "Shanise Rowan  Okeymow Maskiki Vol1 Part 6",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544594016-Shanise_Rowan__Okeymow_Maskiki_Vol1_Part_6.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544594105-Shanise_Rowan_-_Okeymow_Maskiki_Vol._1_Part_3.mp3",
+    "title": "Shanise Rowan - Okeymow Maskiki Vol. 1 Part 3",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544594105-Shanise_Rowan_-_Okeymow_Maskiki_Vol._1_Part_3.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544594167-Shanise-VOL-III.mp3.mp3",
+    "title": "Shanise-VOL-III.mp3",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544594167-Shanise-VOL-III.mp3.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544594338-Shield_and_Spear-Branson_Gorman___Louie_Gonnie.mp3",
+    "title": "Shield and Spear-Branson Gorman · Louie Gonnie",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544594338-Shield_and_Spear-Branson_Gorman___Louie_Gonnie.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544594602-SnapSave.io_-_A_Joyful_Thing__128_kbps_.mp3",
+    "title": "SnapSave.io - A Joyful Thing (128 kbps)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544594602-SnapSave.io_-_A_Joyful_Thing__128_kbps_.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544594604-SnapSave.mp3.mp3",
+    "title": "SnapSave.mp3",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544594604-SnapSave.mp3.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544594605-Solitude_and_Your_Thoughts.mp3",
+    "title": "Solitude and Your Thoughts",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544594605-Solitude_and_Your_Thoughts.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544594886-Starpeople.mp3",
+    "title": "Starpeople",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544594886-Starpeople.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544595003-Storm_Clouds.mp3",
+    "title": "Storm Clouds",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544595003-Storm_Clouds.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544595260-tamborcito_bate_el_parche_-_jam_viola-pro.mp3",
+    "title": "tamborcito bate el parche - jam viola-pro",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544595260-tamborcito_bate_el_parche_-_jam_viola-pro.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544595376-Transcendence_And_The_Dawn.mp3",
+    "title": "Transcendence And The Dawn",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544595376-Transcendence_And_The_Dawn.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544595480-Wonders_Of_A_Crescent_Moon.mp3",
+    "title": "Wonders Of A Crescent Moon",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544595480-Wonders_Of_A_Crescent_Moon.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544595609-Y2meta.app_-_A_Star_Beneath_My_Drum__Pt._4__128_kbps_.mp3",
+    "title": "Y2meta.app - A Star Beneath My Drum, Pt. 4 (128 kbps)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544595609-Y2meta.app_-_A_Star_Beneath_My_Drum__Pt._4__128_kbps_.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544595611-Y2meta.app_-_Florals_and_Firelight__Pt._3__128_kbps_.mp3",
+    "title": "Y2meta.app - Florals and Firelight, Pt. 3 (128 kbps)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544595611-Y2meta.app_-_Florals_and_Firelight__Pt._3__128_kbps_.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544595613-Y2meta.app_-_Florals_and_Firelight__Pt._4__128_kbps_.mp3",
+    "title": "Y2meta.app - Florals and Firelight, Pt. 4 (128 kbps)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544595613-Y2meta.app_-_Florals_and_Firelight__Pt._4__128_kbps_.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544701771-Afrobeats___Hip_Hop__BPM105.wav",
+    "title": "Afrobeats___Hip_Hop__BPM105",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544701771-Afrobeats___Hip_Hop__BPM105.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544701851-Afrobeats___Hip_Hop__BPM80__2_.wav",
+    "title": "Afrobeats___Hip_Hop__BPM80 (2)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544701851-Afrobeats___Hip_Hop__BPM80__2_.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544701923-Desde_Lejos_-_Afrobeats___Hip_Hop__BPM80__3_.wav",
+    "title": "Desde Lejos - Afrobeats___Hip_Hop__BPM80 (3)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544701923-Desde_Lejos_-_Afrobeats___Hip_Hop__BPM80__3_.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544701986-Hip_Hop__BPM100__5_.wav",
+    "title": "Hip_Hop__BPM100 (5)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544701986-Hip_Hop__BPM100__5_.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544702061-Hip_Hop__BPM105__3_.wav",
+    "title": "Hip_Hop__BPM105 (3)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544702061-Hip_Hop__BPM105__3_.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544702138-Hip_Hop__BPM85__1_.wav",
+    "title": "Hip_Hop__BPM85 (1)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544702138-Hip_Hop__BPM85__1_.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544702252-Hip_Hop__BPM90__1_.wav",
+    "title": "Hip_Hop__BPM90 (1)",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544702252-Hip_Hop__BPM90__1_.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544702316-Hip_Hop___Ambient__BPM100.wav",
+    "title": "Hip_Hop___Ambient__BPM100",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544702316-Hip_Hop___Ambient__BPM100.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544702380-Hip_Hop___R_B__BPM140.wav",
+    "title": "Hip_Hop___R_B__BPM140",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544702380-Hip_Hop___R_B__BPM140.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544702527-Luz_y_Sombra_-_Hip_Hop___Orchestra__BPM130.wav",
+    "title": "Luz y Sombra - Hip_Hop___Orchestra__BPM130",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544702527-Luz_y_Sombra_-_Hip_Hop___Orchestra__BPM130.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "1786544702707-siente_el_sol_en_tu_interior_-_Hip_Hop___R_B__BPM130.wav",
+    "title": "siente el sol en tu interior - Hip_Hop___R_B__BPM130",
+    "artist": "Artista Local",
+    "album": "Álbum Local",
+    "duration": 180,
+    "audioUrl": "/uploads/1786544702707-siente_el_sol_en_tu_interior_-_Hip_Hop___R_B__BPM130.wav",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  }
+]

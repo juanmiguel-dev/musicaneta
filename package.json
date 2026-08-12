@@ -7,6 +7,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "wrangler pages dev ./dist",
+    "index-local": "node scripts/index-local-folder.js",
+    "upload-folder": "node scripts/upload-local-folder.js",
     "astro": "astro"
   },
   "dependencies": {
