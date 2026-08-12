@@ -412,5 +412,77 @@
     "duration": 180,
     "audioUrl": "/uploads/Wonders_Of_A_Crescent_Moon.mp3",
     "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "Podcast_Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam.mp3",
+    "title": "Descifrando el Sistema Persona, Soberanía y la Bula Unam Sanctam",
+    "artist": "Podcasts",
+    "album": "Podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/Podcast_Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "Podcast_Efectos_adversos_y_letra_pequea_en_vacunas.mp3",
+    "title": "Efectos adversos y letra pequeña en vacunas",
+    "artist": "Podcasts",
+    "album": "Podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/Podcast_Efectos_adversos_y_letra_pequea_en_vacunas.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "Podcast_El_liderazgo_humano_de_Lionel_Scaloni.mp3",
+    "title": "El liderazgo humano de Lionel Scaloni",
+    "artist": "Podcasts",
+    "album": "Podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/Podcast_El_liderazgo_humano_de_Lionel_Scaloni.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "Podcast_Jess_el_hacker_de_la_jaula_humana.mp3",
+    "title": "Jesús el hacker de la jaula humana",
+    "artist": "Podcasts",
+    "album": "Podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/Podcast_Jess_el_hacker_de_la_jaula_humana.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "Podcast_La_Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_Travs_del_Lenguaje_Cuntico_y_la_IA.mp3",
+    "title": "La Trilogía del Reino Uniendo Física y Conciencia a Través del Lenguaje Cuántico y la IA",
+    "artist": "Podcasts",
+    "album": "Podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/Podcast_La_Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_Travs_del_Lenguaje_Cuntico_y_la_IA.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "Podcast_Messi_y_la_Tercera_Guerra_Mundial.mp3",
+    "title": "Messi y la Tercera Guerra Mundial",
+    "artist": "Podcasts",
+    "album": "Podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/Podcast_Messi_y_la_Tercera_Guerra_Mundial.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "Podcast_Motor_de_Vrtice.mp3",
+    "title": "Motor de Vórtice",
+    "artist": "Podcasts",
+    "album": "Podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/Podcast_Motor_de_Vrtice.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "Podcast_Triloga_del_Reino__Jung_ter_y_la_Geometra_de_la_Conciencia.mp3",
+    "title": "Trilogía del Reino Jung, Éter y la Geometría de la Conciencia",
+    "artist": "Podcasts",
+    "album": "Podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/Podcast_Triloga_del_Reino__Jung_ter_y_la_Geometra_de_la_Conciencia.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=400&q=80"
   }
 ]
