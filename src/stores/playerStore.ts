@@ -1,6 +1,8 @@
 import { atom } from 'nanostores';
 import type { Track } from '../types/music';
 
+export type RepeatMode = 'all' | 'one' | 'off';
+
 // Estado reactivo atómico global con Nanostores
 export const $currentTrack = atom<Track | null>(null);
 export const $isPlaying = atom<boolean>(false);
@@ -10,6 +12,18 @@ export const $volume = atom<number>(0.8);
 export const $isMuted = atom<boolean>(false);
 export const $playlist = atom<Track[]>([]);
 export const $currentIndex = atom<number>(-1);
+export const $repeatMode = atom<RepeatMode>('all');
+
+export function toggleRepeat() {
+  const current = $repeatMode.get();
+  if (current === 'all') {
+    $repeatMode.set('one');
+  } else if (current === 'one') {
+    $repeatMode.set('off');
+  } else {
+    $repeatMode.set('all');
+  }
+}
 
 // Acciones globales
 export function setPlaylist(tracks: Track[], startIndex = 0) {

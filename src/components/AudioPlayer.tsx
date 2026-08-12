@@ -9,12 +9,14 @@ import {
   $isMuted,
   $playlist,
   $currentIndex,
+  $repeatMode,
   togglePlay,
   playNext,
   playPrevious,
   seekTo,
   setVolume,
   toggleMute,
+  toggleRepeat,
   playTrack,
   setPlaylist,
 } from '../stores/playerStore';
@@ -36,6 +38,7 @@ export default function AudioPlayer() {
   const isMuted = useStore($isMuted);
   const playlist = useStore($playlist);
   const currentIndex = useStore($currentIndex);
+  const repeatMode = useStore($repeatMode);
 
   const [showPlaylist, setShowPlaylist] = useState(false);
 
@@ -126,6 +129,25 @@ export default function AudioPlayer() {
     seekTo(val);
   };
 
+  const handleTrackEnded = () => {
+    if (repeatMode === 'one') {
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play().catch(() => {});
+      }
+      seekTo(0);
+    } else if (repeatMode === 'all') {
+      playNext();
+    } else {
+      if (currentIndex < playlist.length - 1) {
+        playNext();
+      } else {
+        $isPlaying.set(false);
+        seekTo(0);
+      }
+    }
+  };
+
   return (
     <div
       className="relative min-h-[100dvh] h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-3 sm:px-6 sm:py-6 overflow-y-auto sm:overflow-hidden select-none text-white"
@@ -137,7 +159,7 @@ export default function AudioPlayer() {
         ref={audioRef}
         onTimeUpdate={() => audioRef.current && seekTo(audioRef.current.currentTime)}
         onLoadedMetadata={() => audioRef.current && $duration.set(audioRef.current.duration)}
-        onEnded={playNext}
+        onEnded={handleTrackEnded}
       />
 
       {/* Resplandor Ambiental Violeta (Apple Style Mesh Ambient Glow) */}
@@ -314,16 +336,52 @@ export default function AudioPlayer() {
             </button>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setShowPlaylist(!showPlaylist)}
-            className="w-10 h-10 rounded-full glass-pill flex items-center justify-center text-purple-200/70 hover:text-white transition-all"
-            title="Categorías & Playlist"
-          >
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path d="M4 10h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0v6l5-3z" />
-            </svg>
-          </button>
+          <div className="flex items-center space-x-2">
+            {/* BOTÓN REPRODUCCIÓN CONTINUA */}
+            <button
+              type="button"
+              onClick={toggleRepeat}
+              className={`w-10 h-10 rounded-full glass-pill flex items-center justify-center transition-all relative ${
+                repeatMode !== 'off'
+                  ? 'text-purple-200 bg-purple-500/40 border border-purple-300/50 shadow-[0_0_15px_rgba(168,85,247,0.5)] font-bold'
+                  : 'text-purple-200/40 hover:text-white border border-white/10'
+              }`}
+              title={
+                repeatMode === 'all'
+                  ? 'Reproducción Continua: ACTIVADA (Lista Completa)'
+                  : repeatMode === 'one'
+                  ? 'Reproducción Continua: TEMA ACTUAL'
+                  : 'Reproducción Continua: DESACTIVADA'
+              }
+            >
+              {repeatMode === 'one' ? (
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z" />
+                </svg>
+              )}
+              {repeatMode !== 'off' && (
+                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse border border-white/50" />
+              )}
+            </button>
+
+            {/* BOTÓN PLAYLIST / CATEGORÍAS */}
+            <button
+              type="button"
+              onClick={() => setShowPlaylist(!showPlaylist)}
+              className={`w-10 h-10 rounded-full glass-pill flex items-center justify-center transition-all ${
+                showPlaylist ? 'text-purple-300 bg-white/20' : 'text-purple-200/70 hover:text-white'
+              }`}
+              title="Categorías & Playlist"
+            >
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M4 10h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0v6l5-3z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </footer>
 
