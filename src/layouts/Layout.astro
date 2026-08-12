@@ -14,17 +14,17 @@ const {
 ---
 
 <!doctype html>
-<html lang="es" class="dark bg-black text-zinc-100 antialiased h-full">
+<html lang="es" class="dark bg-[#0e0a1f] text-purple-50 antialiased h-full">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
     <ClientRouter />
   </head>
-  <body class="h-full bg-black text-zinc-100 selection:bg-white selection:text-black overflow-hidden">
+  <body class="min-h-[100dvh] h-[100dvh] bg-[#0e0a1f] text-purple-50 selection:bg-purple-500 selection:text-white overflow-hidden">
     <main class="h-full w-full">
       <slot />
     </main>

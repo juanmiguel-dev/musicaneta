@@ -125,7 +125,12 @@ export default function AudioPlayer() {
   };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col justify-between items-center px-6 py-8 overflow-hidden select-none">
+    <div
+      className="relative min-h-[100dvh] h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-3 sm:px-6 sm:py-6 overflow-y-auto sm:overflow-hidden select-none text-white"
+      style={{
+        background: 'radial-gradient(circle at 50% 30%, #5b21b6 0%, #2e1065 40%, #0f0728 85%, #050311 100%)',
+      }}
+    >
       <audio
         ref={audioRef}
         onTimeUpdate={() => audioRef.current && seekTo(audioRef.current.currentTime)}
@@ -133,149 +138,190 @@ export default function AudioPlayer() {
         onEnded={playNext}
       />
 
-      {/* Resplandor Ambiental de Fondo (Apple Style Mesh Ambient Glow) */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center -z-10">
+      {/* Resplandor Ambiental Violeta (Apple Style Mesh Ambient Glow) */}
+      <div className="absolute inset-0 pointer-events-none flex items-center justify-center -z-10 overflow-hidden">
         <div
-          className="w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full blur-[140px] opacity-40 ambient-glow transition-all duration-1000"
+          className="w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] rounded-full blur-[110px] opacity-60 ambient-glow transition-all duration-1000"
           style={{
-            background: currentTrack?.coverUrl
-              ? `radial-gradient(circle, rgba(52, 211, 153, 0.45) 0%, rgba(16, 185, 129, 0.15) 50%, rgba(5, 5, 5, 0) 75%)`
-              : `radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(0,0,0,0) 70%)`,
+            background: 'radial-gradient(circle, rgba(168, 85, 247, 0.5) 0%, rgba(124, 58, 237, 0.25) 50%, rgba(0, 0, 0, 0) 75%)',
           }}
         />
       </div>
 
-      {/* Header Minimalista Superior */}
-      <header className="w-full max-w-5xl flex items-center justify-between z-20">
+      {/* Header Estilo Apple: Botón Volver (<) - Título - Menú Playlist (≡) */}
+      <header className="w-full max-w-md sm:max-w-xl flex items-center justify-between z-20 pt-1">
+        <button
+          type="button"
+          onClick={() => setShowPlaylist(!showPlaylist)}
+          className="w-10 h-10 rounded-full glass-pill flex items-center justify-center text-purple-200 hover:text-white transition-all transform hover:scale-105 active:scale-95 shadow-md border border-white/10"
+          title="Menú"
+        >
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+          </svg>
+        </button>
+
         <div className="flex items-center space-x-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-          <span className="text-xs font-medium tracking-widest uppercase text-zinc-400">
+          <div className="w-2 h-2 rounded-full bg-purple-400 animate-ping" />
+          <span className="text-xs font-extrabold tracking-widest uppercase text-purple-200/90">
             MUSICANETA
           </span>
         </div>
+
+        <button
+          type="button"
+          onClick={() => setShowPlaylist(!showPlaylist)}
+          className={`w-10 h-10 rounded-full glass-pill flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 shadow-md border border-white/10 ${
+            showPlaylist ? 'text-purple-300 bg-white/20' : 'text-purple-200 hover:text-white'
+          }`}
+          title="Lista de Reproducción"
+        >
+          <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </button>
       </header>
 
-      {/* Centro Immersivo: Arte de Tapa & Información */}
-      <main className="w-full max-w-md my-auto flex flex-col items-center z-10 space-y-8">
-        <div className="relative group">
-          <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-88 md:h-88 rounded-3xl overflow-hidden shadow-2xl transition-all duration-700 transform group-hover:scale-[1.02] border border-white/10 relative">
+      {/* Centro Inmersivo: Disco Circular con Anillos Neumórficos Violeta */}
+      <main className="w-full max-w-md my-auto flex flex-col items-center z-10 py-2 space-y-4 sm:space-y-6">
+        {/* Disco de Arte de Tapa en Círculo con Anillos Concéntricos */}
+        <div className="relative flex items-center justify-center p-2 sm:p-4">
+          {/* Anillos Concéntricos Estilo Neumórfico Violeta */}
+          <div className="absolute inset-0 rounded-full border border-purple-400/20 animate-pulse pointer-events-none" />
+          <div className="absolute -inset-3 sm:-inset-5 rounded-full border border-purple-500/20 shadow-[0_0_40px_rgba(168,85,247,0.35)] pointer-events-none" />
+          <div className="absolute -inset-6 sm:-inset-10 rounded-full border border-purple-600/15 pointer-events-none" />
+
+          {/* Disco Principal */}
+          <div className="w-44 h-44 xs:w-52 xs:h-52 sm:w-64 sm:h-64 rounded-full overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.6)] border-2 border-purple-300/30 relative group transition-all duration-700">
             <img
               src={currentTrack?.coverUrl || 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=800&q=80'}
               alt={currentTrack?.title || 'No Track'}
-              className="w-full h-full object-cover"
+              className={`w-full h-full object-cover transition-transform duration-1000 ${
+                isPlaying ? 'scale-105' : 'scale-100'
+              }`}
             />
 
-            {isPlaying && (
-              <div className="absolute bottom-4 right-4 flex items-end space-x-1 glass-pill px-3 py-2 rounded-xl">
-                <span className="w-1 bg-emerald-400 rounded-full animate-[bounce_0.8s_infinite_100ms] h-4" />
-                <span className="w-1 bg-emerald-400 rounded-full animate-[bounce_0.8s_infinite_300ms] h-6" />
-                <span className="w-1 bg-emerald-400 rounded-full animate-[bounce_0.8s_infinite_200ms] h-3" />
-                <span className="w-1 bg-emerald-400 rounded-full animate-[bounce_0.8s_infinite_400ms] h-5" />
-              </div>
-            )}
+            {/* Overlay al pulsar o interactuar */}
+            <div className="absolute inset-0 bg-purple-950/40 backdrop-blur-[2px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <button
+                type="button"
+                onClick={togglePlay}
+                className="w-14 h-14 rounded-full bg-white/20 border border-white/40 flex items-center justify-center text-white shadow-xl"
+              >
+                {isPlaying ? (
+                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6 fill-current ml-1" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
-        <div className="text-center space-y-1 max-w-sm">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white truncate">
+        {/* Información del Tema */}
+        <div className="text-center space-y-1 max-w-xs sm:max-w-sm px-2">
+          <h1 className="text-lg sm:text-2xl font-extrabold tracking-wider uppercase text-white truncate drop-shadow-md">
             {currentTrack?.title || 'Selecciona una canción'}
           </h1>
-          <p className="text-sm font-medium text-zinc-400 truncate">
+          <p className="text-xs sm:text-sm font-medium text-purple-200/80 truncate">
             {currentTrack?.artist || 'Musicaneta Studio'}
+            {currentTrack?.album && currentTrack.album !== 'Álbum Local' ? ` - ${currentTrack.album}` : ''}
           </p>
         </div>
 
-        <div className="w-full space-y-2">
+        {/* Barra de Progreso / Seek */}
+        <div className="w-full max-w-xs sm:max-w-sm px-2 space-y-1">
           <input
             type="range"
             min={0}
             max={duration || 100}
             value={currentTime}
             onChange={handleSeek}
-            className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white transition-all"
+            className="w-full h-1.5 bg-purple-950/60 rounded-lg appearance-none cursor-pointer accent-purple-300 transition-all border border-purple-500/20"
           />
-          <div className="flex justify-between text-xs font-mono text-zinc-500">
+          <div className="flex justify-between text-[11px] font-mono text-purple-300/60">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
         </div>
       </main>
 
-      {/* Barra Flotante Inferior */}
-      <footer className="w-full max-w-xl z-20 mb-4">
-        <div className="glass-panel rounded-full px-6 py-4 flex items-center justify-between space-x-4 shadow-2xl">
+      {/* Controles de Reproducción Estilo Apple Violeta */}
+      <footer className="w-full max-w-md z-20 mb-2 sm:mb-4">
+        <div className="glass-panel rounded-3xl px-5 py-3.5 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/40 backdrop-blur-2xl">
           <button
-            onClick={() => setShowPlaylist(!showPlaylist)}
-            className={`p-2.5 rounded-full transition-colors ${
-              showPlaylist ? 'text-emerald-400 bg-white/10' : 'text-zinc-400 hover:text-white'
-            }`}
-            title="Playlist"
+            type="button"
+            onClick={toggleMute}
+            className="w-10 h-10 rounded-full glass-pill flex items-center justify-center text-purple-200/70 hover:text-white transition-all"
+            title="Silenciar / Activar Sonido"
           >
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path d="M4 10h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0v6l5-3z" />
-            </svg>
+            {isMuted || volume === 0 ? (
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M3.63 3.63L2.36 4.9 7 9.54V15h4l5 5V13.54l4.1 4.1 1.27-1.27L3.63 3.63zM16 4v3.88l3 3V4z" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+              </svg>
+            )}
           </button>
 
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4 sm:space-x-6">
             <button
+              type="button"
               onClick={playPrevious}
-              className="text-zinc-400 hover:text-white transition-transform active:scale-95"
+              className="w-11 h-11 rounded-full glass-pill text-white hover:text-purple-200 flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 border border-white/10"
               title="Anterior"
             >
-              <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                 <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
               </svg>
             </button>
 
+            {/* BOTÓN PRINCIPAL PLAY / PAUSE (GRANDE VIOLETA APPLE STYLE) */}
             <button
+              type="button"
               onClick={togglePlay}
-              className="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-white/20"
+              className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-gradient-to-tr from-purple-600 via-indigo-600 to-purple-400 text-white flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_25px_rgba(168,85,247,0.6)] border border-purple-300/40"
               title={isPlaying ? 'Pausar' : 'Reproducir'}
             >
               {isPlaying ? (
-                <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
                   <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
                 </svg>
               ) : (
-                <svg className="w-6 h-6 fill-current ml-1" viewBox="0 0 24 24">
+                <svg className="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z" />
                 </svg>
               )}
             </button>
 
             <button
+              type="button"
               onClick={playNext}
-              className="text-zinc-400 hover:text-white transition-transform active:scale-95"
+              className="w-11 h-11 rounded-full glass-pill text-white hover:text-purple-200 flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 border border-white/10"
               title="Siguiente"
             >
-              <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                 <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
               </svg>
             </button>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <button onClick={toggleMute} className="text-zinc-400 hover:text-white">
-              {isMuted || volume === 0 ? (
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M3.63 3.63L2.36 4.9 7 9.54V15h4l5 5V13.54l4.1 4.1 1.27-1.27L3.63 3.63zM16 4v3.88l3 3V4z" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
-                </svg>
-              )}
-            </button>
-            <input
-              type="range"
-              min={0}
-              max={1}
-              step={0.01}
-              value={isMuted ? 0 : volume}
-              onChange={(e) => setVolume(parseFloat(e.target.value))}
-              className="w-16 sm:w-20 h-1 bg-white/20 rounded-lg appearance-none cursor-pointer accent-white"
-            />
-          </div>
+          <button
+            type="button"
+            onClick={() => setShowPlaylist(!showPlaylist)}
+            className="w-10 h-10 rounded-full glass-pill flex items-center justify-center text-purple-200/70 hover:text-white transition-all"
+            title="Categorías & Playlist"
+          >
+            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M4 10h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0v6l5-3z" />
+            </svg>
+          </button>
         </div>
       </footer>
 
