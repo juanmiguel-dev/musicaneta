@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import type { Track } from '../../types/music';
-import fs from 'node:fs';
-import path from 'node:path';
+import localMetadata from '../../../public/uploads/metadata.json';
 
 const mockTracks: Track[] = [
   {
@@ -17,7 +16,7 @@ const mockTracks: Track[] = [
 
 export const GET: APIRoute = async ({ request, locals }) => {
   try {
-    const env = locals.runtime?.env;
+    const env = (locals as any).runtime?.env;
     const url = new URL(request.url);
     const keyParam = url.searchParams.get('key');
 
@@ -44,12 +43,12 @@ export const GET: APIRoute = async ({ request, locals }) => {
       }
     };
 
-    // 1. Si estamos en producción en Cloudflare R2
+    // 1. Si existe el binding R2 en Cloudflare Worker (Producción) con pistas cargadas
     if (env && env.MUSIC_BUCKET) {
       const objects = await env.MUSIC_BUCKET.list({ limit: 500 });
       const publicDomain = env.R2_PUBLIC_DOMAIN || '';
 
-      const r2Tracks: Track[] = objects.objects.map((obj) => {
+      const r2Tracks: Track[] = objects.objects.map((obj: any) => {
         const rawTitle = obj.customMetadata?.title;
         const rawArtist = obj.customMetadata?.artist;
         const rawAlbum = obj.customMetadata?.album;
@@ -81,21 +80,15 @@ export const GET: APIRoute = async ({ request, locals }) => {
       }
     }
 
-    // 2. Fallback de desarrollo local: Cargar archivos guardados en public/uploads/
-    const metaPath = path.join(process.cwd(), 'public', 'uploads', 'metadata.json');
-    if (fs.existsSync(metaPath)) {
-      try {
-        const localTracks: Track[] = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
-        if (localTracks.length > 0) {
-          return new Response(JSON.stringify(localTracks), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' },
-          });
-        }
-      } catch (e) {}
+    // 2. Usar catálogo local estático enlazado en el build (46 canciones)
+    if (Array.isArray(localMetadata) && localMetadata.length > 0) {
+      return new Response(JSON.stringify(localMetadata), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
-    // 3. Fallback inicial si no hay archivos subidos aún
+    // 3. Fallback inicial si no hay canciones
     return new Response(JSON.stringify(mockTracks), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
