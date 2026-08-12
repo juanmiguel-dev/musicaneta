@@ -28,11 +28,11 @@ export const GET: APIRoute = async ({ request, locals }) => {
         return new Response('Pista no encontrada', { status: 404 });
       }
       const headers = new Headers();
-      obj.writeHttpMetadata(headers);
+      obj.writeHttpMetadata(headers as any);
       headers.set('etag', obj.httpEtag);
       headers.set('cache-control', 'public, max-age=31536000, immutable');
 
-      return new Response(obj.body, { headers });
+      return new Response(obj.body as unknown as BodyInit, { headers });
     }
 
     const safeDecode = (val?: string) => {

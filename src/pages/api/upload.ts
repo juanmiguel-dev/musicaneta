@@ -11,7 +11,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const env = { ...processEnv, ...runtimeEnv };
 
     const body = await request.json();
-    const { filename, contentType, title, artist, album } = body;
+    const { filename, contentType } = body;
 
     if (!filename) {
       return new Response(JSON.stringify({ error: 'Filename es requerido' }), { status: 400 });
