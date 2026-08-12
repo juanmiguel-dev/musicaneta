@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useStore } from '@nanostores/react';
 import {
   $currentTrack,
@@ -40,6 +40,37 @@ export default function AudioPlayer() {
   const [showPlaylist, setShowPlaylist] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [uploadMode, setUploadMode] = useState<'single' | 'folder'>('folder');
+
+  // Filtros de canciones por Carpeta / Categoría y Búsqueda
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // Extraer carpetas / artistas / álbumes únicos de la playlist
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    playlist.forEach((t) => {
+      if (t.artist && t.artist !== 'Artista Local') set.add(t.artist);
+      if (t.album && t.album !== 'Álbum Local') set.add(t.album);
+    });
+    return Array.from(set);
+  }, [playlist]);
+
+  // Playlist filtrada según la carpeta o búsqueda seleccionada
+  const filteredPlaylist = useMemo(() => {
+    return playlist.filter((t) => {
+      const matchesCategory =
+        selectedCategory === 'all' ||
+        t.artist === selectedCategory ||
+        t.album === selectedCategory;
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        t.title.toLowerCase().includes(q) ||
+        t.artist.toLowerCase().includes(q) ||
+        (t.album && t.album.toLowerCase().includes(q));
+      return matchesCategory && matchesSearch;
+    });
+  }, [playlist, selectedCategory, searchQuery]);
 
   // Estados de subida
   const [files, setFiles] = useState<File[]>([]);
@@ -420,36 +451,95 @@ export default function AudioPlayer() {
       {/* Drawer Desplegable de Playlist Glass Panel */}
       {showPlaylist && (
         <div className="fixed inset-y-0 right-0 w-full sm:w-96 glass-panel border-l border-white/10 z-40 p-6 flex flex-col">
-          <div className="flex items-center justify-between pb-4 border-b border-white/10">
-            <h3 className="font-bold text-lg text-white">Lista de Canciones</h3>
+          <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <div>
+              <h3 className="font-bold text-lg text-white">Biblioteca de Música</h3>
+              <p className="text-xs text-zinc-400 mt-0.5">
+                {filteredPlaylist.length} {filteredPlaylist.length === 1 ? 'canción' : 'canciones'}
+              </p>
+            </div>
             <button onClick={() => setShowPlaylist(false)} className="p-1 text-zinc-400 hover:text-white">
               ✕
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto mt-4 space-y-2 no-scrollbar">
-            {playlist.map((t, idx) => (
-              <div
-                key={t.id || idx}
-                onClick={() => playTrack(t, idx)}
-                className={`p-3 rounded-2xl flex items-center justify-between cursor-pointer transition-all ${
-                  currentIndex === idx
-                    ? 'bg-white/15 border border-white/20 text-white font-semibold'
-                    : 'hover:bg-white/5 text-zinc-400 hover:text-zinc-200'
-                }`}
-              >
-                <div className="flex items-center space-x-3 overflow-hidden">
-                  <img src={t.coverUrl} alt={t.title} className="w-10 h-10 rounded-xl object-cover" />
-                  <div className="overflow-hidden">
-                    <p className="text-sm truncate">{t.title}</p>
-                    <p className="text-xs opacity-60 truncate">{t.artist}</p>
-                  </div>
-                </div>
-                {currentIndex === idx && isPlaying && (
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                )}
+          {/* Buscador & Filtro por Carpeta / Álbum */}
+          <div className="py-3 space-y-3 border-b border-white/10">
+            <input
+              type="text"
+              placeholder="🔍 Buscar por nombre, carpeta o artista..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/50 transition-all"
+            />
+
+            {categories.length > 0 && (
+              <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 no-scrollbar">
+                <button
+                  type="button"
+                  onClick={() => setSelectedCategory('all')}
+                  className={`px-3 py-1 text-[11px] font-semibold rounded-lg whitespace-nowrap transition-all ${
+                    selectedCategory === 'all'
+                      ? 'bg-white text-black font-bold'
+                      : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
+                  }`}
+                >
+                  Todas ({playlist.length})
+                </button>
+                {categories.map((cat) => {
+                  const count = playlist.filter((t) => t.artist === cat || t.album === cat).length;
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`px-3 py-1 text-[11px] font-semibold rounded-lg whitespace-nowrap transition-all ${
+                        selectedCategory === cat
+                          ? 'bg-emerald-400 text-black font-bold'
+                          : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
+                      }`}
+                    >
+                      📁 {cat} ({count})
+                    </button>
+                  );
+                })}
               </div>
-            ))}
+            )}
+          </div>
+
+          <div className="flex-1 overflow-y-auto mt-3 space-y-2 no-scrollbar">
+            {filteredPlaylist.map((t, idx) => {
+              const realIndex = playlist.findIndex((item) => item.id === t.id);
+              const isCurrent = currentTrack?.id === t.id;
+
+              return (
+                <div
+                  key={t.id || idx}
+                  onClick={() => playTrack(t, realIndex !== -1 ? realIndex : idx)}
+                  className={`p-3 rounded-2xl flex items-center justify-between cursor-pointer transition-all ${
+                    isCurrent
+                      ? 'bg-white/15 border border-white/20 text-white font-semibold'
+                      : 'hover:bg-white/5 text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3 overflow-hidden">
+                    <img src={t.coverUrl} alt={t.title} className="w-10 h-10 rounded-xl object-cover" />
+                    <div className="overflow-hidden">
+                      <p className="text-sm truncate">{t.title}</p>
+                      <div className="flex items-center space-x-2 text-xs opacity-60 truncate">
+                        <span>{t.artist}</span>
+                        {t.album && t.album !== 'Álbum Local' && (
+                          <span className="bg-white/10 px-1.5 py-0.5 rounded text-[10px]">📁 {t.album}</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  {isCurrent && isPlaying && (
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
