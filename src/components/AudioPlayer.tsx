@@ -43,12 +43,14 @@ export default function AudioPlayer() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Extraer carpetas / artistas / álbumes únicos de la playlist
+  // Extraer carpetas / álbumes únicos de la playlist
   const categories = useMemo(() => {
     const set = new Set<string>();
     playlist.forEach((t) => {
-      if (t.artist && t.artist !== 'Artista Local') set.add(t.artist);
-      if (t.album && t.album !== 'Álbum Local') set.add(t.album);
+      const folderName = (t.album && t.album !== 'Colección Curada' && t.album !== 'Álbum Local') ? t.album : t.artist;
+      if (folderName && folderName !== 'Artista Local' && folderName !== 'Colección Curada') {
+        set.add(folderName);
+      }
     });
     return Array.from(set);
   }, [playlist]);
@@ -351,14 +353,14 @@ export default function AudioPlayer() {
             />
 
             {categories.length > 0 && (
-              <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 no-scrollbar">
+              <div className="flex flex-wrap gap-1.5 pt-1 pb-1">
                 <button
                   type="button"
                   onClick={() => setSelectedCategory('all')}
-                  className={`px-3 py-1 text-[11px] font-semibold rounded-lg whitespace-nowrap transition-all ${
+                  className={`px-3 py-1 text-[11px] font-semibold rounded-lg transition-all ${
                     selectedCategory === 'all'
-                      ? 'bg-white text-black font-bold'
-                      : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
+                      ? 'bg-purple-400 text-black font-extrabold shadow-md'
+                      : 'bg-white/5 text-purple-200/70 hover:text-white border border-white/10'
                   }`}
                 >
                   Todas ({playlist.length})
@@ -370,10 +372,10 @@ export default function AudioPlayer() {
                       key={cat}
                       type="button"
                       onClick={() => setSelectedCategory(cat)}
-                      className={`px-3 py-1 text-[11px] font-semibold rounded-lg whitespace-nowrap transition-all ${
+                      className={`px-3 py-1 text-[11px] font-semibold rounded-lg transition-all ${
                         selectedCategory === cat
-                          ? 'bg-emerald-400 text-black font-bold'
-                          : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
+                          ? 'bg-purple-400 text-black font-extrabold shadow-md'
+                          : 'bg-white/5 text-purple-200/70 hover:text-white border border-white/10'
                       }`}
                     >
                       📁 {cat} ({count})
