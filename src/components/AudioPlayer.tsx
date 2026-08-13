@@ -46,23 +46,29 @@ export default function AudioPlayer() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Extraer carpetas / álbumes únicos de la playlist
+  // Extraer carpetas / listas únicas de la playlist
   const categories = useMemo(() => {
     const set = new Set<string>();
     playlist.forEach((t) => {
-      const folderName = (t.album && t.album !== 'Colección Curada' && t.album !== 'Álbum Local') ? t.album : t.artist;
-      if (folderName && folderName !== 'Artista Local' && folderName !== 'Colección Curada') {
-        set.add(folderName);
+      if (t.folder && t.folder !== 'General') {
+        set.add(t.folder);
+      } else {
+        const folderName = (t.album && t.album !== 'Colección Curada' && t.album !== 'Álbum Local' && t.album !== 'Native') ? t.album : t.artist;
+        if (folderName && folderName !== 'Artista Local' && folderName !== 'Colección Curada' && folderName !== 'Native') {
+          set.add(folderName);
+        }
       }
     });
     return Array.from(set);
   }, [playlist]);
 
-  // Playlist filtrada según la carpeta o búsqueda seleccionada
+  // Playlist filtrada según la carpeta/lista o búsqueda seleccionada
   const filteredPlaylist = useMemo(() => {
     return playlist.filter((t) => {
       const matchesCategory =
         selectedCategory === 'all' ||
+        t.folder === selectedCategory ||
+        (t.folder && t.folder.startsWith(selectedCategory)) ||
         t.artist === selectedCategory ||
         t.album === selectedCategory;
       const q = searchQuery.toLowerCase().trim();
@@ -70,7 +76,8 @@ export default function AudioPlayer() {
         !q ||
         t.title.toLowerCase().includes(q) ||
         t.artist.toLowerCase().includes(q) ||
-        (t.album && t.album.toLowerCase().includes(q));
+        (t.album && t.album.toLowerCase().includes(q)) ||
+        (t.folder && t.folder.toLowerCase().includes(q));
       return matchesCategory && matchesSearch;
     });
   }, [playlist, selectedCategory, searchQuery]);
@@ -424,7 +431,13 @@ export default function AudioPlayer() {
                   Todas ({playlist.length})
                 </button>
                 {categories.map((cat) => {
-                  const count = playlist.filter((t) => t.artist === cat || t.album === cat).length;
+                  const count = playlist.filter(
+                    (t) =>
+                      t.folder === cat ||
+                      (t.folder && t.folder.startsWith(cat)) ||
+                      t.artist === cat ||
+                      t.album === cat
+                  ).length;
                   return (
                     <button
                       key={cat}
@@ -465,8 +478,10 @@ export default function AudioPlayer() {
                       <p className="text-sm truncate">{t.title}</p>
                       <div className="flex items-center space-x-2 text-xs opacity-60 truncate">
                         <span>{t.artist}</span>
-                        {t.album && t.album !== 'Álbum Local' && (
-                          <span className="bg-white/10 px-1.5 py-0.5 rounded text-[10px]">📁 {t.album}</span>
+                        {(t.folder || (t.album && t.album !== 'Álbum Local' && t.album !== 'Colección')) && (
+                          <span className="bg-white/10 px-1.5 py-0.5 rounded text-[10px] truncate max-w-[140px]">
+                            📁 {t.folder || t.album}
+                          </span>
                         )}
                       </div>
                     </div>

@@ -8,6 +8,8 @@
     "build": "astro check && astro build",
     "preview": "wrangler pages dev ./dist",
     "index-local": "node scripts/index-local-folder.js",
+    "push-music": "node scripts/index-local-folder.js --push",
+    "sync-music": "node scripts/index-local-folder.js --push",
     "upload-folder": "node scripts/upload-local-folder.js",
     "astro": "astro"
   },

@@ -1,8 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 
-// Script para indexar una carpeta local de música a public/uploads/ de forma instantánea
-const sourceFolder = process.argv[2];
+// Script para copiar e indexar carpetas locales de música (incluyendo subcarpetas como listas)
+// Opción de realizar git add, commit y push automáticamente con la opción --push
+
+const args = process.argv.slice(2);
+const shouldPush = args.includes('--push') || args.includes('-p');
+const filteredArgs = args.filter((a) => a !== '--push' && a !== '-p');
+const targetArg = filteredArgs[0];
+
 const projectRoot = process.cwd();
 const uploadsDir = path.join(projectRoot, 'public', 'uploads');
 
@@ -37,81 +44,106 @@ function getAllAudioFiles(dirPath, arrayOfFiles = []) {
   return arrayOfFiles;
 }
 
-if (!sourceFolder) {
-  console.log('📌 Uso: node scripts/index-local-folder.js "C:\\Ruta\\A\\Tu\\Carpeta\\De\\Musica"');
-  console.log('O bien coloca tus archivos directamente dentro de public/uploads/ e indexaremos automáticamente.');
-  
-  // Indexar lo que ya esté en public/uploads/
-  const existingFiles = getAllAudioFiles(uploadsDir);
-  console.log(`\n🔍 Escaneando public/uploads/ (${existingFiles.length} archivos)...`);
-  
-  let added = 0;
-  for (const filePath of existingFiles) {
-    const fileName = path.basename(filePath);
-    if (fileName === 'metadata.json') continue;
-
-    const existsInMeta = metaList.some((item) => item.id === fileName || item.audioUrl.endsWith(fileName));
-    if (!existsInMeta) {
-      const title = fileName.replace(/\.[^/.]+$/, '');
-      metaList.push({
-        id: fileName,
-        title,
-        artist: 'Artista Local',
-        album: 'Álbum Local',
-        duration: 180,
-        audioUrl: `/uploads/${fileName}`,
-        coverUrl: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80',
-      });
-      added++;
-    }
+function pushToGit(copiedCount) {
+  console.log('\n🚀 Ejecutando Git add, commit y push...');
+  try {
+    execSync('git add public/uploads metadata.json', { stdio: 'inherit' });
+    const commitMsg = `feat: agregar canciones e indexar carpetas/subcarpetas como listas`;
+    execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
+    console.log('⬆️ Enviando cambios a GitHub (git push origin main)...');
+    execSync('git push origin main', { stdio: 'inherit' });
+    console.log('✅ ¡Git push completado exitosamente!');
+  } catch (err) {
+    console.error('❌ Error al ejecutar Git:', err.message);
   }
-
-  fs.writeFileSync(metaPath, JSON.stringify(metaList, null, 2));
-  console.log(`✅ ${added} canciones nuevas indexadas en metadata.json. Total en biblioteca local: ${metaList.length}`);
-  process.exit(0);
 }
 
-console.log(`\n📂 Copiando e indexando archivos desde: ${sourceFolder}...`);
+// Determinar el directorio a escanear
+let sourceFolder = targetArg ? path.resolve(targetArg) : uploadsDir;
+const isDirectUploads = sourceFolder === uploadsDir;
+
+console.log(`\n📂 Escaneando e indexando archivos desde: ${sourceFolder}...`);
 const files = getAllAudioFiles(sourceFolder);
 
 if (files.length === 0) {
-  console.log('⚠️ No se encontraron archivos de audio.');
+  console.log('⚠️ No se encontraron archivos de audio (.mp3, .wav, .m4a, .flac, .ogg, .aac).');
   process.exit(0);
 }
 
-let copied = 0;
-for (const filePath of files) {
-  const relativePath = path.relative(sourceFolder, filePath);
-  const fileName = path.basename(filePath);
+let addedOrCopied = 0;
 
+for (const filePath of files) {
+  const fileName = path.basename(filePath);
+  if (fileName === 'metadata.json') continue;
+
+  const relativePath = path.relative(sourceFolder, filePath);
   const parts = relativePath.split(path.sep);
+
+  let folderPath = 'General';
   let artist = 'Artista Local';
-  let album = 'Álbum Local';
+  let album = 'Colección';
   let title = fileName.replace(/\.[^/.]+$/, '');
 
-  if (parts.length >= 3) {
-    artist = parts[parts.length - 3];
-    album = parts[parts.length - 2];
-  } else if (parts.length === 2) {
-    album = parts[0];
+  if (parts.length > 1) {
+    const folderParts = parts.slice(0, parts.length - 1);
+    folderPath = folderParts.join(' / ');
+
+    album = folderParts[folderParts.length - 1];
+    if (folderParts.length >= 2) {
+      artist = folderParts[folderParts.length - 2];
+    } else {
+      artist = folderParts[0];
+    }
   }
 
-  const cleanFileName = `${Date.now()}-${fileName.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-  const destPath = path.join(uploadsDir, cleanFileName);
+  let finalAudioUrl = '';
+  let trackId = '';
 
-  fs.copyFileSync(filePath, destPath);
+  if (isDirectUploads) {
+    // Los archivos ya están dentro de public/uploads/
+    const webPath = relativePath.split(path.sep).join('/');
+    finalAudioUrl = `/uploads/${webPath}`;
+    trackId = webPath;
+  } else {
+    // Copiar el archivo desde la ruta fuente a public/uploads/
+    const safeBaseName = fileName.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const cleanFileName = `${Date.now()}-${safeBaseName}`;
+    const destPath = path.join(uploadsDir, cleanFileName);
+    fs.copyFileSync(filePath, destPath);
+    finalAudioUrl = `/uploads/${cleanFileName}`;
+    trackId = cleanFileName;
+  }
 
-  metaList.push({
-    id: cleanFileName,
+  // Verificar si ya existe en metadata
+  const existingIdx = metaList.findIndex((item) => item.id === trackId || item.audioUrl === finalAudioUrl);
+
+  const trackObj = {
+    id: trackId,
     title,
     artist,
     album,
+    folder: folderPath,
     duration: 180,
-    audioUrl: `/uploads/${cleanFileName}`,
+    audioUrl: finalAudioUrl,
     coverUrl: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80',
-  });
-  copied++;
+  };
+
+  if (existingIdx !== -1) {
+    // Actualizar metadata existente con la nueva carpeta/playlist
+    metaList[existingIdx] = { ...metaList[existingIdx], ...trackObj };
+  } else {
+    metaList.push(trackObj);
+    addedOrCopied++;
+    console.log(`  🎵 Indexada: "${title}" -> Lista/Carpeta: "${folderPath}"`);
+  }
 }
 
-fs.writeFileSync(metaPath, JSON.stringify(metaList, null, 2));
-console.log(`🎉 ¡Éxito! ${copied} canciones copiadas e indexadas en la biblioteca local.`);
+fs.writeFileSync(metaPath, JSON.stringify(metaList, null, 2), 'utf-8');
+console.log(`\n🎉 ¡Éxito! Biblioteca actualizada en metadata.json. Total de canciones: ${metaList.length}`);
+
+if (shouldPush) {
+  pushToGit(addedOrCopied);
+} else {
+  console.log('\n💡 Para hacer commit y git push automáticamente, incluye la bandera --push:');
+  console.log('   npm run push-music');
+}

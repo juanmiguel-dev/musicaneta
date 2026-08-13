@@ -3,6 +3,7 @@ export interface Track {
   title: string;
   artist: string;
   album?: string;
+  folder?: string;
   duration: number; // en segundos
   audioUrl: string;
   coverUrl: string;
