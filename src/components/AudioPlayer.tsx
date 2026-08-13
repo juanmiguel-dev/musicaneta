@@ -41,6 +41,8 @@ export default function AudioPlayer() {
   const repeatMode = useStore($repeatMode);
 
   const [showPlaylist, setShowPlaylist] = useState(false);
+  const [isSeeking, setIsSeeking] = useState(false);
+  const [seekValue, setSeekValue] = useState(0);
 
   // Filtros de canciones por Carpeta / Categoría y Búsqueda
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -130,10 +132,28 @@ export default function AudioPlayer() {
     }
   }, [volume, isMuted]);
 
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (!isSeeking) {
+      setSeekValue(currentTime);
+    }
+  }, [currentTime, isSeeking]);
+
+  const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseFloat(e.target.value);
-    if (audioRef.current) audioRef.current.currentTime = val;
-    seekTo(val);
+    setSeekValue(val);
+  };
+
+  const handleSeekStart = () => {
+    setIsSeeking(true);
+  };
+
+  const handleSeekEnd = (val?: number) => {
+    const targetTime = typeof val === 'number' && !isNaN(val) ? val : seekValue;
+    if (audioRef.current) {
+      audioRef.current.currentTime = targetTime;
+    }
+    seekTo(targetTime);
+    setIsSeeking(false);
   };
 
   const handleTrackEnded = () => {
@@ -179,17 +199,36 @@ export default function AudioPlayer() {
         />
       </div>
 
-      {/* Header Estilo Apple: Botón Volver (<) - Título - Menú Playlist (≡) */}
+      {/* Header Estilo Apple: Botón Reproducción Continua (Top Izquierda) - Título - Menú Playlist (Top Derecha) */}
       <header className="w-full max-w-md sm:max-w-xl flex items-center justify-between z-20 pt-1">
         <button
           type="button"
-          onClick={() => setShowPlaylist(!showPlaylist)}
-          className="w-10 h-10 rounded-full glass-pill flex items-center justify-center text-purple-200 hover:text-white transition-all transform hover:scale-105 active:scale-95 shadow-md border border-white/10"
-          title="Menú"
+          onClick={toggleRepeat}
+          className={`w-10 h-10 rounded-full glass-pill flex items-center justify-center transition-all relative transform hover:scale-105 active:scale-95 shadow-md border border-white/10 ${
+            repeatMode !== 'off'
+              ? 'text-purple-200 bg-purple-500/40 border border-purple-300/50 shadow-[0_0_15px_rgba(168,85,247,0.5)] font-bold'
+              : 'text-purple-200/70 hover:text-white'
+          }`}
+          title={
+            repeatMode === 'all'
+              ? 'Reproducción Continua: ACTIVADA (Lista Completa)'
+              : repeatMode === 'one'
+              ? 'Reproducción Continua: TEMA ACTUAL'
+              : 'Reproducción Continua: DESACTIVADA'
+          }
         >
-          <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-          </svg>
+          {repeatMode === 'one' ? (
+            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z" />
+            </svg>
+          )}
+          {repeatMode !== 'off' && (
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse border border-white/50" />
+          )}
         </button>
 
         <div className="flex items-center space-x-2">
@@ -205,7 +244,7 @@ export default function AudioPlayer() {
           className={`w-10 h-10 rounded-full glass-pill flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 shadow-md border border-white/10 ${
             showPlaylist ? 'text-purple-300 bg-white/20' : 'text-purple-200 hover:text-white'
           }`}
-          title="Lista de Reproducción"
+          title="Lista de Reproducción & Carpetas"
         >
           <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
             <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
@@ -264,26 +303,41 @@ export default function AudioPlayer() {
           </p>
         </div>
 
-        {/* Barra de Progreso / Seek */}
+        {/* Barra de Progreso / Seek Deslizable */}
         <div className="w-full max-w-xs sm:max-w-sm px-2 space-y-1">
-          <input
-            type="range"
-            min={0}
-            max={duration || 100}
-            value={currentTime}
-            onChange={handleSeek}
-            className="w-full h-1.5 bg-purple-950/60 rounded-lg appearance-none cursor-pointer accent-purple-300 transition-all border border-purple-500/20"
-          />
-          <div className="flex justify-between text-[11px] font-mono text-purple-300/60">
-            <span>{formatTime(currentTime)}</span>
+          <div className="relative flex items-center py-2">
+            <input
+              type="range"
+              min={0}
+              max={duration || 100}
+              step={0.1}
+              value={isSeeking ? seekValue : currentTime}
+              onMouseDown={handleSeekStart}
+              onTouchStart={handleSeekStart}
+              onChange={handleSeekChange}
+              onMouseUp={(e) => handleSeekEnd(parseFloat((e.target as HTMLInputElement).value))}
+              onTouchEnd={(e) => handleSeekEnd(parseFloat((e.target as HTMLInputElement).value))}
+              className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-purple-300 focus:outline-none transition-all border border-purple-400/30 shadow-[0_0_10px_rgba(168,85,247,0.3)]"
+              style={{
+                background: `linear-gradient(to right, #c084fc ${
+                  ((isSeeking ? seekValue : currentTime) / (duration || 1)) * 100
+                }%, rgba(46, 16, 101, 0.7) ${
+                  ((isSeeking ? seekValue : currentTime) / (duration || 1)) * 100
+                }%)`,
+              }}
+            />
+          </div>
+          <div className="flex justify-between text-[11px] font-mono text-purple-300/80">
+            <span>{formatTime(isSeeking ? seekValue : currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
         </div>
       </main>
 
-      {/* Controles de Reproducción Estilo Apple Violeta */}
-      <footer className="w-full max-w-md z-20 mb-2 sm:mb-4">
-        <div className="glass-panel rounded-3xl px-5 py-3.5 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/40 backdrop-blur-2xl">
+      {/* Controles Sticky de Reproducción (Fijos Abajo) */}
+      <footer className="sticky bottom-2 sm:bottom-4 w-full max-w-md z-30 my-1">
+        <div className="glass-panel rounded-3xl px-5 py-3.5 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/70 backdrop-blur-2xl">
+          {/* Silenciar / Volumen */}
           <button
             type="button"
             onClick={toggleMute}
@@ -301,6 +355,7 @@ export default function AudioPlayer() {
             )}
           </button>
 
+          {/* Controles Principales centrados: Anterior - PLAY/PAUSE - Siguiente */}
           <div className="flex items-center space-x-4 sm:space-x-6">
             <button
               type="button"
@@ -313,7 +368,7 @@ export default function AudioPlayer() {
               </svg>
             </button>
 
-            {/* BOTÓN PRINCIPAL PLAY / PAUSE (GRANDE VIOLETA APPLE STYLE) */}
+            {/* BOTÓN PRINCIPAL PLAY / PAUSE */}
             <button
               type="button"
               onClick={togglePlay}
@@ -343,52 +398,8 @@ export default function AudioPlayer() {
             </button>
           </div>
 
-          <div className="flex items-center space-x-2">
-            {/* BOTÓN REPRODUCCIÓN CONTINUA */}
-            <button
-              type="button"
-              onClick={toggleRepeat}
-              className={`w-10 h-10 rounded-full glass-pill flex items-center justify-center transition-all relative ${
-                repeatMode !== 'off'
-                  ? 'text-purple-200 bg-purple-500/40 border border-purple-300/50 shadow-[0_0_15px_rgba(168,85,247,0.5)] font-bold'
-                  : 'text-purple-200/40 hover:text-white border border-white/10'
-              }`}
-              title={
-                repeatMode === 'all'
-                  ? 'Reproducción Continua: ACTIVADA (Lista Completa)'
-                  : repeatMode === 'one'
-                  ? 'Reproducción Continua: TEMA ACTUAL'
-                  : 'Reproducción Continua: DESACTIVADA'
-              }
-            >
-              {repeatMode === 'one' ? (
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z" />
-                </svg>
-              )}
-              {repeatMode !== 'off' && (
-                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse border border-white/50" />
-              )}
-            </button>
-
-            {/* BOTÓN PLAYLIST / CATEGORÍAS */}
-            <button
-              type="button"
-              onClick={() => setShowPlaylist(!showPlaylist)}
-              className={`w-10 h-10 rounded-full glass-pill flex items-center justify-center transition-all ${
-                showPlaylist ? 'text-purple-300 bg-white/20' : 'text-purple-200/70 hover:text-white'
-              }`}
-              title="Categorías & Playlist"
-            >
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M4 10h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0v6l5-3z" />
-              </svg>
-            </button>
-          </div>
+          {/* Espaciador simétrico para mantener centrado perfecto el botón de play */}
+          <div className="w-10 h-10 pointer-events-none" />
         </div>
       </footer>
 
