@@ -170,16 +170,6 @@
     "coverUrl": "/covers/cover_native.jpg"
   },
   {
-    "id": "native/Kambosito.mp3",
-    "title": "Kambosito",
-    "artist": "native",
-    "album": "native",
-    "folder": "native",
-    "duration": 180,
-    "audioUrl": "/uploads/native/Kambosito.mp3",
-    "coverUrl": "/covers/cover_native.jpg"
-  },
-  {
     "id": "native/Light_of_My_Life_Pt._1.mp3",
     "title": "Light of My Life Pt. 1",
     "artist": "native",
@@ -207,26 +197,6 @@
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Light_of_My_Life_Pt._4.mp3",
-    "coverUrl": "/covers/cover_native.jpg"
-  },
-  {
-    "id": "native/mahto_1.mp3",
-    "title": "mahto 1",
-    "artist": "native",
-    "album": "native",
-    "folder": "native",
-    "duration": 180,
-    "audioUrl": "/uploads/native/mahto_1.mp3",
-    "coverUrl": "/covers/cover_native.jpg"
-  },
-  {
-    "id": "native/mahto_2.mp3",
-    "title": "mahto 2",
-    "artist": "native",
-    "album": "native",
-    "folder": "native",
-    "duration": 180,
-    "audioUrl": "/uploads/native/mahto_2.mp3",
     "coverUrl": "/covers/cover_native.jpg"
   },
   {
@@ -460,26 +430,6 @@
     "coverUrl": "/covers/cover_native.jpg"
   },
   {
-    "id": "podcasts/Del_código_777_a_la_profecía_666.mp3",
-    "title": "Del código 777 a la profecía 666",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Del_código_777_a_la_profecía_666.mp3",
-    "coverUrl": "/covers/cover_podcast.jpg"
-  },
-  {
-    "id": "podcasts/El_gigantesco_planisferio_de_Urbano_Monte.mp3",
-    "title": "El gigantesco planisferio de Urbano Monte",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/El_gigantesco_planisferio_de_Urbano_Monte.mp3",
-    "coverUrl": "/covers/cover_podcast.jpg"
-  },
-  {
     "id": "podcasts/El_laberinto_jurídico_de_las_Islas_Malvinas.mp3",
     "title": "El laberinto jurídico de las Islas Malvinas",
     "artist": "podcasts",
@@ -498,16 +448,6 @@
     "duration": 180,
     "audioUrl": "/uploads/podcasts/El_panel_de_control_del_cielo_babilónico.mp3",
     "coverUrl": "/covers/cover_podcast.jpg"
-  },
-  {
-    "id": "podcasts/Telepatía_y_tiempo_en_espejos_de_Kozyrev.mp3",
-    "title": "Telepatía y tiempo en espejos de Kozyrev",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Telepatía_y_tiempo_en_espejos_de_Kozyrev.mp3",
-    "coverUrl": "/covers/cover_cosmic.jpg"
   },
   {
     "id": "podcasts/Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam.mp3",
@@ -677,6 +617,46 @@
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Casa Blanca, Futbol y la Tercera Guerra Mundial.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/Del código 777 a la profecía 666.mp3",
+    "title": "Del código 777 a la profecía 666",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Del código 777 a la profecía 666.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/El gigantesco planisferio de Urbano Monte.mp3",
+    "title": "El gigantesco planisferio de Urbano Monte",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/El gigantesco planisferio de Urbano Monte.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/Telepatía y tiempo en espejos de Kozyrev.mp3",
+    "title": "Telepatía y tiempo en espejos de Kozyrev",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Telepatía y tiempo en espejos de Kozyrev.mp3",
+    "coverUrl": "/covers/cover_cosmic.jpg"
+  },
+  {
+    "id": "podcasts/El sistema lógico del Tetrabiblos de Ptolomeo.mp3",
+    "title": "El sistema lógico del Tetrabiblos de Ptolomeo",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/El sistema lógico del Tetrabiblos de Ptolomeo.mp3",
     "coverUrl": "/covers/cover_podcast.jpg"
   }
 ]

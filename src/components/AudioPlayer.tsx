@@ -303,6 +303,8 @@ export default function AudioPlayer() {
       {/* Audio element: purely managed by effects above */}
       <audio
         ref={audioRef}
+        preload="auto"
+        playsInline
         onTimeUpdate={handleTimeUpdate}
         onDurationChange={handleDurationChange}
         onLoadedMetadata={handleDurationChange}
@@ -459,10 +461,17 @@ export default function AudioPlayer() {
               step={0.5}
               value={isSeekingRef.current ? seekValue : displayTime}
               onChange={handleSeekDrag}
+              onPointerDown={handleSeekStart}
               onMouseDown={handleSeekStart}
               onTouchStart={handleSeekStart}
+              onPointerUp={(e) => handleSeekCommit(parseFloat((e.target as HTMLInputElement).value))}
               onMouseUp={(e) => handleSeekCommit(parseFloat((e.target as HTMLInputElement).value))}
               onTouchEnd={(e) => handleSeekCommit(parseFloat((e.target as HTMLInputElement).value))}
+              onKeyUp={(e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                  handleSeekCommit(parseFloat((e.target as HTMLInputElement).value));
+                }
+              }}
               className="flex-1 h-2.5 rounded-lg appearance-none cursor-pointer accent-purple-300 focus:outline-none border border-purple-400/30 shadow-[0_0_10px_rgba(168,85,247,0.3)]"
               style={{
                 background: `linear-gradient(to right, #c084fc ${progressPct}%, rgba(46,16,101,0.7) ${progressPct}%)`,
