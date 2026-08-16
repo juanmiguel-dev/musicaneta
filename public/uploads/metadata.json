@@ -638,5 +638,45 @@
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Motor de Vortice.mp3",
     "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "native/edmond-poochay/Peyote Song 10 - Edmond Poochay.mp3",
+    "title": "Peyote Song 10 - Edmond Poochay",
+    "artist": "native",
+    "album": "edmond-poochay",
+    "folder": "native / edmond-poochay",
+    "duration": 180,
+    "audioUrl": "/uploads/native/edmond-poochay/Peyote Song 10 - Edmond Poochay.mp3",
+    "coverUrl": "/covers/cover_native.jpg"
+  },
+  {
+    "id": "native/edmond-poochay/Peyote Song 6 - Edmond Poochay.mp3",
+    "title": "Peyote Song 6 - Edmond Poochay",
+    "artist": "native",
+    "album": "edmond-poochay",
+    "folder": "native / edmond-poochay",
+    "duration": 180,
+    "audioUrl": "/uploads/native/edmond-poochay/Peyote Song 6 - Edmond Poochay.mp3",
+    "coverUrl": "/covers/cover_native.jpg"
+  },
+  {
+    "id": "native/edmond-poochay/Peyote Song 8 - Edmond Poochay.mp3",
+    "title": "Peyote Song 8 - Edmond Poochay",
+    "artist": "native",
+    "album": "edmond-poochay",
+    "folder": "native / edmond-poochay",
+    "duration": 180,
+    "audioUrl": "/uploads/native/edmond-poochay/Peyote Song 8 - Edmond Poochay.mp3",
+    "coverUrl": "/covers/cover_native.jpg"
+  },
+  {
+    "id": "podcasts/El algoritmo que predice vidas históricas.mp3",
+    "title": "El algoritmo que predice vidas históricas",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/El algoritmo que predice vidas históricas.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
   }
 ]

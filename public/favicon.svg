@@ -1,34 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <radialGradient id="bgGrad" cx="50%" cy="35%" r="65%">
-      <stop offset="0%" stop-color="#7c3aed" />
-      <stop offset="50%" stop-color="#3b0764" />
-      <stop offset="100%" stop-color="#0a0518" />
-    </radialGradient>
-    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#c084fc" />
-      <stop offset="50%" stop-color="#818cf8" />
-      <stop offset="100%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#6366f1" />
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
+    <radialGradient id="disc" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#581c87" />
+      <stop offset="70%" stop-color="#2e1065" />
+      <stop offset="100%" stop-color="#0f0728" />
+    </radialGradient>
   </defs>
 
-  <!-- Base Circle -->
-  <circle cx="32" cy="32" r="30" fill="url(#bgGrad)" stroke="#a855f7" stroke-width="1.5" />
+  <!-- Outer Vinyl Body -->
+  <circle cx="32" cy="32" r="30" fill="url(#disc)" stroke="#a855f7" stroke-width="2.5" />
 
-  <!-- Vinyl Grooves -->
-  <circle cx="32" cy="32" r="24" stroke="#ffffff" stroke-opacity="0.12" stroke-width="0.75" />
-  <circle cx="32" cy="32" r="18" stroke="#ffffff" stroke-opacity="0.15" stroke-width="0.75" />
-  <circle cx="32" cy="32" r="12" stroke="#c084fc" stroke-opacity="0.25" stroke-width="1" />
+  <!-- Grooves -->
+  <circle cx="32" cy="32" r="23" fill="none" stroke="#d8b4fe" stroke-width="1" stroke-opacity="0.3" />
+  <circle cx="32" cy="32" r="17" fill="none" stroke="#d8b4fe" stroke-width="1" stroke-opacity="0.35" />
+  <circle cx="32" cy="32" r="12" fill="none" stroke="#d8b4fe" stroke-width="1" stroke-opacity="0.4" />
 
-  <!-- Center Core Glow -->
-  <circle cx="32" cy="32" r="8" fill="#1e0b36" stroke="url(#glowGrad)" stroke-width="1.5" />
+  <!-- Center Label Core -->
+  <circle cx="32" cy="32" r="9" fill="url(#glow)" stroke="#ffffff" stroke-width="1.5" />
 
-  <!-- Music Wave Note Icon -->
-  <path d="M30 20v14.5a3.5 3.5 0 1 1-3-3.44V23l8-3v9.5a3.5 3.5 0 1 1-3-3.44V17l-2 3z" 
-        fill="url(#glowGrad)" 
-        filter="url(#glow)" />
+  <!-- Center Spindle Hole -->
+  <circle cx="32" cy="32" r="3" fill="#0f0728" />
+
+  <!-- Sound wave accents -->
+  <path d="M12 28v8M8 30v4M52 28v8M56 30v4" stroke="#c084fc" stroke-width="2" stroke-linecap="round" />
 </svg>

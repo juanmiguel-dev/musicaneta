@@ -99,6 +99,9 @@ export default function AudioPlayer() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const lastTrackIdRef = useRef<string | null>(null);
+
   // Extraer carpetas / listas únicas de la playlist
   const categories = useMemo(() => {
     const set = new Set<string>();
@@ -137,8 +140,6 @@ export default function AudioPlayer() {
     });
   }, [playlist, selectedCategory, searchQuery]);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
   // Cargar catálogo inicial si la lista está vacía
   useEffect(() => {
     async function loadInitialTracks() {
@@ -159,68 +160,93 @@ export default function AudioPlayer() {
     loadInitialTracks();
   }, []);
 
-  // Sincronizar audio con el estado
+  // Cargar pista de audio cuando cambia de canción (sin recargar en renderizados)
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !currentTrack) return;
+
+    if (lastTrackIdRef.current !== currentTrack.id) {
+      lastTrackIdRef.current = currentTrack.id;
+      const encodedUrl = encodeURI(currentTrack.audioUrl);
+      audio.src = encodedUrl;
+      audio.load();
+      if (isPlaying) {
+        audio.play().catch(() => {});
+      }
+    }
+  }, [currentTrack]);
+
+  // Sincronizar estado play/pause
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
     if (isPlaying) {
-      audio.play().catch(() => {});
+      if (audio.paused) {
+        audio.play().catch(() => {});
+      }
     } else {
-      audio.pause();
+      if (!audio.paused) {
+        audio.pause();
+      }
     }
-  }, [isPlaying, currentTrack]);
+  }, [isPlaying]);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio || !currentTrack) return;
-    if (audio.src !== currentTrack.audioUrl) {
-      audio.src = currentTrack.audioUrl;
-      if (isPlaying) audio.play().catch(() => {});
-    }
-  }, [currentTrack]);
-
+  // Control de volumen y silencio
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = isMuted ? 0 : volume;
     }
   }, [volume, isMuted]);
 
+  // Sincronizar valor visual del seek si no se está arrastrando
   useEffect(() => {
     if (!isSeeking) {
       setSeekValue(currentTime);
     }
   }, [currentTime, isSeeking]);
 
-  // Manejo de deslizamiento y salto de posición de audio fluido
-  const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseFloat(e.target.value);
-    setSeekValue(val);
-    if (audioRef.current && !isNaN(val)) {
-      audioRef.current.currentTime = val;
-      seekTo(val);
+  // Manejo de eventos del elemento <audio>
+  const handleTimeUpdate = () => {
+    const audio = audioRef.current;
+    if (!audio || isSeeking) return;
+    seekTo(audio.currentTime);
+  };
+
+  const handleLoadedMetadata = () => {
+    const audio = audioRef.current;
+    if (audio && audio.duration && !isNaN(audio.duration)) {
+      $duration.set(audio.duration);
     }
   };
 
+  // Manejo de deslizamiento de la barra de progreso
   const handleSeekStart = () => {
     setIsSeeking(true);
   };
 
+  const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = parseFloat(e.target.value);
+    setSeekValue(val);
+  };
+
   const handleSeekEnd = (val?: number) => {
     const targetTime = typeof val === 'number' && !isNaN(val) ? val : seekValue;
-    if (audioRef.current && !isNaN(targetTime)) {
-      audioRef.current.currentTime = targetTime;
-      seekTo(targetTime);
+    const audio = audioRef.current;
+    if (audio && !isNaN(targetTime)) {
+      audio.currentTime = targetTime;
     }
+    seekTo(targetTime);
     setIsSeeking(false);
   };
 
   // Botones de salto rápido (Adelantar / Atrasar)
   const skipSeconds = (secs: number) => {
-    if (!audioRef.current) return;
-    const cur = audioRef.current.currentTime || currentTime || 0;
-    const dur = duration || audioRef.current.duration || 0;
+    const audio = audioRef.current;
+    if (!audio) return;
+    const cur = audio.currentTime || currentTime || 0;
+    const dur = audio.duration || duration || 0;
     const nextTime = Math.max(0, Math.min(dur, cur + secs));
-    audioRef.current.currentTime = nextTime;
+    audio.currentTime = nextTime;
     setSeekValue(nextTime);
     seekTo(nextTime);
   };
@@ -255,12 +281,12 @@ export default function AudioPlayer() {
     >
       <audio
         ref={audioRef}
-        onTimeUpdate={() => audioRef.current && !isSeeking && seekTo(audioRef.current.currentTime)}
-        onLoadedMetadata={() => audioRef.current && $duration.set(audioRef.current.duration)}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleTrackEnded}
       />
 
-      {/* Resplandor Ambiental Violeta (Apple Style Mesh Ambient Glow) */}
+      {/* Resplandor Ambiental Violeta */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center -z-10 overflow-hidden">
         <div
           className="w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] rounded-full blur-[110px] opacity-60 ambient-glow transition-all duration-1000"
@@ -270,7 +296,7 @@ export default function AudioPlayer() {
         />
       </div>
 
-      {/* Header: Botón Reproducción Continua - Marca - Menú Playlist */}
+      {/* Header: Botón Repetición - Marca - Menú Playlist */}
       <header className="w-full max-w-md sm:max-w-xl flex items-center justify-between z-20 pt-1">
         <button
           type="button"
@@ -323,11 +349,9 @@ export default function AudioPlayer() {
         </button>
       </header>
 
-      {/* Centro Inmersivo: Disco Circular con Anillos Neumórficos Violeta */}
+      {/* Centro Inmersivo: Disco Circular con Arte */}
       <main className="w-full max-w-md my-auto flex flex-col items-center z-10 py-1 space-y-3 sm:space-y-5">
-        {/* Disco de Arte de Tapa en Círculo con Anillos Concéntricos */}
         <div className="relative flex items-center justify-center p-2 sm:p-4">
-          {/* Anillos Concéntricos Estilo Neumórfico Violeta */}
           <div className="absolute inset-0 rounded-full border border-purple-400/20 animate-pulse pointer-events-none" />
           <div className="absolute -inset-3 sm:-inset-5 rounded-full border border-purple-500/20 shadow-[0_0_40px_rgba(168,85,247,0.35)] pointer-events-none" />
           <div className="absolute -inset-6 sm:-inset-10 rounded-full border border-purple-600/15 pointer-events-none" />
@@ -342,7 +366,7 @@ export default function AudioPlayer() {
               }`}
             />
 
-            {/* Overlay al pulsar o interactuar */}
+            {/* Overlay al pulsar */}
             <div className="absolute inset-0 bg-purple-950/40 backdrop-blur-[2px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               <button
                 type="button"
@@ -377,18 +401,20 @@ export default function AudioPlayer() {
         {/* Barra de Progreso Deslizable & Botones de Salto ±10s */}
         <div className="w-full max-w-xs sm:max-w-md px-2 space-y-1.5">
           <div className="flex items-center space-x-2">
+            {/* Retroceder 10 segundos */}
             <button
               type="button"
               onClick={() => skipSeconds(-10)}
-              className="p-1.5 rounded-full text-purple-300/70 hover:text-white hover:bg-white/10 active:scale-95 transition-all text-xs flex items-center justify-center"
+              className="p-2 rounded-full text-purple-300 hover:text-white bg-white/5 hover:bg-white/15 active:scale-95 transition-all text-xs flex items-center justify-center border border-white/10 shadow-sm"
               title="Retroceder 10 segundos"
             >
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path d="M12.5 8c-2.65 0-5.05 1-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.2 3.16-1.98 5.12-1.98 3.79 0 6.94 2.69 7.68 6.25l2.42-.64C21.6 11.5 17.5 8 12.5 8z" />
               </svg>
-              <span className="text-[9px] font-bold ml-0.5">-10</span>
+              <span className="text-[10px] font-bold ml-1">-10s</span>
             </button>
 
+            {/* Slider de Arrastre */}
             <div className="relative flex-1 flex items-center py-2">
               <input
                 type="range"
@@ -412,13 +438,14 @@ export default function AudioPlayer() {
               />
             </div>
 
+            {/* Adelantar 10 segundos */}
             <button
               type="button"
               onClick={() => skipSeconds(10)}
-              className="p-1.5 rounded-full text-purple-300/70 hover:text-white hover:bg-white/10 active:scale-95 transition-all text-xs flex items-center justify-center"
+              className="p-2 rounded-full text-purple-300 hover:text-white bg-white/5 hover:bg-white/15 active:scale-95 transition-all text-xs flex items-center justify-center border border-white/10 shadow-sm"
               title="Adelantar 10 segundos"
             >
-              <span className="text-[9px] font-bold mr-0.5">+10</span>
+              <span className="text-[10px] font-bold mr-1">+10s</span>
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path d="M11.5 8c2.65 0 5.05 1 6.9 2.6L22 7v9h-9l3.62-3.62c-1.39-1.2-3.16-1.98-5.12-1.98-3.79 0-6.94 2.69-7.68 6.25l-2.42-.64C2.4 11.5 6.5 8 11.5 8z" />
               </svg>
@@ -432,7 +459,7 @@ export default function AudioPlayer() {
         </div>
       </main>
 
-      {/* Controles Sticky de Reproducción (Fijos Abajo) */}
+      {/* Controles Sticky de Reproducción */}
       <footer className="sticky bottom-2 sm:bottom-4 w-full max-w-md z-30 my-1">
         <div className="glass-panel rounded-3xl px-5 py-3 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/70 backdrop-blur-2xl">
           {/* Silenciar / Volumen */}
@@ -496,7 +523,6 @@ export default function AudioPlayer() {
             </button>
           </div>
 
-          {/* Espaciador simétrico para mantener centrado perfecto el botón de play */}
           <div className="w-10 h-10 pointer-events-none" />
         </div>
       </footer>
