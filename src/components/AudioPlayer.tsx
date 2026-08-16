@@ -160,34 +160,37 @@ export default function AudioPlayer() {
     loadInitialTracks();
   }, []);
 
-  // Cargar pista de audio cuando cambia de canción (sin recargar en renderizados)
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio || !currentTrack) return;
-
-    if (lastTrackIdRef.current !== currentTrack.id) {
-      lastTrackIdRef.current = currentTrack.id;
-      const encodedUrl = encodeURI(currentTrack.audioUrl);
-      audio.src = encodedUrl;
-      audio.load();
-      if (isPlaying) {
-        audio.play().catch((err) => {
-          console.warn('Autoplay bloqueado:', err);
-          $isPlaying.set(false);
-        });
-      }
-    }
-  }, [currentTrack]);
-
-  // Sincronizar estado play/pause
+  // Controlador unificado de audio: Carga de pista y sincronización de play/pause
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+
+    if (!currentTrack) {
+      audio.pause();
+      audio.removeAttribute('src');
+      lastTrackIdRef.current = null;
+      return;
+    }
+
+    const trackChanged = lastTrackIdRef.current !== currentTrack.id;
+    if (trackChanged) {
+      lastTrackIdRef.current = currentTrack.id;
+      audio.src = encodeURI(currentTrack.audioUrl);
+      audio.load();
+    }
+
     if (isPlaying) {
-      if (audio.paused) {
-        audio.play().catch((err) => {
-          console.warn('Autoplay bloqueado por el navegador:', err);
-          $isPlaying.set(false);
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          if (err.name === 'AbortError') {
+            // Petición interrumpida normalmente por cambio rápido o buffering: ignorar
+            return;
+          }
+          if (err.name === 'NotAllowedError') {
+            // Bloqueado por política de autoplay del navegador
+            $isPlaying.set(false);
+          }
         });
       }
     } else {
@@ -195,7 +198,7 @@ export default function AudioPlayer() {
         audio.pause();
       }
     }
-  }, [isPlaying]);
+  }, [currentTrack, isPlaying]);
 
   // Control de volumen y silencio
   useEffect(() => {
