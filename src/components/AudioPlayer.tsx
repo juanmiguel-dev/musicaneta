@@ -486,7 +486,7 @@ export default function AudioPlayer() {
       </main>
 
       {/* Controles Sticky de Reproducción */}
-      <div className="w-full max-w-md z-30 my-1">
+      <div className="w-full max-w-md z-30 mt-2 mb-4 sm:mb-6">
         <div className="w-full glass-panel rounded-3xl px-5 py-3 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/70 backdrop-blur-2xl">
           {/* Silenciar / Volumen */}
           <button
@@ -554,13 +554,13 @@ export default function AudioPlayer() {
         </div>
       </div>
 
-      {/* Enlace en el Footer bien separado de los controles */}
-      <footer className="w-full max-w-md z-20 flex justify-center pt-2 pb-1">
+      {/* Footer con el enlace a Zenodo con amplio margen inferior */}
+      <footer className="w-full max-w-md z-20 flex justify-center pb-3 pt-1">
         <a
           href="https://zenodo.org/communities/sinergia-humano-ia/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[11px] font-medium text-purple-300/50 hover:text-purple-100 transition-all flex items-center space-x-1.5 px-3 py-1 rounded-full hover:bg-white/5 border border-transparent hover:border-white/10 tracking-wide"
+          className="text-[11px] font-medium text-purple-300/40 hover:text-purple-200 transition-all flex items-center space-x-1.5 px-3 py-1 rounded-full hover:bg-white/5 border border-transparent hover:border-white/10 tracking-wide"
           title="Visitar la comunidad Sinergia Humano-IA en Zenodo"
         >
           <span>🌐</span>
@@ -694,6 +694,19 @@ export default function AudioPlayer() {
                 </div>
               );
             })}
+          </div>
+
+          {/* Enlace en el pie de la Biblioteca */}
+          <div className="pt-3 border-t border-white/10 flex justify-center">
+            <a
+              href="https://zenodo.org/communities/sinergia-humano-ia/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] text-purple-300/50 hover:text-purple-200 transition-colors flex items-center space-x-1.5"
+            >
+              <span>🌐</span>
+              <span>Comunidad Zenodo: Sinergia Humano-IA</span>
+            </a>
           </div>
         </div>
       )}
