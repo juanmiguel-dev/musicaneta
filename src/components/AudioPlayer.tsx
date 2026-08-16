@@ -29,6 +29,57 @@ function formatTime(seconds: number): string {
   return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
+export function formatTitle(title?: string): string {
+  if (!title) return '';
+  return title
+    .replace(/^podcast_/i, '')
+    .replace(/__/g, ' – ')
+    .replace(/_/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const DEFAULT_COVERS = [
+  '/covers/cover_podcast.jpg',
+  '/covers/cover_cosmic.jpg',
+  '/covers/cover_native.jpg',
+  '/covers/cover_vinyl.jpg',
+  '/covers/cover_cyber.jpg',
+  'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1520523839898-5071282543e2?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=80'
+];
+
+export function getTrackCover(track?: Track | null): string {
+  if (!track) return DEFAULT_COVERS[3];
+  if (track.coverUrl && !track.coverUrl.includes('photo-1614613535308-eb5fbd3d2c17')) {
+    return track.coverUrl;
+  }
+  const lowerFolder = (track.folder || '').toLowerCase();
+  const lowerTitle = (track.title || '').toLowerCase();
+  if (lowerFolder.includes('podcast') || lowerTitle.includes('podcast')) {
+    if (lowerTitle.includes('espejismo') || lowerTitle.includes('conciencia') || lowerTitle.includes('kozyrev') || lowerTitle.includes('universo') || lowerTitle.includes('reino') || lowerTitle.includes('babil')) {
+      return '/covers/cover_cosmic.jpg';
+    }
+    return '/covers/cover_podcast.jpg';
+  }
+  if (lowerFolder.includes('native') || lowerTitle.includes('lakota') || lowerTitle.includes('spirit') || lowerTitle.includes('ancestor') || lowerTitle.includes('drum')) {
+    return '/covers/cover_native.jpg';
+  }
+  let hash = 0;
+  const str = track.id || track.title || 'musicaneta';
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 31 + str.charCodeAt(i)) & 0xffffffff;
+  }
+  return DEFAULT_COVERS[Math.abs(hash) % DEFAULT_COVERS.length];
+}
+
 export default function AudioPlayer() {
   const currentTrack = useStore($currentTrack);
   const isPlaying = useStore($isPlaying);
@@ -74,9 +125,11 @@ export default function AudioPlayer() {
         t.artist === selectedCategory ||
         t.album === selectedCategory;
       const q = searchQuery.toLowerCase().trim();
+      const cleanT = formatTitle(t.title).toLowerCase();
       const matchesSearch =
         !q ||
         t.title.toLowerCase().includes(q) ||
+        cleanT.includes(q) ||
         t.artist.toLowerCase().includes(q) ||
         (t.album && t.album.toLowerCase().includes(q)) ||
         (t.folder && t.folder.toLowerCase().includes(q));
@@ -138,9 +191,14 @@ export default function AudioPlayer() {
     }
   }, [currentTime, isSeeking]);
 
+  // Manejo de deslizamiento y salto de posición de audio fluido
   const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseFloat(e.target.value);
     setSeekValue(val);
+    if (audioRef.current && !isNaN(val)) {
+      audioRef.current.currentTime = val;
+      seekTo(val);
+    }
   };
 
   const handleSeekStart = () => {
@@ -149,11 +207,22 @@ export default function AudioPlayer() {
 
   const handleSeekEnd = (val?: number) => {
     const targetTime = typeof val === 'number' && !isNaN(val) ? val : seekValue;
-    if (audioRef.current) {
+    if (audioRef.current && !isNaN(targetTime)) {
       audioRef.current.currentTime = targetTime;
+      seekTo(targetTime);
     }
-    seekTo(targetTime);
     setIsSeeking(false);
+  };
+
+  // Botones de salto rápido (Adelantar / Atrasar)
+  const skipSeconds = (secs: number) => {
+    if (!audioRef.current) return;
+    const cur = audioRef.current.currentTime || currentTime || 0;
+    const dur = duration || audioRef.current.duration || 0;
+    const nextTime = Math.max(0, Math.min(dur, cur + secs));
+    audioRef.current.currentTime = nextTime;
+    setSeekValue(nextTime);
+    seekTo(nextTime);
   };
 
   const handleTrackEnded = () => {
@@ -175,6 +244,8 @@ export default function AudioPlayer() {
     }
   };
 
+  const activeCover = getTrackCover(currentTrack);
+
   return (
     <div
       className="relative min-h-[100dvh] h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-3 sm:px-6 sm:py-6 overflow-y-auto sm:overflow-hidden select-none text-white"
@@ -184,7 +255,7 @@ export default function AudioPlayer() {
     >
       <audio
         ref={audioRef}
-        onTimeUpdate={() => audioRef.current && seekTo(audioRef.current.currentTime)}
+        onTimeUpdate={() => audioRef.current && !isSeeking && seekTo(audioRef.current.currentTime)}
         onLoadedMetadata={() => audioRef.current && $duration.set(audioRef.current.duration)}
         onEnded={handleTrackEnded}
       />
@@ -199,7 +270,7 @@ export default function AudioPlayer() {
         />
       </div>
 
-      {/* Header Estilo Apple: Botón Reproducción Continua (Top Izquierda) - Título - Menú Playlist (Top Derecha) */}
+      {/* Header: Botón Reproducción Continua - Marca - Menú Playlist */}
       <header className="w-full max-w-md sm:max-w-xl flex items-center justify-between z-20 pt-1">
         <button
           type="button"
@@ -253,7 +324,7 @@ export default function AudioPlayer() {
       </header>
 
       {/* Centro Inmersivo: Disco Circular con Anillos Neumórficos Violeta */}
-      <main className="w-full max-w-md my-auto flex flex-col items-center z-10 py-2 space-y-4 sm:space-y-6">
+      <main className="w-full max-w-md my-auto flex flex-col items-center z-10 py-1 space-y-3 sm:space-y-5">
         {/* Disco de Arte de Tapa en Círculo con Anillos Concéntricos */}
         <div className="relative flex items-center justify-center p-2 sm:p-4">
           {/* Anillos Concéntricos Estilo Neumórfico Violeta */}
@@ -262,10 +333,10 @@ export default function AudioPlayer() {
           <div className="absolute -inset-6 sm:-inset-10 rounded-full border border-purple-600/15 pointer-events-none" />
 
           {/* Disco Principal */}
-          <div className="w-44 h-44 xs:w-52 xs:h-52 sm:w-64 sm:h-64 rounded-full overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.6)] border-2 border-purple-300/30 relative group transition-all duration-700">
+          <div className="w-40 h-40 xs:w-48 xs:h-48 sm:w-60 sm:h-60 rounded-full overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.6)] border-2 border-purple-300/30 relative group transition-all duration-700">
             <img
-              src={currentTrack?.coverUrl || 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=800&q=80'}
-              alt={currentTrack?.title || 'No Track'}
+              src={activeCover}
+              alt={formatTitle(currentTrack?.title) || 'No Track'}
               className={`w-full h-full object-cover transition-transform duration-1000 ${
                 isPlaying ? 'scale-105' : 'scale-100'
               }`}
@@ -292,42 +363,69 @@ export default function AudioPlayer() {
           </div>
         </div>
 
-        {/* Información del Tema */}
-        <div className="text-center space-y-1 max-w-xs sm:max-w-sm px-2">
-          <h1 className="text-lg sm:text-2xl font-extrabold tracking-wider uppercase text-white truncate drop-shadow-md">
-            {currentTrack?.title || 'Selecciona una canción'}
+        {/* Información del Tema (Título Completo Multilínea) */}
+        <div className="text-center space-y-1 max-w-sm sm:max-w-md px-3">
+          <h1 className="text-base sm:text-xl font-extrabold tracking-wide text-white drop-shadow-md leading-snug line-clamp-3 break-words">
+            {formatTitle(currentTrack?.title) || 'Selecciona una canción'}
           </h1>
-          <p className="text-xs sm:text-sm font-medium text-purple-200/80 truncate">
-            {currentTrack?.artist || 'Musicaneta Studio'}
-            {currentTrack?.album && currentTrack.album !== 'Álbum Local' ? ` - ${currentTrack.album}` : ''}
+          <p className="text-xs sm:text-sm font-medium text-purple-200/80 line-clamp-2 break-words">
+            {currentTrack?.artist || 'Musicaneta'}
+            {currentTrack?.folder ? ` • 📁 ${currentTrack.folder}` : (currentTrack?.album && currentTrack.album !== 'Álbum Local' ? ` • ${currentTrack.album}` : '')}
           </p>
         </div>
 
-        {/* Barra de Progreso / Seek Deslizable */}
-        <div className="w-full max-w-xs sm:max-w-sm px-2 space-y-1">
-          <div className="relative flex items-center py-2">
-            <input
-              type="range"
-              min={0}
-              max={duration || 100}
-              step={0.1}
-              value={isSeeking ? seekValue : currentTime}
-              onMouseDown={handleSeekStart}
-              onTouchStart={handleSeekStart}
-              onChange={handleSeekChange}
-              onMouseUp={(e) => handleSeekEnd(parseFloat((e.target as HTMLInputElement).value))}
-              onTouchEnd={(e) => handleSeekEnd(parseFloat((e.target as HTMLInputElement).value))}
-              className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-purple-300 focus:outline-none transition-all border border-purple-400/30 shadow-[0_0_10px_rgba(168,85,247,0.3)]"
-              style={{
-                background: `linear-gradient(to right, #c084fc ${
-                  ((isSeeking ? seekValue : currentTime) / (duration || 1)) * 100
-                }%, rgba(46, 16, 101, 0.7) ${
-                  ((isSeeking ? seekValue : currentTime) / (duration || 1)) * 100
-                }%)`,
-              }}
-            />
+        {/* Barra de Progreso Deslizable & Botones de Salto ±10s */}
+        <div className="w-full max-w-xs sm:max-w-md px-2 space-y-1.5">
+          <div className="flex items-center space-x-2">
+            <button
+              type="button"
+              onClick={() => skipSeconds(-10)}
+              className="p-1.5 rounded-full text-purple-300/70 hover:text-white hover:bg-white/10 active:scale-95 transition-all text-xs flex items-center justify-center"
+              title="Retroceder 10 segundos"
+            >
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M12.5 8c-2.65 0-5.05 1-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.2 3.16-1.98 5.12-1.98 3.79 0 6.94 2.69 7.68 6.25l2.42-.64C21.6 11.5 17.5 8 12.5 8z" />
+              </svg>
+              <span className="text-[9px] font-bold ml-0.5">-10</span>
+            </button>
+
+            <div className="relative flex-1 flex items-center py-2">
+              <input
+                type="range"
+                min={0}
+                max={duration || 100}
+                step={0.1}
+                value={isSeeking ? seekValue : currentTime}
+                onMouseDown={handleSeekStart}
+                onTouchStart={handleSeekStart}
+                onChange={handleSeekChange}
+                onMouseUp={(e) => handleSeekEnd(parseFloat((e.target as HTMLInputElement).value))}
+                onTouchEnd={(e) => handleSeekEnd(parseFloat((e.target as HTMLInputElement).value))}
+                className="w-full h-2.5 rounded-lg appearance-none cursor-pointer accent-purple-300 focus:outline-none transition-all border border-purple-400/30 shadow-[0_0_10px_rgba(168,85,247,0.3)] touch-none"
+                style={{
+                  background: `linear-gradient(to right, #c084fc ${
+                    ((isSeeking ? seekValue : currentTime) / (duration || 1)) * 100
+                  }%, rgba(46, 16, 101, 0.7) ${
+                    ((isSeeking ? seekValue : currentTime) / (duration || 1)) * 100
+                  }%)`,
+                }}
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={() => skipSeconds(10)}
+              className="p-1.5 rounded-full text-purple-300/70 hover:text-white hover:bg-white/10 active:scale-95 transition-all text-xs flex items-center justify-center"
+              title="Adelantar 10 segundos"
+            >
+              <span className="text-[9px] font-bold mr-0.5">+10</span>
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M11.5 8c2.65 0 5.05 1 6.9 2.6L22 7v9h-9l3.62-3.62c-1.39-1.2-3.16-1.98-5.12-1.98-3.79 0-6.94 2.69-7.68 6.25l-2.42-.64C2.4 11.5 6.5 8 11.5 8z" />
+              </svg>
+            </button>
           </div>
-          <div className="flex justify-between text-[11px] font-mono text-purple-300/80">
+
+          <div className="flex justify-between text-[11px] font-mono text-purple-300/80 px-1">
             <span>{formatTime(isSeeking ? seekValue : currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
@@ -336,7 +434,7 @@ export default function AudioPlayer() {
 
       {/* Controles Sticky de Reproducción (Fijos Abajo) */}
       <footer className="sticky bottom-2 sm:bottom-4 w-full max-w-md z-30 my-1">
-        <div className="glass-panel rounded-3xl px-5 py-3.5 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/70 backdrop-blur-2xl">
+        <div className="glass-panel rounded-3xl px-5 py-3 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/70 backdrop-blur-2xl">
           {/* Silenciar / Volumen */}
           <button
             type="button"
@@ -405,15 +503,15 @@ export default function AudioPlayer() {
 
       {/* Drawer Desplegable de Playlist Glass Panel */}
       {showPlaylist && (
-        <div className="fixed inset-y-0 right-0 w-full sm:w-96 glass-panel border-l border-white/10 z-40 p-6 flex flex-col">
+        <div className="fixed inset-y-0 right-0 w-full sm:w-96 glass-panel border-l border-white/10 z-40 p-5 flex flex-col bg-purple-950/90 backdrop-blur-2xl">
           <div className="flex items-center justify-between pb-3 border-b border-white/10">
             <div>
               <h3 className="font-bold text-lg text-white">Biblioteca de Música</h3>
-              <p className="text-xs text-zinc-400 mt-0.5">
-                {filteredPlaylist.length} {filteredPlaylist.length === 1 ? 'canción' : 'canciones'}
+              <p className="text-xs text-purple-200/70 mt-0.5">
+                {filteredPlaylist.length} {filteredPlaylist.length === 1 ? 'pista' : 'pistas'}
               </p>
             </div>
-            <button onClick={() => setShowPlaylist(false)} className="p-1 text-zinc-400 hover:text-white">
+            <button onClick={() => setShowPlaylist(false)} className="p-1 text-purple-200 hover:text-white rounded-lg hover:bg-white/10 transition-colors">
               ✕
             </button>
           </div>
@@ -422,14 +520,14 @@ export default function AudioPlayer() {
           <div className="py-3 space-y-3 border-b border-white/10">
             <input
               type="text"
-              placeholder="🔍 Buscar por nombre, carpeta o artista..."
+              placeholder="🔍 Buscar título, podcast, lista o artista..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/50 transition-all"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-purple-300/40 focus:outline-none focus:border-purple-400 transition-all"
             />
 
             {categories.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 pt-1 pb-1">
+              <div className="flex flex-wrap gap-1.5 pt-1 pb-1 max-h-24 overflow-y-auto no-scrollbar">
                 <button
                   type="button"
                   onClick={() => setSelectedCategory('all')}
@@ -468,10 +566,12 @@ export default function AudioPlayer() {
             )}
           </div>
 
-          <div className="flex-1 overflow-y-auto mt-3 space-y-2 no-scrollbar">
+          {/* Lista de Pistas con Títulos Completos y Portadas Variadas */}
+          <div className="flex-1 overflow-y-auto mt-3 space-y-2 no-scrollbar pr-1">
             {filteredPlaylist.map((t, idx) => {
               const realIndex = playlist.findIndex((item) => item.id === t.id);
               const isCurrent = currentTrack?.id === t.id;
+              const coverImg = getTrackCover(t);
 
               return (
                 <div
@@ -479,18 +579,24 @@ export default function AudioPlayer() {
                   onClick={() => playTrack(t, realIndex !== -1 ? realIndex : idx)}
                   className={`p-3 rounded-2xl flex items-center justify-between cursor-pointer transition-all ${
                     isCurrent
-                      ? 'bg-white/15 border border-white/20 text-white font-semibold'
-                      : 'hover:bg-white/5 text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-white/20 border border-white/30 text-white font-semibold shadow-lg'
+                      : 'hover:bg-white/5 text-purple-200/80 hover:text-white border border-transparent'
                   }`}
                 >
-                  <div className="flex items-center space-x-3 overflow-hidden">
-                    <img src={t.coverUrl} alt={t.title} className="w-10 h-10 rounded-xl object-cover" />
-                    <div className="overflow-hidden">
-                      <p className="text-sm truncate">{t.title}</p>
-                      <div className="flex items-center space-x-2 text-xs opacity-60 truncate">
-                        <span>{t.artist}</span>
+                  <div className="flex items-center space-x-3 min-w-0 flex-1 pr-2">
+                    <img 
+                      src={coverImg} 
+                      alt={t.title} 
+                      className="w-12 h-12 rounded-xl object-cover flex-shrink-0 shadow-md border border-white/10" 
+                    />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm font-medium text-white leading-snug break-words line-clamp-2">
+                        {formatTitle(t.title)}
+                      </p>
+                      <div className="flex items-center flex-wrap gap-1.5 text-[11px] opacity-75 mt-1">
+                        <span className="truncate max-w-[100px] text-purple-300">{t.artist}</span>
                         {(t.folder || (t.album && t.album !== 'Álbum Local' && t.album !== 'Colección')) && (
-                          <span className="bg-white/10 px-1.5 py-0.5 rounded text-[10px] truncate max-w-[140px]">
+                          <span className="bg-white/10 px-1.5 py-0.5 rounded text-[10px] truncate max-w-[130px] text-purple-200">
                             📁 {t.folder || t.album}
                           </span>
                         )}
@@ -498,7 +604,7 @@ export default function AudioPlayer() {
                     </div>
                   </div>
                   {isCurrent && isPlaying && (
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping flex-shrink-0 ml-2" />
                   )}
                 </div>
               );

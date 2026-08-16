@@ -3,7 +3,7 @@ import path from 'node:path';
 import { execSync } from 'node:child_process';
 
 // Script inteligente para sincronizar e indexar carpetas de música
-// Detecta temas nuevos, renombres y eliminaciones sin duplicar subidas en Git
+// Detecta temas nuevos, renombres y asigna portadas variadas
 
 const args = process.argv.slice(2);
 const shouldPush = args.includes('--push') || args.includes('-p');
@@ -25,6 +25,53 @@ if (fs.existsSync(metaPath)) {
   } catch (e) {}
 }
 
+const RANDOM_COVERS = [
+  '/covers/cover_podcast.jpg',
+  '/covers/cover_cosmic.jpg',
+  '/covers/cover_native.jpg',
+  '/covers/cover_vinyl.jpg',
+  '/covers/cover_cyber.jpg',
+  'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1520523839898-5071282543e2?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=600&q=80',
+  'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=600&q=80'
+];
+
+function getCoverForTrack(title, folder, id) {
+  const lowerFolder = (folder || '').toLowerCase();
+  const lowerTitle = (title || '').toLowerCase();
+  if (lowerFolder.includes('podcast') || lowerTitle.includes('podcast')) {
+    if (lowerTitle.includes('espejismo') || lowerTitle.includes('conciencia') || lowerTitle.includes('kozyrev') || lowerTitle.includes('universo') || lowerTitle.includes('reino')) {
+      return '/covers/cover_cosmic.jpg';
+    }
+    return '/covers/cover_podcast.jpg';
+  }
+  if (lowerFolder.includes('native') || lowerTitle.includes('lakota') || lowerTitle.includes('spirit') || lowerTitle.includes('ancestor') || lowerTitle.includes('drum')) {
+    return '/covers/cover_native.jpg';
+  }
+  let hash = 0;
+  const str = id || title || 'musicaneta';
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 31 + str.charCodeAt(i)) & 0xffffffff;
+  }
+  const index = Math.abs(hash) % RANDOM_COVERS.length;
+  return RANDOM_COVERS[index];
+}
+
+function cleanTitleString(raw) {
+  return raw
+    .replace(/^podcast_/i, '')
+    .replace(/__/g, ' – ')
+    .replace(/_/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function getAllAudioFiles(dirPath, arrayOfFiles = []) {
   if (!fs.existsSync(dirPath)) return arrayOfFiles;
   const files = fs.readdirSync(dirPath);
@@ -32,7 +79,9 @@ function getAllAudioFiles(dirPath, arrayOfFiles = []) {
   files.forEach((file) => {
     const fullPath = path.join(dirPath, file);
     if (fs.statSync(fullPath).isDirectory()) {
-      arrayOfFiles = getAllAudioFiles(fullPath, arrayOfFiles);
+      if (file !== 'covers') {
+        arrayOfFiles = getAllAudioFiles(fullPath, arrayOfFiles);
+      }
     } else {
       const ext = path.extname(file).toLowerCase();
       if (['.wav', '.mp3', '.m4a', '.flac', '.ogg', '.aac'].includes(ext)) {
@@ -47,14 +96,14 @@ function getAllAudioFiles(dirPath, arrayOfFiles = []) {
 function pushToGit() {
   console.log('\n🚀 Ejecutando Git add, commit y push inteligente...');
   try {
-    execSync('git add -A public/uploads metadata.json', { stdio: 'inherit' });
-    const commitMsg = `sync: actualizar biblioteca de música (agregar/renombrar/organizar listas)`;
+    execSync('git add -A public/uploads metadata.json public/covers', { stdio: 'inherit' });
+    const commitMsg = `sync: actualizar biblioteca de música con portadas variadas`;
     execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
-    console.log('⬆️ Enviando únicamente los cambios a GitHub (git push origin main)...');
+    console.log('⬆️ Enviando cambios a GitHub (git push origin main)...');
     execSync('git push origin main', { stdio: 'inherit' });
-    console.log('✅ ¡Sincronización en Git y despliegue en la nube completado!');
+    console.log('✅ ¡Sincronización y despliegue completado!');
   } catch (err) {
-    if (err.message.includes('nothing to commit')) {
+    if (err.message && err.message.includes('nothing to commit')) {
       console.log('ℹ️ No hay cambios pendientes para subir.');
     } else {
       console.error('❌ Error al ejecutar Git:', err.message);
@@ -82,7 +131,8 @@ for (const filePath of files) {
   let folderPath = 'General';
   let artist = 'Artista Local';
   let album = 'Colección';
-  let title = fileName.replace(/\.[^/.]+$/, '');
+  let rawTitle = fileName.replace(/\.[^/.]+$/, '');
+  let title = cleanTitleString(rawTitle);
 
   if (parts.length > 1) {
     const folderParts = parts.slice(0, parts.length - 1);
@@ -116,6 +166,8 @@ for (const filePath of files) {
 
   const existingIdx = metaList.findIndex((item) => item.id === trackId || item.audioUrl === finalAudioUrl);
 
+  const coverUrl = getCoverForTrack(title, folderPath, trackId);
+
   const trackObj = {
     id: trackId,
     title,
@@ -124,7 +176,7 @@ for (const filePath of files) {
     folder: folderPath,
     duration: 180,
     audioUrl: finalAudioUrl,
-    coverUrl: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80',
+    coverUrl,
   };
 
   if (existingIdx !== -1) {
@@ -132,7 +184,7 @@ for (const filePath of files) {
   } else {
     metaList.push(trackObj);
     addedOrUpdated++;
-    console.log(`  🎵 Nueva pista o renombrada: "${title}" -> Lista: "${folderPath}"`);
+    console.log(`  🎵 Nueva pista: "${title}" -> Lista: "${folderPath}"`);
   }
 }
 
@@ -149,11 +201,8 @@ if (metaList.length < initialCount) {
 }
 
 fs.writeFileSync(metaPath, JSON.stringify(metaList, null, 2), 'utf-8');
-console.log(`\n🎉 ¡Éxito! Biblioteca actualizada. Total de canciones activas: ${metaList.length}`);
+console.log(`\n🎉 ¡Éxito! Biblioteca actualizada con títulos limpios y portadas variadas. Total pistas: ${metaList.length}`);
 
 if (shouldPush) {
   pushToGit();
-} else {
-  console.log('\n💡 Para hacer commit y git push automáticamente, incluye la bandera --push:');
-  console.log('   npm run push-music');
 }

@@ -6,13 +6,20 @@ interface Props {
 }
 
 const { track } = Astro.props;
+
+const cleanTitle = (track.title || '')
+  .replace(/^podcast_/i, '')
+  .replace(/__/g, ' – ')
+  .replace(/_/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
 ---
 
 <div class="group relative bg-zinc-900/60 hover:bg-zinc-800/80 p-4 rounded-xl transition-all duration-300 border border-zinc-800/50 hover:border-zinc-700/50 flex flex-col justify-between shadow-lg">
   <div class="relative aspect-square w-full rounded-lg overflow-hidden mb-4 bg-zinc-950">
     <img
       src={track.coverUrl}
-      alt={track.title}
+      alt={cleanTitle}
       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
       loading="lazy"
     />
@@ -21,7 +28,7 @@ const { track } = Astro.props;
     <button
       data-track={JSON.stringify(track)}
       class="play-btn absolute bottom-3 right-3 w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-xl shadow-emerald-500/30"
-      aria-label={`Reproducir ${track.title}`}
+      aria-label={`Reproducir ${cleanTitle}`}
     >
       <svg class="w-6 h-6 fill-current ml-0.5" viewBox="0 0 24 24">
         <path d="M8 5v14l11-7z"></path>
@@ -30,10 +37,10 @@ const { track } = Astro.props;
   </div>
 
   <div>
-    <h3 class="font-bold text-base text-zinc-100 truncate group-hover:text-emerald-400 transition-colors">
-      {track.title}
+    <h3 class="font-bold text-base text-zinc-100 line-clamp-2 break-words leading-snug group-hover:text-emerald-400 transition-colors">
+      {cleanTitle}
     </h3>
-    <p class="text-sm text-zinc-400 truncate mt-1">
+    <p class="text-sm text-zinc-400 line-clamp-1 break-words mt-1">
       {track.artist} {track.album && `• ${track.album}`}
     </p>
   </div>

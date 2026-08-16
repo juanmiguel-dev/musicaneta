@@ -1,73 +1,73 @@
 [
   {
     "id": "native/Ancestors_Spirit.mp3",
-    "title": "Ancestors_Spirit",
+    "title": "Ancestors Spirit",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Ancestors_Spirit.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/A_Joyful_Thing.mp3",
-    "title": "A_Joyful_Thing",
+    "title": "A Joyful Thing",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/A_Joyful_Thing.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/A_Star_Beneath_My_Drum_Pt._1.mp3",
-    "title": "A_Star_Beneath_My_Drum_Pt._1",
+    "title": "A Star Beneath My Drum Pt. 1",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/A_Star_Beneath_My_Drum_Pt._1.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Beauty_In_Music_Louie_Gonnie.mp3",
-    "title": "Beauty_In_Music_Louie_Gonnie",
+    "title": "Beauty In Music Louie Gonnie",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Beauty_In_Music_Louie_Gonnie.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Cecile_Moosomin.mp3",
-    "title": "Cecile_Moosomin",
+    "title": "Cecile Moosomin",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Cecile_Moosomin.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Charity_-_Kevin_Yazzie.mp3",
-    "title": "Charity_-_Kevin_Yazzie",
+    "title": "Charity - Kevin Yazzie",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Charity_-_Kevin_Yazzie.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Dreamscapes_Louie_Gonnie.mp3",
-    "title": "Dreamscapes_Louie_Gonnie",
+    "title": "Dreamscapes Louie Gonnie",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Dreamscapes_Louie_Gonnie.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Envisionment.mp3",
@@ -77,17 +77,17 @@
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Envisionment.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Fallen_Dreams_Upon_A_Star.mp3",
-    "title": "Fallen_Dreams_Upon_A_Star",
+    "title": "Fallen Dreams Upon A Star",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Fallen_Dreams_Upon_A_Star.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Feldspar.mp3",
@@ -97,77 +97,77 @@
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Feldspar.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Fires_of_Our_Ancestors.mp3",
-    "title": "Fires_of_Our_Ancestors",
+    "title": "Fires of Our Ancestors",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Fires_of_Our_Ancestors.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Florals_and_Firelight_Pt._2.mp3",
-    "title": "Florals_and_Firelight_Pt._2",
+    "title": "Florals and Firelight Pt. 2",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Florals_and_Firelight_Pt._2.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Florals_and_Firelight_Pt._3_128_kbps.mp3",
-    "title": "Florals_and_Firelight_Pt._3_128_kbps",
+    "title": "Florals and Firelight Pt. 3 128 kbps",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Florals_and_Firelight_Pt._3_128_kbps.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Florals_and_Firelight_Pt._4_128_kbps.mp3",
-    "title": "Florals_and_Firelight_Pt._4_128_kbps",
+    "title": "Florals and Firelight Pt. 4 128 kbps",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Florals_and_Firelight_Pt._4_128_kbps.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Happy_Birthday.mp3",
-    "title": "Happy_Birthday",
+    "title": "Happy Birthday",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Happy_Birthday.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Holy_Moments.mp3",
-    "title": "Holy_Moments",
+    "title": "Holy Moments",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Holy_Moments.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Home_recording_Winnebago_Nebraska._Adrian_Primeaux_and_Paul_brown.mp3",
-    "title": "Home_recording_Winnebago_Nebraska._Adrian_Primeaux_and_Paul_brown",
+    "title": "Home recording Winnebago Nebraska. Adrian Primeaux and Paul brown",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Home_recording_Winnebago_Nebraska._Adrian_Primeaux_and_Paul_brown.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Kambosito.mp3",
@@ -177,77 +177,77 @@
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Kambosito.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Light_of_My_Life_Pt._1.mp3",
-    "title": "Light_of_My_Life_Pt._1",
+    "title": "Light of My Life Pt. 1",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Light_of_My_Life_Pt._1.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Light_of_My_Life_Pt._3_128kbps.mp3",
-    "title": "Light_of_My_Life_Pt._3_128kbps",
+    "title": "Light of My Life Pt. 3 128kbps",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Light_of_My_Life_Pt._3_128kbps.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Light_of_My_Life_Pt._4.mp3",
-    "title": "Light_of_My_Life_Pt._4",
+    "title": "Light of My Life Pt. 4",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Light_of_My_Life_Pt._4.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/mahto_1.mp3",
-    "title": "mahto_1",
+    "title": "mahto 1",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/mahto_1.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/mahto_2.mp3",
-    "title": "mahto_2",
+    "title": "mahto 2",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/mahto_2.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Mahto_Akicita__Tiwahe__Wokiksuye_Lakota__Native_American_Downtempo.mp3",
-    "title": "Mahto_Akicita__Tiwahe__Wokiksuye_Lakota__Native_American_Downtempo",
+    "title": "Mahto Akicita – Tiwahe – Wokiksuye Lakota – Native American Downtempo",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Mahto_Akicita__Tiwahe__Wokiksuye_Lakota__Native_American_Downtempo.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Medicine_Shield.mp3",
-    "title": "Medicine_Shield",
+    "title": "Medicine Shield",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Medicine_Shield.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Meditate.mp3",
@@ -257,7 +257,7 @@
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Meditate.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/NAC.mp3",
@@ -267,67 +267,67 @@
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/NAC.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/NAC_Compliation.mp3",
-    "title": "NAC_Compliation",
+    "title": "NAC Compliation",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/NAC_Compliation.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Nac_Set_Three_Pt._2.mp3",
-    "title": "Nac_Set_Three_Pt._2",
+    "title": "Nac Set Three Pt. 2",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Nac_Set_Three_Pt._2.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Our_Hope_for_the_Future.mp3",
-    "title": "Our_Hope_for_the_Future",
+    "title": "Our Hope for the Future",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Our_Hope_for_the_Future.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Sage_and_Blessings_Pt._2.mp3",
-    "title": "Sage_and_Blessings_Pt._2",
+    "title": "Sage and Blessings Pt. 2",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Sage_and_Blessings_Pt._2.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Set_4_-_Kevin_Yazzie.mp3",
-    "title": "Set_4_-_Kevin_Yazzie",
+    "title": "Set 4 - Kevin Yazzie",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Set_4_-_Kevin_Yazzie.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Set_6_Kevin_yazzie.mp3",
-    "title": "Set_6_Kevin_yazzie",
+    "title": "Set 6 Kevin yazzie",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Set_6_Kevin_yazzie.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Shanise-VOL-III.mp3.mp3",
@@ -337,87 +337,87 @@
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Shanise-VOL-III.mp3.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Shanise_Rowan_-_Okeymow_Maskiki_Vol._1_Part_3.mp3",
-    "title": "Shanise_Rowan_-_Okeymow_Maskiki_Vol._1_Part_3",
+    "title": "Shanise Rowan - Okeymow Maskiki Vol. 1 Part 3",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Shanise_Rowan_-_Okeymow_Maskiki_Vol._1_Part_3.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Shanise_Rowan__Okeymow_Maskiki_Vol1_Part_5.mp3",
-    "title": "Shanise_Rowan__Okeymow_Maskiki_Vol1_Part_5",
+    "title": "Shanise Rowan – Okeymow Maskiki Vol1 Part 5",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Shanise_Rowan__Okeymow_Maskiki_Vol1_Part_5.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Shanise_Rowan__Okeymow_Maskiki_Vol1_Part_6.mp3",
-    "title": "Shanise_Rowan__Okeymow_Maskiki_Vol1_Part_6",
+    "title": "Shanise Rowan – Okeymow Maskiki Vol1 Part 6",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Shanise_Rowan__Okeymow_Maskiki_Vol1_Part_6.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Shanise_Rowan__Okeymow_Maskiki_Vol_1_Part_2.mp3",
-    "title": "Shanise_Rowan__Okeymow_Maskiki_Vol_1_Part_2",
+    "title": "Shanise Rowan – Okeymow Maskiki Vol 1 Part 2",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Shanise_Rowan__Okeymow_Maskiki_Vol_1_Part_2.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Shanise_Rowan__Okeymow_Maskiki_Vol_1_Part_4.mp3",
-    "title": "Shanise_Rowan__Okeymow_Maskiki_Vol_1_Part_4",
+    "title": "Shanise Rowan – Okeymow Maskiki Vol 1 Part 4",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Shanise_Rowan__Okeymow_Maskiki_Vol_1_Part_4.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Shanise_Rowan__Okeymow_Maskiki_Vol_1__Part_1.mp3",
-    "title": "Shanise_Rowan__Okeymow_Maskiki_Vol_1__Part_1",
+    "title": "Shanise Rowan – Okeymow Maskiki Vol 1 – Part 1",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Shanise_Rowan__Okeymow_Maskiki_Vol_1__Part_1.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Shield_and_Spear-Branson_Gorman__Louie_Gonnie.mp3",
-    "title": "Shield_and_Spear-Branson_Gorman__Louie_Gonnie",
+    "title": "Shield and Spear-Branson Gorman – Louie Gonnie",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Shield_and_Spear-Branson_Gorman__Louie_Gonnie.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Solitude_and_Your_Thoughts.mp3",
-    "title": "Solitude_and_Your_Thoughts",
+    "title": "Solitude and Your Thoughts",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Solitude_and_Your_Thoughts.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Starpeople.mp3",
@@ -427,206 +427,216 @@
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Starpeople.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Storm_Clouds.mp3",
-    "title": "Storm_Clouds",
+    "title": "Storm Clouds",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Storm_Clouds.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Transcendence_And_The_Dawn.mp3",
-    "title": "Transcendence_And_The_Dawn",
+    "title": "Transcendence And The Dawn",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Transcendence_And_The_Dawn.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "native/Wonders_Of_A_Crescent_Moon.mp3",
-    "title": "Wonders_Of_A_Crescent_Moon",
+    "title": "Wonders Of A Crescent Moon",
     "artist": "native",
     "album": "native",
     "folder": "native",
     "duration": 180,
     "audioUrl": "/uploads/native/Wonders_Of_A_Crescent_Moon.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_native.jpg"
   },
   {
     "id": "podcasts/Argentina_pagará_su_deuda_sin_Wall_Street.mp3",
-    "title": "Argentina_pagará_su_deuda_sin_Wall_Street",
+    "title": "Argentina pagará su deuda sin Wall Street",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Argentina_pagará_su_deuda_sin_Wall_Street.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
     "id": "podcasts/Del_código_777_a_la_profecía_666.mp3",
-    "title": "Del_código_777_a_la_profecía_666",
+    "title": "Del código 777 a la profecía 666",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Del_código_777_a_la_profecía_666.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
     "id": "podcasts/El_gigantesco_planisferio_de_Urbano_Monte.mp3",
-    "title": "El_gigantesco_planisferio_de_Urbano_Monte",
+    "title": "El gigantesco planisferio de Urbano Monte",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/El_gigantesco_planisferio_de_Urbano_Monte.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
     "id": "podcasts/El_laberinto_jurídico_de_las_Islas_Malvinas.mp3",
-    "title": "El_laberinto_jurídico_de_las_Islas_Malvinas",
+    "title": "El laberinto jurídico de las Islas Malvinas",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/El_laberinto_jurídico_de_las_Islas_Malvinas.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
     "id": "podcasts/El_panel_de_control_del_cielo_babilónico.mp3",
-    "title": "El_panel_de_control_del_cielo_babilónico",
+    "title": "El panel de control del cielo babilónico",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/El_panel_de_control_del_cielo_babilónico.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/Santiago_Cúneo_contra_el_capitalismo_intangible.mp3",
-    "title": "Santiago_Cúneo_contra_el_capitalismo_intangible",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Santiago_Cúneo_contra_el_capitalismo_intangible.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
     "id": "podcasts/Telepatía_y_tiempo_en_espejos_de_Kozyrev.mp3",
-    "title": "Telepatía_y_tiempo_en_espejos_de_Kozyrev",
+    "title": "Telepatía y tiempo en espejos de Kozyrev",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Telepatía_y_tiempo_en_espejos_de_Kozyrev.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_cosmic.jpg"
   },
   {
     "id": "podcasts/Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam.mp3",
-    "title": "Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam",
+    "title": "Descifrando el Sistema – Persona Soberana y la Bula Unam Sanctam",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
     "id": "podcasts/Efectos_adversos_y_letra_pequea_en_vacunas.mp3",
-    "title": "Efectos_adversos_y_letra_pequea_en_vacunas",
+    "title": "Efectos adversos y letra pequea en vacunas",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Efectos_adversos_y_letra_pequea_en_vacunas.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
     "id": "podcasts/El_liderazgo_humano_de_Lionel_Scaloni.mp3",
-    "title": "El_liderazgo_humano_de_Lionel_Scaloni",
+    "title": "El liderazgo humano de Lionel Scaloni",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/El_liderazgo_humano_de_Lionel_Scaloni.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
     "id": "podcasts/Jesus_el_hacker_de_la_jaula_humana.mp3",
-    "title": "Jesus_el_hacker_de_la_jaula_humana",
+    "title": "Jesus el hacker de la jaula humana",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Jesus_el_hacker_de_la_jaula_humana.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
     "id": "podcasts/La Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_traves_del_Lenguaje_y_la_IA.mp3",
-    "title": "La Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_traves_del_Lenguaje_y_la_IA",
+    "title": "La Triloga del Reino – Uniendo Fsica y Conciencia a traves del Lenguaje y la IA",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/La Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_traves_del_Lenguaje_y_la_IA.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_cosmic.jpg"
   },
   {
     "id": "podcasts/La_economía_energética_de_la_retención_seminal.mp3",
-    "title": "La_economía_energética_de_la_retención_seminal",
+    "title": "La economía energética de la retención seminal",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/La_economía_energética_de_la_retención_seminal.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/La_historia_antigua_es_un_espejismo_matemático.mp3",
-    "title": "La_historia_antigua_es_un_espejismo_matemático",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/La_historia_antigua_es_un_espejismo_matemático.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/Messi_y_la_Tercera_Guerra_Mundial.mp3",
-    "title": "Messi_y_la_Tercera_Guerra_Mundial",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Messi_y_la_Tercera_Guerra_Mundial.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/Motor_de_Vrtice.mp3",
-    "title": "Motor_de_Vrtice",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Motor_de_Vrtice.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
     "id": "podcasts/Triloga_del_Reino__Jung_eter_y_la_Geometria_de_la_Conciencia.mp3",
-    "title": "Triloga_del_Reino__Jung_eter_y_la_Geometria_de_la_Conciencia",
+    "title": "Triloga del Reino – Jung eter y la Geometria de la Conciencia",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Triloga_del_Reino__Jung_eter_y_la_Geometria_de_la_Conciencia.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+    "coverUrl": "/covers/cover_cosmic.jpg"
+  },
+  {
+    "id": "native/edmond-poochay/Peyote Song 4 - Edmond Poochay.mp3",
+    "title": "Peyote Song 4 - Edmond Poochay",
+    "artist": "native",
+    "album": "edmond-poochay",
+    "folder": "native / edmond-poochay",
+    "duration": 180,
+    "audioUrl": "/uploads/native/edmond-poochay/Peyote Song 4 - Edmond Poochay.mp3",
+    "coverUrl": "/covers/cover_native.jpg"
+  },
+  {
+    "id": "native/edmond-poochay/Peyote Song 5 - Edmond Poochay.mp3",
+    "title": "Peyote Song 5 - Edmond Poochay",
+    "artist": "native",
+    "album": "edmond-poochay",
+    "folder": "native / edmond-poochay",
+    "duration": 180,
+    "audioUrl": "/uploads/native/edmond-poochay/Peyote Song 5 - Edmond Poochay.mp3",
+    "coverUrl": "/covers/cover_native.jpg"
+  },
+  {
+    "id": "podcasts/La Historia Antigua es un espejismo matemático.mp3",
+    "title": "La Historia Antigua es un espejismo matemático",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/La Historia Antigua es un espejismo matemático.mp3",
+    "coverUrl": "/covers/cover_cosmic.jpg"
+  },
+  {
+    "id": "podcasts/Messi y la Tercera Guerra Mundial.mp3",
+    "title": "Messi y la Tercera Guerra Mundial",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Messi y la Tercera Guerra Mundial.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/Motor de Vortice.mp3",
+    "title": "Motor de Vortice",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Motor de Vortice.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
   }
 ]
