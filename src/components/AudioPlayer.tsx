@@ -350,14 +350,14 @@ export default function AudioPlayer() {
       </header>
 
       {/* Centro Inmersivo: Disco Circular con Arte */}
-      <main className="w-full max-w-md my-auto flex flex-col items-center z-10 py-1 space-y-3 sm:space-y-5">
-        <div className="relative flex items-center justify-center p-2 sm:p-4">
+      <main className="w-full max-w-md my-auto flex flex-col items-center z-10 py-1 space-y-2 sm:space-y-4">
+        <div className="relative flex items-center justify-center p-2 sm:p-3">
           <div className="absolute inset-0 rounded-full border border-purple-400/20 animate-pulse pointer-events-none" />
           <div className="absolute -inset-3 sm:-inset-5 rounded-full border border-purple-500/20 shadow-[0_0_40px_rgba(168,85,247,0.35)] pointer-events-none" />
           <div className="absolute -inset-6 sm:-inset-10 rounded-full border border-purple-600/15 pointer-events-none" />
 
           {/* Disco Principal */}
-          <div className="w-40 h-40 xs:w-48 xs:h-48 sm:w-60 sm:h-60 rounded-full overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.6)] border-2 border-purple-300/30 relative group transition-all duration-700">
+          <div className="w-36 h-36 xs:w-44 xs:h-44 sm:w-56 sm:h-56 rounded-full overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.6)] border-2 border-purple-300/30 relative group transition-all duration-700">
             <img
               src={activeCover}
               alt={formatTitle(currentTrack?.title) || 'No Track'}
@@ -387,8 +387,8 @@ export default function AudioPlayer() {
           </div>
         </div>
 
-        {/* Información del Tema (Título Completo Multilínea) */}
-        <div className="text-center space-y-1 max-w-sm sm:max-w-md px-3">
+        {/* Información del Tema (Título Completo Multilínea + Botón de Descarga) */}
+        <div className="text-center space-y-1 max-w-sm sm:max-w-md px-3 flex flex-col items-center">
           <h1 className="text-base sm:text-xl font-extrabold tracking-wide text-white drop-shadow-md leading-snug line-clamp-3 break-words">
             {formatTitle(currentTrack?.title) || 'Selecciona una canción'}
           </h1>
@@ -396,10 +396,27 @@ export default function AudioPlayer() {
             {currentTrack?.artist || 'Musicaneta'}
             {currentTrack?.folder ? ` • 📁 ${currentTrack.folder}` : (currentTrack?.album && currentTrack.album !== 'Álbum Local' ? ` • ${currentTrack.album}` : '')}
           </p>
+
+          {/* Botón de Descarga directa para el audio/podcast activo */}
+          {currentTrack && (
+            <a
+              href={encodeURI(currentTrack.audioUrl)}
+              download={`${formatTitle(currentTrack.title) || 'audio'}.mp3`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-purple-200 hover:text-white text-xs transition-all active:scale-95 shadow-sm mt-1"
+              title="Descargar archivo MP3"
+            >
+              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+              </svg>
+              <span className="font-semibold text-[11px]">Descargar MP3</span>
+            </a>
+          )}
         </div>
 
         {/* Barra de Progreso Deslizable & Botones de Salto ±10s */}
-        <div className="w-full max-w-xs sm:max-w-md px-2 space-y-1.5">
+        <div className="w-full max-w-xs sm:max-w-md px-2 space-y-1">
           <div className="flex items-center space-x-2">
             {/* Retroceder 10 segundos */}
             <button
@@ -459,9 +476,9 @@ export default function AudioPlayer() {
         </div>
       </main>
 
-      {/* Controles Sticky de Reproducción */}
-      <footer className="sticky bottom-2 sm:bottom-4 w-full max-w-md z-30 my-1">
-        <div className="glass-panel rounded-3xl px-5 py-3 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/70 backdrop-blur-2xl">
+      {/* Controles Sticky de Reproducción & Enlace de la Comunidad en Footer */}
+      <footer className="sticky bottom-2 sm:bottom-3 w-full max-w-md z-30 flex flex-col items-center space-y-2 my-1">
+        <div className="w-full glass-panel rounded-3xl px-5 py-3 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/70 backdrop-blur-2xl">
           {/* Silenciar / Volumen */}
           <button
             type="button"
@@ -525,6 +542,21 @@ export default function AudioPlayer() {
 
           <div className="w-10 h-10 pointer-events-none" />
         </div>
+
+        {/* Enlace en el Footer a la Comunidad Zenodo */}
+        <a
+          href="https://zenodo.org/communities/sinergia-humano-ia/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[11px] font-medium text-purple-300/70 hover:text-purple-100 transition-all flex items-center space-x-1.5 py-0.5 tracking-wide hover:underline"
+          title="Visitar la comunidad Sinergia Humano-IA en Zenodo"
+        >
+          <span>🌐</span>
+          <span>Sinergia Humano-IA en Zenodo</span>
+          <svg className="w-3 h-3 fill-current opacity-70" viewBox="0 0 24 24">
+            <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm-2 16H5V7h7V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7h-7z" />
+          </svg>
+        </a>
       </footer>
 
       {/* Drawer Desplegable de Playlist Glass Panel */}
@@ -592,7 +624,7 @@ export default function AudioPlayer() {
             )}
           </div>
 
-          {/* Lista de Pistas con Títulos Completos y Portadas Variadas */}
+          {/* Lista de Pistas con Títulos Completos, Portadas Variadas y Botón de Descarga */}
           <div className="flex-1 overflow-y-auto mt-3 space-y-2 no-scrollbar pr-1">
             {filteredPlaylist.map((t, idx) => {
               const realIndex = playlist.findIndex((item) => item.id === t.id);
@@ -629,9 +661,24 @@ export default function AudioPlayer() {
                       </div>
                     </div>
                   </div>
-                  {isCurrent && isPlaying && (
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping flex-shrink-0 ml-2" />
-                  )}
+
+                  {/* Acciones del Item: Botón Descargar y Onda de Reproducción */}
+                  <div className="flex items-center space-x-1 flex-shrink-0">
+                    <a
+                      href={encodeURI(t.audioUrl)}
+                      download={`${formatTitle(t.title) || 'audio'}.mp3`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="p-2 rounded-xl text-purple-300/60 hover:text-purple-100 hover:bg-white/10 transition-all"
+                      title={`Descargar ${formatTitle(t.title)}`}
+                    >
+                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                      </svg>
+                    </a>
+                    {isCurrent && isPlaying && (
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping ml-1" />
+                    )}
+                  </div>
                 </div>
               );
             })}
