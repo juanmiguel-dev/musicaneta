@@ -26,10 +26,17 @@ export function toggleRepeat() {
 }
 
 // Acciones globales
-export function setPlaylist(tracks: Track[], startIndex = 0) {
+export function setPlaylist(tracks: Track[], startIndex = 0, autoPlay = false) {
   $playlist.set(tracks);
   if (tracks.length > 0 && startIndex >= 0 && startIndex < tracks.length) {
-    playTrack(tracks[startIndex], startIndex);
+    if (autoPlay) {
+      playTrack(tracks[startIndex], startIndex);
+    } else {
+      $currentIndex.set(startIndex);
+      $currentTrack.set(tracks[startIndex]);
+      $isPlaying.set(false);
+      $currentTime.set(0);
+    }
   }
 }
 

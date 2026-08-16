@@ -140,7 +140,7 @@ export default function AudioPlayer() {
     });
   }, [playlist, selectedCategory, searchQuery]);
 
-  // Cargar catálogo inicial si la lista está vacía
+  // Cargar catálogo inicial si la lista está vacía (sin autoplay automático para que muestre botón play)
   useEffect(() => {
     async function loadInitialTracks() {
       if (playlist.length === 0) {
@@ -149,7 +149,7 @@ export default function AudioPlayer() {
           if (res.ok) {
             const data: Track[] = await res.json();
             if (data && data.length > 0) {
-              setPlaylist(data, 0);
+              setPlaylist(data, 0, false);
             }
           }
         } catch (e) {
@@ -171,7 +171,10 @@ export default function AudioPlayer() {
       audio.src = encodedUrl;
       audio.load();
       if (isPlaying) {
-        audio.play().catch(() => {});
+        audio.play().catch((err) => {
+          console.warn('Autoplay bloqueado:', err);
+          $isPlaying.set(false);
+        });
       }
     }
   }, [currentTrack]);
@@ -182,7 +185,10 @@ export default function AudioPlayer() {
     if (!audio) return;
     if (isPlaying) {
       if (audio.paused) {
-        audio.play().catch(() => {});
+        audio.play().catch((err) => {
+          console.warn('Autoplay bloqueado por el navegador:', err);
+          $isPlaying.set(false);
+        });
       }
     } else {
       if (!audio.paused) {
@@ -281,6 +287,8 @@ export default function AudioPlayer() {
     >
       <audio
         ref={audioRef}
+        onPlay={() => $isPlaying.set(true)}
+        onPause={() => $isPlaying.set(false)}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleTrackEnded}
@@ -372,6 +380,7 @@ export default function AudioPlayer() {
                 type="button"
                 onClick={togglePlay}
                 className="w-14 h-14 rounded-full bg-white/20 border border-white/40 flex items-center justify-center text-white shadow-xl"
+                aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
               >
                 {isPlaying ? (
                   <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
@@ -476,8 +485,8 @@ export default function AudioPlayer() {
         </div>
       </main>
 
-      {/* Controles Sticky de Reproducción & Enlace de la Comunidad en Footer */}
-      <footer className="sticky bottom-2 sm:bottom-3 w-full max-w-md z-30 flex flex-col items-center space-y-2 my-1">
+      {/* Controles Sticky de Reproducción */}
+      <div className="w-full max-w-md z-30 my-1">
         <div className="w-full glass-panel rounded-3xl px-5 py-3 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/70 backdrop-blur-2xl">
           {/* Silenciar / Volumen */}
           <button
@@ -516,6 +525,7 @@ export default function AudioPlayer() {
               onClick={togglePlay}
               className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-gradient-to-tr from-purple-600 via-indigo-600 to-purple-400 text-white flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_25px_rgba(168,85,247,0.6)] border border-purple-300/40"
               title={isPlaying ? 'Pausar' : 'Reproducir'}
+              aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
             >
               {isPlaying ? (
                 <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
@@ -542,13 +552,15 @@ export default function AudioPlayer() {
 
           <div className="w-10 h-10 pointer-events-none" />
         </div>
+      </div>
 
-        {/* Enlace en el Footer a la Comunidad Zenodo */}
+      {/* Enlace en el Footer bien separado de los controles */}
+      <footer className="w-full max-w-md z-20 flex justify-center pt-2 pb-1">
         <a
           href="https://zenodo.org/communities/sinergia-humano-ia/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[11px] font-medium text-purple-300/70 hover:text-purple-100 transition-all flex items-center space-x-1.5 py-0.5 tracking-wide hover:underline"
+          className="text-[11px] font-medium text-purple-300/50 hover:text-purple-100 transition-all flex items-center space-x-1.5 px-3 py-1 rounded-full hover:bg-white/5 border border-transparent hover:border-white/10 tracking-wide"
           title="Visitar la comunidad Sinergia Humano-IA en Zenodo"
         >
           <span>🌐</span>

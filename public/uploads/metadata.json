@@ -460,16 +460,6 @@
     "coverUrl": "/covers/cover_native.jpg"
   },
   {
-    "id": "podcasts/Argentina_pagará_su_deuda_sin_Wall_Street.mp3",
-    "title": "Argentina pagará su deuda sin Wall Street",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Argentina_pagará_su_deuda_sin_Wall_Street.mp3",
-    "coverUrl": "/covers/cover_podcast.jpg"
-  },
-  {
     "id": "podcasts/Del_código_777_a_la_profecía_666.mp3",
     "title": "Del código 777 a la profecía 666",
     "artist": "podcasts",
@@ -620,16 +610,6 @@
     "coverUrl": "/covers/cover_cosmic.jpg"
   },
   {
-    "id": "podcasts/Messi y la Tercera Guerra Mundial.mp3",
-    "title": "Messi y la Tercera Guerra Mundial",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Messi y la Tercera Guerra Mundial.mp3",
-    "coverUrl": "/covers/cover_podcast.jpg"
-  },
-  {
     "id": "podcasts/Motor de Vortice.mp3",
     "title": "Motor de Vortice",
     "artist": "podcasts",
@@ -677,6 +657,26 @@
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/El algoritmo que predice vidas históricas.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "native/edmond-poochay/Peyote Song 11 - Edmond Poochay.mp3",
+    "title": "Peyote Song 11 - Edmond Poochay",
+    "artist": "native",
+    "album": "edmond-poochay",
+    "folder": "native / edmond-poochay",
+    "duration": 180,
+    "audioUrl": "/uploads/native/edmond-poochay/Peyote Song 11 - Edmond Poochay.mp3",
+    "coverUrl": "/covers/cover_native.jpg"
+  },
+  {
+    "id": "podcasts/Casa Blanca, Futbol y la Tercera Guerra Mundial.mp3",
+    "title": "Casa Blanca, Futbol y la Tercera Guerra Mundial",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Casa Blanca, Futbol y la Tercera Guerra Mundial.mp3",
     "coverUrl": "/covers/cover_podcast.jpg"
   }
 ]
