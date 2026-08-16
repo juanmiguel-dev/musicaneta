@@ -14,7 +14,6 @@ import {
   playNext,
   playPrevious,
   seekTo,
-  setVolume,
   toggleMute,
   toggleRepeat,
   playTrack,
@@ -221,9 +220,9 @@ export default function AudioPlayer() {
     seekTo(audio.currentTime);
   };
 
-  const handleLoadedMetadata = () => {
+  const syncDuration = () => {
     const audio = audioRef.current;
-    if (audio && audio.duration && !isNaN(audio.duration)) {
+    if (audio && audio.duration && !isNaN(audio.duration) && isFinite(audio.duration)) {
       $duration.set(audio.duration);
     }
   };
@@ -235,14 +234,20 @@ export default function AudioPlayer() {
 
   const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = parseFloat(e.target.value);
-    setSeekValue(val);
+    if (!isNaN(val)) {
+      setSeekValue(val);
+    }
   };
 
-  const handleSeekEnd = (val?: number) => {
+  const handleSeekCommit = (val?: number) => {
     const targetTime = typeof val === 'number' && !isNaN(val) ? val : seekValue;
     const audio = audioRef.current;
     if (audio && !isNaN(targetTime)) {
-      audio.currentTime = targetTime;
+      try {
+        audio.currentTime = targetTime;
+      } catch (e) {
+        console.warn('Error setting audio.currentTime:', e);
+      }
     }
     seekTo(targetTime);
     setIsSeeking(false);
@@ -252,10 +257,21 @@ export default function AudioPlayer() {
   const skipSeconds = (secs: number) => {
     const audio = audioRef.current;
     if (!audio) return;
-    const cur = audio.currentTime || currentTime || 0;
-    const dur = audio.duration || duration || 0;
-    const nextTime = Math.max(0, Math.min(dur, cur + secs));
-    audio.currentTime = nextTime;
+    const cur = !isNaN(audio.currentTime) ? audio.currentTime : (currentTime || 0);
+    const rawDur = (audio.duration && !isNaN(audio.duration) && isFinite(audio.duration)) ? audio.duration : duration;
+    
+    let nextTime = cur + secs;
+    if (rawDur && rawDur > 0) {
+      nextTime = Math.max(0, Math.min(rawDur, nextTime));
+    } else {
+      nextTime = Math.max(0, nextTime);
+    }
+
+    try {
+      audio.currentTime = nextTime;
+    } catch (e) {
+      console.warn('Error seeking audio:', e);
+    }
     setSeekValue(nextTime);
     seekTo(nextTime);
   };
@@ -293,7 +309,9 @@ export default function AudioPlayer() {
         onPlay={() => $isPlaying.set(true)}
         onPause={() => $isPlaying.set(false)}
         onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
+        onLoadedMetadata={syncDuration}
+        onDurationChange={syncDuration}
+        onCanPlay={syncDuration}
         onEnded={handleTrackEnded}
       />
 
@@ -448,20 +466,27 @@ export default function AudioPlayer() {
               <input
                 type="range"
                 min={0}
-                max={duration || 100}
+                max={duration && duration > 0 ? duration : 100}
                 step={0.1}
                 value={isSeeking ? seekValue : currentTime}
+                onPointerDown={handleSeekStart}
                 onMouseDown={handleSeekStart}
                 onTouchStart={handleSeekStart}
                 onChange={handleSeekChange}
-                onMouseUp={(e) => handleSeekEnd(parseFloat((e.target as HTMLInputElement).value))}
-                onTouchEnd={(e) => handleSeekEnd(parseFloat((e.target as HTMLInputElement).value))}
+                onPointerUp={(e) => handleSeekCommit(parseFloat((e.target as HTMLInputElement).value))}
+                onMouseUp={(e) => handleSeekCommit(parseFloat((e.target as HTMLInputElement).value))}
+                onTouchEnd={(e) => handleSeekCommit(parseFloat((e.target as HTMLInputElement).value))}
+                onKeyUp={(e) => {
+                  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    handleSeekCommit(parseFloat((e.target as HTMLInputElement).value));
+                  }
+                }}
                 className="w-full h-2.5 rounded-lg appearance-none cursor-pointer accent-purple-300 focus:outline-none transition-all border border-purple-400/30 shadow-[0_0_10px_rgba(168,85,247,0.3)] touch-none"
                 style={{
                   background: `linear-gradient(to right, #c084fc ${
-                    ((isSeeking ? seekValue : currentTime) / (duration || 1)) * 100
+                    ((isSeeking ? seekValue : currentTime) / (duration && duration > 0 ? duration : 1)) * 100
                   }%, rgba(46, 16, 101, 0.7) ${
-                    ((isSeeking ? seekValue : currentTime) / (duration || 1)) * 100
+                    ((isSeeking ? seekValue : currentTime) / (duration && duration > 0 ? duration : 1)) * 100
                   }%)`,
                 }}
               />
@@ -557,18 +582,18 @@ export default function AudioPlayer() {
         </div>
       </div>
 
-      {/* Footer con el enlace a Zenodo con amplio margen inferior */}
-      <footer className="w-full max-w-md z-20 flex justify-center pb-3 pt-1">
+      {/* Enlace Zenodo posicionado abajo y a la derecha */}
+      <footer className="fixed bottom-2.5 right-3 sm:bottom-4 sm:right-6 z-20 pointer-events-auto">
         <a
           href="https://zenodo.org/communities/sinergia-humano-ia/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[11px] font-medium text-purple-300/40 hover:text-purple-200 transition-all flex items-center space-x-1.5 px-3 py-1 rounded-full hover:bg-white/5 border border-transparent hover:border-white/10 tracking-wide"
+          className="text-[10px] sm:text-[11px] font-medium text-purple-300/50 hover:text-purple-100 transition-all flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-purple-950/40 hover:bg-purple-900/60 border border-purple-400/10 hover:border-purple-400/30 backdrop-blur-md shadow-lg tracking-wide group"
           title="Visitar la comunidad Sinergia Humano-IA en Zenodo"
         >
-          <span>🌐</span>
+          <span className="opacity-70 group-hover:opacity-100 transition-opacity">🌐</span>
           <span>Sinergia Humano-IA en Zenodo</span>
-          <svg className="w-3 h-3 fill-current opacity-70" viewBox="0 0 24 24">
+          <svg className="w-2.5 h-2.5 fill-current opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24">
             <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm-2 16H5V7h7V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7h-7z" />
           </svg>
         </a>
