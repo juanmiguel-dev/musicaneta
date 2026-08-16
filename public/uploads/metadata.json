@@ -510,86 +510,6 @@
     "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
   },
   {
-    "id": "podcasts/Podcast_Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam.mp3",
-    "title": "Podcast_Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Podcast_Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/Podcast_Efectos_adversos_y_letra_pequea_en_vacunas.mp3",
-    "title": "Podcast_Efectos_adversos_y_letra_pequea_en_vacunas",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Podcast_Efectos_adversos_y_letra_pequea_en_vacunas.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/Podcast_El_liderazgo_humano_de_Lionel_Scaloni.mp3",
-    "title": "Podcast_El_liderazgo_humano_de_Lionel_Scaloni",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Podcast_El_liderazgo_humano_de_Lionel_Scaloni.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/Podcast_Jess_el_hacker_de_la_jaula_humana.mp3",
-    "title": "Podcast_Jess_el_hacker_de_la_jaula_humana",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Podcast_Jess_el_hacker_de_la_jaula_humana.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/Podcast_La_Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_Travs_del_Lenguaje_Cuntico_y_la_IA.mp3",
-    "title": "Podcast_La_Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_Travs_del_Lenguaje_Cuntico_y_la_IA",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Podcast_La_Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_Travs_del_Lenguaje_Cuntico_y_la_IA.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/Podcast_Messi_y_la_Tercera_Guerra_Mundial.mp3",
-    "title": "Podcast_Messi_y_la_Tercera_Guerra_Mundial",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Podcast_Messi_y_la_Tercera_Guerra_Mundial.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/Podcast_Motor_de_Vrtice.mp3",
-    "title": "Podcast_Motor_de_Vrtice",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Podcast_Motor_de_Vrtice.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
-    "id": "podcasts/Podcast_Triloga_del_Reino__Jung_ter_y_la_Geometra_de_la_Conciencia.mp3",
-    "title": "Podcast_Triloga_del_Reino__Jung_ter_y_la_Geometra_de_la_Conciencia",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Podcast_Triloga_del_Reino__Jung_ter_y_la_Geometra_de_la_Conciencia.mp3",
-    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
-  },
-  {
     "id": "podcasts/Santiago_Cúneo_contra_el_capitalismo_intangible.mp3",
     "title": "Santiago_Cúneo_contra_el_capitalismo_intangible",
     "artist": "podcasts",
@@ -607,6 +527,106 @@
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Telepatía_y_tiempo_en_espejos_de_Kozyrev.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "podcasts/Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam.mp3",
+    "title": "Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Descifrando_el_Sistema__Persona_Soberana_y_la_Bula_Unam_Sanctam.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "podcasts/Efectos_adversos_y_letra_pequea_en_vacunas.mp3",
+    "title": "Efectos_adversos_y_letra_pequea_en_vacunas",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Efectos_adversos_y_letra_pequea_en_vacunas.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "podcasts/El_liderazgo_humano_de_Lionel_Scaloni.mp3",
+    "title": "El_liderazgo_humano_de_Lionel_Scaloni",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/El_liderazgo_humano_de_Lionel_Scaloni.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "podcasts/Jesus_el_hacker_de_la_jaula_humana.mp3",
+    "title": "Jesus_el_hacker_de_la_jaula_humana",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Jesus_el_hacker_de_la_jaula_humana.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "podcasts/La Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_traves_del_Lenguaje_y_la_IA.mp3",
+    "title": "La Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_traves_del_Lenguaje_y_la_IA",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/La Triloga_del_Reino__Uniendo_Fsica_y_Conciencia_a_traves_del_Lenguaje_y_la_IA.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "podcasts/La_economía_energética_de_la_retención_seminal.mp3",
+    "title": "La_economía_energética_de_la_retención_seminal",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/La_economía_energética_de_la_retención_seminal.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "podcasts/La_historia_antigua_es_un_espejismo_matemático.mp3",
+    "title": "La_historia_antigua_es_un_espejismo_matemático",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/La_historia_antigua_es_un_espejismo_matemático.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "podcasts/Messi_y_la_Tercera_Guerra_Mundial.mp3",
+    "title": "Messi_y_la_Tercera_Guerra_Mundial",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Messi_y_la_Tercera_Guerra_Mundial.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "podcasts/Motor_de_Vrtice.mp3",
+    "title": "Motor_de_Vrtice",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Motor_de_Vrtice.mp3",
+    "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
+  },
+  {
+    "id": "podcasts/Triloga_del_Reino__Jung_eter_y_la_Geometria_de_la_Conciencia.mp3",
+    "title": "Triloga_del_Reino__Jung_eter_y_la_Geometria_de_la_Conciencia",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Triloga_del_Reino__Jung_eter_y_la_Geometria_de_la_Conciencia.mp3",
     "coverUrl": "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80"
   }
 ]
