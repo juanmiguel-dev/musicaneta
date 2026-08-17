@@ -706,18 +706,6 @@ export default function AudioPlayer() {
               );
             })}
           </div>
-
-          <div className="pt-3 border-t border-white/10 flex justify-center">
-            <a
-              href="https://zenodo.org/communities/sinergia-humano-ia/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[11px] text-purple-300/50 hover:text-purple-200 transition-colors flex items-center space-x-1.5"
-            >
-              <span>🌐</span>
-              <span>Comunidad Zenodo: Sinergia Humano-IA</span>
-            </a>
-          </div>
         </div>
       )}
     </div>
