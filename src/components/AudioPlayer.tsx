@@ -573,13 +573,13 @@ export default function AudioPlayer() {
         </div>
       </div>
 
-      {/* Zenodo link: en mobile está abajo en el flujo normal bien separado; en desktop en la esquina inferior derecha */}
-      <footer className="relative mt-8 sm:mt-0 mb-3 sm:mb-0 w-full sm:w-auto flex justify-center sm:justify-end sm:fixed sm:bottom-4 sm:right-6 z-20">
+      {/* Enlace Zenodo abajo a la derecha */}
+      <footer className="w-full max-w-md sm:max-w-xl flex justify-end mt-6 sm:mt-8 mb-2 px-2 z-20">
         <a
           href="https://zenodo.org/communities/sinergia-humano-ia/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[11px] font-medium text-purple-300/60 hover:text-purple-100 transition-all flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-purple-950/50 hover:bg-purple-900/70 border border-purple-400/15 hover:border-purple-400/35 backdrop-blur-md shadow-lg tracking-wide group"
+          className="text-[10px] sm:text-[11px] font-medium text-purple-300/60 hover:text-purple-100 transition-all flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-purple-950/50 hover:bg-purple-900/70 border border-purple-400/15 hover:border-purple-400/35 backdrop-blur-md shadow-md tracking-wide group"
           title="Comunidad Zenodo: Sinergia Humano-IA"
         >
           <span className="opacity-75 group-hover:opacity-100 transition-opacity">🌐</span>
