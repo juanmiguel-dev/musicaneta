@@ -304,7 +304,7 @@ export default function AudioPlayer() {
 
   return (
     <div
-      className="relative min-h-[100dvh] h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-3 sm:px-6 sm:py-6 overflow-y-auto sm:overflow-hidden select-none text-white"
+      className="relative min-h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-4 sm:px-6 sm:py-6 select-none text-white"
       style={{
         background: 'radial-gradient(circle at 50% 30%, #5b21b6 0%, #2e1065 40%, #0f0728 85%, #050311 100%)',
       }}
@@ -573,18 +573,18 @@ export default function AudioPlayer() {
         </div>
       </div>
 
-      {/* Zenodo link – bottom right */}
-      <footer className="fixed bottom-2.5 right-3 sm:bottom-4 sm:right-6 z-20">
+      {/* Zenodo link: en mobile está abajo en el flujo normal bien separado; en desktop en la esquina inferior derecha */}
+      <footer className="relative mt-8 sm:mt-0 mb-3 sm:mb-0 w-full sm:w-auto flex justify-center sm:justify-end sm:fixed sm:bottom-4 sm:right-6 z-20">
         <a
           href="https://zenodo.org/communities/sinergia-humano-ia/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[10px] sm:text-[11px] font-medium text-purple-300/50 hover:text-purple-100 transition-all flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-purple-950/40 hover:bg-purple-900/60 border border-purple-400/10 hover:border-purple-400/30 backdrop-blur-md shadow-lg tracking-wide group"
-          title="Sinergia Humano-IA en Zenodo"
+          className="text-[11px] font-medium text-purple-300/60 hover:text-purple-100 transition-all flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-purple-950/50 hover:bg-purple-900/70 border border-purple-400/15 hover:border-purple-400/35 backdrop-blur-md shadow-lg tracking-wide group"
+          title="Comunidad Zenodo: Sinergia Humano-IA"
         >
-          <span className="opacity-70 group-hover:opacity-100 transition-opacity">🌐</span>
+          <span className="opacity-75 group-hover:opacity-100 transition-opacity">🌐</span>
           <span>Sinergia Humano-IA en Zenodo</span>
-          <svg className="w-2.5 h-2.5 fill-current opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24">
+          <svg className="w-3 h-3 fill-current opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24">
             <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm-2 16H5V7h7V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7h-7z" />
           </svg>
         </a>
