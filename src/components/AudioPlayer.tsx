@@ -6,7 +6,6 @@ import {
   $volume,
   $isMuted,
   $playlist,
-  $currentIndex,
   $repeatMode,
   togglePlay,
   playNext,
@@ -96,7 +95,6 @@ export default function AudioPlayer() {
   const volume = useStore($volume);
   const isMuted = useStore($isMuted);
   const playlist = useStore($playlist);
-  const currentIndex = useStore($currentIndex);
   const repeatMode = useStore($repeatMode);
 
   // ── Local state (UI only) ────────────────────────────────────────────────────
@@ -246,16 +244,11 @@ export default function AudioPlayer() {
         audio.currentTime = 0;
         audio.play().catch(() => {});
       }
-    } else if (repeatMode === 'all') {
-      playNext();
     } else {
-      if (currentIndex < playlist.length - 1) {
-        playNext();
-      } else {
-        $isPlaying.set(false);
-      }
+      // Reproducción automática continua por defecto
+      playNext();
     }
-  }, [repeatMode, currentIndex, playlist.length]);
+  }, [repeatMode]);
 
   // ── Seek slider handlers ─────────────────────────────────────────────────────
   const handleSeekStart = useCallback(() => {
@@ -336,33 +329,35 @@ export default function AudioPlayer() {
 
       {/* Header */}
       <header className="w-full max-w-md sm:max-w-xl flex items-center justify-between z-20 pt-1">
+        {/* Botón de reproducción continua / repetir tema */}
         <button
           type="button"
           onClick={toggleRepeat}
-          className={`w-10 h-10 rounded-full glass-pill flex items-center justify-center transition-all relative transform hover:scale-105 active:scale-95 shadow-md border border-white/10 ${
-            repeatMode !== 'off'
-              ? 'text-purple-200 bg-purple-500/40 border-purple-300/50 shadow-[0_0_15px_rgba(168,85,247,0.5)]'
-              : 'text-purple-200/70 hover:text-white'
+          className={`h-9 px-3 rounded-full glass-pill flex items-center space-x-1.5 transition-all transform hover:scale-105 active:scale-95 shadow-md border ${
+            repeatMode === 'one'
+              ? 'text-white bg-purple-500/50 border-purple-300/60 shadow-[0_0_15px_rgba(168,85,247,0.5)] font-bold'
+              : 'text-purple-200/80 hover:text-white border-white/10 bg-white/5'
           }`}
           title={
-            repeatMode === 'all'
-              ? 'Repetir: Lista completa'
-              : repeatMode === 'one'
-              ? 'Repetir: Tema actual'
-              : 'Repetir: Desactivado'
+            repeatMode === 'one'
+              ? 'Modo activo: Repetir canción actual'
+              : 'Modo activo: Reproducción continua automática'
           }
         >
           {repeatMode === 'one' ? (
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z" />
-            </svg>
+            <>
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z" />
+              </svg>
+              <span className="text-[10px] font-extrabold tracking-wider">1 Tema</span>
+            </>
           ) : (
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z" />
-            </svg>
-          )}
-          {repeatMode !== 'off' && (
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse border border-white/50" />
+            <>
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z" />
+              </svg>
+              <span className="text-[10px] font-semibold opacity-90 hidden xs:inline">Auto</span>
+            </>
           )}
         </button>
 
