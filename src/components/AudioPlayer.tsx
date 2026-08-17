@@ -506,75 +506,75 @@ export default function AudioPlayer() {
             <span>{formatTime(displayDuration)}</span>
           </div>
         </div>
-      </main>
 
-      {/* Playback controls */}
-      <div className="w-full max-w-md z-30 mt-2 mb-4 sm:mb-6">
-        <div className="w-full glass-panel rounded-3xl px-5 py-3 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/70 backdrop-blur-2xl">
-          <button
-            type="button"
-            onClick={toggleMute}
-            className="w-10 h-10 rounded-full glass-pill flex items-center justify-center text-purple-200/70 hover:text-white transition-all"
-            title="Silenciar"
-          >
-            {isMuted || volume === 0 ? (
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M3.63 3.63L2.36 4.9 7 9.54V15h4l5 5V13.54l4.1 4.1 1.27-1.27L3.63 3.63zM16 4v3.88l3 3V4z" />
-              </svg>
-            ) : (
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
-              </svg>
-            )}
-          </button>
-
-          <div className="flex items-center space-x-4 sm:space-x-6">
+        {/* Playback controls: inmediatamente integrados bajo la barra de tiempo */}
+        <div className="w-full max-w-xs sm:max-w-md pt-2">
+          <div className="w-full glass-panel rounded-3xl px-5 py-3 flex items-center justify-between shadow-2xl border border-purple-400/20 bg-purple-950/70 backdrop-blur-2xl">
             <button
               type="button"
-              onClick={playPrevious}
-              className="w-11 h-11 rounded-full glass-pill text-white hover:text-purple-200 flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 border border-white/10"
-              title="Anterior"
+              onClick={toggleMute}
+              className="w-10 h-10 rounded-full glass-pill flex items-center justify-center text-purple-200/70 hover:text-white transition-all"
+              title="Silenciar"
             >
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
-              </svg>
-            </button>
-
-            <button
-              type="button"
-              onClick={togglePlay}
-              className="w-16 h-16 rounded-full bg-gradient-to-tr from-purple-600 via-indigo-600 to-purple-400 text-white flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_25px_rgba(168,85,247,0.6)] border border-purple-300/40"
-              aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
-            >
-              {isPlaying ? (
-                <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
-                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+              {isMuted || volume === 0 ? (
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M3.63 3.63L2.36 4.9 7 9.54V15h4l5 5V13.54l4.1 4.1 1.27-1.27L3.63 3.63zM16 4v3.88l3 3V4z" />
                 </svg>
               ) : (
-                <svg className="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
                 </svg>
               )}
             </button>
 
-            <button
-              type="button"
-              onClick={playNext}
-              className="w-11 h-11 rounded-full glass-pill text-white hover:text-purple-200 flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 border border-white/10"
-              title="Siguiente"
-            >
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
-              </svg>
-            </button>
+            <div className="flex items-center space-x-4 sm:space-x-6">
+              <button
+                type="button"
+                onClick={playPrevious}
+                className="w-11 h-11 rounded-full glass-pill text-white hover:text-purple-200 flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 border border-white/10"
+                title="Anterior"
+              >
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+                </svg>
+              </button>
+
+              <button
+                type="button"
+                onClick={togglePlay}
+                className="w-16 h-16 rounded-full bg-gradient-to-tr from-purple-600 via-indigo-600 to-purple-400 text-white flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_25px_rgba(168,85,247,0.6)] border border-purple-300/40"
+                aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
+              >
+                {isPlaying ? (
+                  <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                  </svg>
+                ) : (
+                  <svg className="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={playNext}
+                className="w-11 h-11 rounded-full glass-pill text-white hover:text-purple-200 flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 border border-white/10"
+                title="Siguiente"
+              >
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="w-10 h-10 pointer-events-none" />
           </div>
-
-          <div className="w-10 h-10 pointer-events-none" />
         </div>
-      </div>
+      </main>
 
-      {/* Enlace Zenodo abajo a la derecha */}
-      <footer className="w-full max-w-md sm:max-w-xl flex justify-end mt-6 sm:mt-8 mb-2 px-2 z-20">
+      {/* Enlace Zenodo: abajo de todo a la izquierda */}
+      <footer className="w-full sm:w-auto flex justify-start sm:fixed sm:bottom-4 sm:left-6 z-20 mt-4 sm:mt-0 mb-1 sm:mb-0 px-2 sm:px-0">
         <a
           href="https://zenodo.org/communities/sinergia-humano-ia/"
           target="_blank"

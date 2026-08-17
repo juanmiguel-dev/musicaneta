@@ -660,13 +660,13 @@
     "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
-    "id": "podcasts/Danza_del_Sol.mp3",
-    "title": "Danza del Sol",
+    "id": "podcasts/Danza del Sol, una interpretacion mas...mp3",
+    "title": "Danza del Sol, una interpretacion mas..",
     "artist": "podcasts",
     "album": "podcasts",
     "folder": "podcasts",
     "duration": 180,
-    "audioUrl": "/uploads/podcasts/Danza_del_Sol.mp3",
+    "audioUrl": "/uploads/podcasts/Danza del Sol, una interpretacion mas...mp3",
     "coverUrl": "/covers/cover_podcast.jpg"
   }
 ]
