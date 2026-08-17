@@ -269,26 +269,35 @@ export default function AudioPlayer() {
     if (!isNaN(val)) setSeekValue(val);
   }, []);
 
-  const handleSeekCommit = useCallback((val: number) => {
+  const handleSeekCommit = useCallback((val?: number) => {
     isSeekingRef.current = false;
     const audio = audioRef.current;
-    if (!audio || isNaN(val)) return;
-    audio.currentTime = val;
-    setDisplayTime(val);
-    setSeekValue(val);
-  }, []);
+    const target = (typeof val === 'number' && !isNaN(val)) ? val : seekValue;
+    if (!audio || isNaN(target)) return;
+    try {
+      audio.currentTime = target;
+      setDisplayTime(target);
+      setSeekValue(target);
+    } catch (e) {
+      console.warn('Error setting audio.currentTime:', e);
+    }
+  }, [seekValue]);
 
   // ── Skip ±10 seconds ─────────────────────────────────────────────────────────
   const skipSeconds = useCallback((secs: number) => {
     const audio = audioRef.current;
     if (!audio) return;
-    const cur = isFinite(audio.currentTime) ? audio.currentTime : 0;
-    const dur = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
+    const cur = isFinite(audio.currentTime) ? audio.currentTime : (displayTime || 0);
+    const dur = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : (displayDuration || 0);
     const next = dur > 0 ? Math.max(0, Math.min(dur, cur + secs)) : Math.max(0, cur + secs);
-    audio.currentTime = next;
+    try {
+      audio.currentTime = next;
+    } catch (e) {
+      console.warn('Error setting audio.currentTime:', e);
+    }
     setDisplayTime(next);
     setSeekValue(next);
-  }, []);
+  }, [displayTime, displayDuration]);
 
   const activeCover = getTrackCover(currentTrack);
   const progressPct = (uiTime / uiDuration) * 100;
