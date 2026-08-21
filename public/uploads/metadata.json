@@ -668,5 +668,35 @@
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Danza del Sol, una interpretacion mas...mp3",
     "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/Contradicciones en la Argentina del 1800.mp3",
+    "title": "Contradicciones en la Argentina del 1800",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Contradicciones en la Argentina del 1800.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/El_origen_vikingo_del_Imperio_británico.mp3",
+    "title": "El origen vikingo del Imperio británico",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/El_origen_vikingo_del_Imperio_británico.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/El_sistema_operativo_de_la_conquista.mp3",
+    "title": "El sistema operativo de la conquista",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/El_sistema_operativo_de_la_conquista.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
   }
 ]
