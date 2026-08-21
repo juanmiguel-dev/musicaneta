@@ -742,23 +742,50 @@ export default function AudioPlayer() {
                       </div>
                     </div>
 
-                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-xs">
-                      <div className="flex items-center space-x-1 text-[11px] text-purple-300/70">
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-xs gap-2">
+                      {/* Botón Play / Pause interactivo */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (isCurrent) {
+                            togglePlay();
+                          } else {
+                            playTrack(t, realIndex !== -1 ? realIndex : idx);
+                          }
+                        }}
+                        className={`px-3 py-1.5 rounded-xl flex items-center space-x-1.5 text-[11px] font-bold transition-all transform active:scale-95 shadow-sm border ${
+                          isCurrent && isPlaying
+                            ? 'bg-purple-500 text-white border-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.5)]'
+                            : isCurrent
+                            ? 'bg-purple-500/30 text-purple-200 border-purple-400/50 hover:bg-purple-500 hover:text-white'
+                            : 'bg-white/10 text-purple-100 hover:text-white hover:bg-purple-600/80 border-white/15 hover:border-purple-400/40'
+                        }`}
+                        title={isCurrent && isPlaying ? 'Pausar audio' : 'Reproducir audio'}
+                      >
                         {isCurrent && isPlaying ? (
-                          <span className="flex items-center space-x-1 text-emerald-400 font-medium text-[10px]">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
-                            <span>En vivo</span>
-                          </span>
+                          <>
+                            <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                            </svg>
+                            <span>Pausa</span>
+                          </>
                         ) : (
-                          <span className="text-[10px] text-purple-300/50">Audio MP3</span>
+                          <>
+                            <svg className="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                            <span>Play</span>
+                          </>
                         )}
-                      </div>
+                      </button>
 
+                      {/* Botón Descargar */}
                       <a
                         href={encodeURI(t.audioUrl)}
                         download={`${formatTitle(t.title) || 'audio'}.mp3`}
                         onClick={(e) => e.stopPropagation()}
-                        className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-purple-200 hover:text-white text-[11px] font-medium flex items-center space-x-1 transition-all active:scale-95 shadow-sm"
+                        className="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-purple-200 hover:text-white text-[11px] font-medium flex items-center space-x-1 transition-all active:scale-95 shadow-sm ml-auto"
                         title={`Descargar ${formatTitle(t.title)}`}
                       >
                         <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
