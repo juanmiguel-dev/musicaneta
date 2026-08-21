@@ -369,14 +369,17 @@ export default function AudioPlayer() {
         <button
           type="button"
           onClick={() => setShowPlaylist(!showPlaylist)}
-          className={`w-10 h-10 rounded-full glass-pill flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 shadow-md border border-white/10 ${
-            showPlaylist ? 'text-purple-300 bg-white/20' : 'text-purple-200 hover:text-white'
+          className={`h-9 px-3.5 sm:px-4 rounded-full flex items-center space-x-1.5 sm:space-x-2 transition-all transform hover:scale-105 active:scale-95 shadow-md border ${
+            showPlaylist
+              ? 'text-white bg-purple-500/40 border-purple-300/60 shadow-[0_0_15px_rgba(168,85,247,0.4)] font-bold'
+              : 'text-purple-100 hover:text-white border-white/15 bg-white/10 hover:bg-white/20 backdrop-blur-xl'
           }`}
-          title="Biblioteca"
+          title="Abrir Catálogo"
         >
-          <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          <svg className="w-4 h-4 fill-current opacity-90" viewBox="0 0 24 24">
+            <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z" />
           </svg>
+          <span className="text-[11px] sm:text-xs font-bold tracking-widest uppercase">CATÁLOGO</span>
         </button>
       </header>
 
@@ -585,41 +588,68 @@ export default function AudioPlayer() {
         </a>
       </footer>
 
-      {/* Playlist drawer */}
+      {/* Playlist / Catálogo drawer */}
       {showPlaylist && (
-        <div className="fixed inset-y-0 right-0 w-full sm:w-96 glass-panel border-l border-white/10 z-40 p-5 flex flex-col bg-purple-950/90 backdrop-blur-2xl">
+        <div className="fixed inset-y-0 right-0 w-full sm:w-[540px] md:w-[740px] lg:w-[940px] xl:w-[1100px] max-w-full glass-panel border-l border-white/15 z-40 p-4 sm:p-6 flex flex-col bg-purple-950/95 backdrop-blur-3xl shadow-[-20px_0_50px_rgba(0,0,0,0.6)]">
+          {/* Header */}
           <div className="flex items-center justify-between pb-3 border-b border-white/10">
-            <div>
-              <h3 className="font-bold text-lg text-white">Biblioteca de Música</h3>
-              <p className="text-xs text-purple-200/70 mt-0.5">
-                {filteredPlaylist.length} {filteredPlaylist.length === 1 ? 'pista' : 'pistas'}
-              </p>
+            <div className="flex items-center space-x-3">
+              <div className="w-9 h-9 rounded-xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-purple-300">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-extrabold text-base sm:text-lg text-white tracking-wide flex items-center space-x-2">
+                  <span>Catálogo de Audios</span>
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-purple-400/20 text-purple-300 font-semibold border border-purple-400/30">
+                    {filteredPlaylist.length}
+                  </span>
+                </h3>
+                <p className="text-[11px] sm:text-xs text-purple-200/60 mt-0.5">
+                  Explora pistas, podcasts y colecciones
+                </p>
+              </div>
             </div>
             <button
               onClick={() => setShowPlaylist(false)}
-              className="p-1 text-purple-200 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+              className="w-9 h-9 flex items-center justify-center text-purple-200 hover:text-white rounded-full bg-white/5 hover:bg-white/15 border border-white/10 transition-all active:scale-95"
+              title="Cerrar Catálogo"
             >
               ✕
             </button>
           </div>
 
-          <div className="py-3 space-y-3 border-b border-white/10">
-            <input
-              type="text"
-              placeholder="🔍 Buscar título, podcast, lista o artista..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-white placeholder-purple-300/40 focus:outline-none focus:border-purple-400 transition-all"
-            />
+          {/* Search & Categories */}
+          <div className="py-3 space-y-2.5 border-b border-white/10">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="🔍 Buscar por título, podcast, lista o artista..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-3.5 pr-8 py-2 text-xs text-white placeholder-purple-300/40 focus:outline-none focus:border-purple-400 focus:bg-white/10 transition-all"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-purple-300/60 hover:text-white text-xs"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+
             {categories.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 pt-1 pb-1 max-h-24 overflow-y-auto no-scrollbar">
+              <div className="flex flex-wrap gap-1.5 pt-0.5 max-h-24 overflow-y-auto no-scrollbar">
                 <button
                   type="button"
                   onClick={() => setSelectedCategory('all')}
-                  className={`px-3 py-1 text-[11px] font-semibold rounded-lg transition-all ${
+                  className={`px-3 py-1.5 text-[11px] font-semibold rounded-xl transition-all ${
                     selectedCategory === 'all'
                       ? 'bg-purple-400 text-black font-extrabold shadow-md'
-                      : 'bg-white/5 text-purple-200/70 hover:text-white border border-white/10'
+                      : 'bg-white/5 text-purple-200/70 hover:text-white border border-white/10 hover:bg-white/10'
                   }`}
                 >
                   Todas ({playlist.length})
@@ -637,10 +667,10 @@ export default function AudioPlayer() {
                       key={cat}
                       type="button"
                       onClick={() => setSelectedCategory(cat)}
-                      className={`px-3 py-1 text-[11px] font-semibold rounded-lg transition-all ${
+                      className={`px-3 py-1.5 text-[11px] font-semibold rounded-xl transition-all ${
                         selectedCategory === cat
                           ? 'bg-purple-400 text-black font-extrabold shadow-md'
-                          : 'bg-white/5 text-purple-200/70 hover:text-white border border-white/10'
+                          : 'bg-white/5 text-purple-200/70 hover:text-white border border-white/10 hover:bg-white/10'
                       }`}
                     >
                       📁 {cat} ({count})
@@ -651,60 +681,92 @@ export default function AudioPlayer() {
             )}
           </div>
 
-          <div className="flex-1 overflow-y-auto mt-3 space-y-2 no-scrollbar pr-1">
-            {filteredPlaylist.map((t, idx) => {
-              const realIndex = playlist.findIndex((item) => item.id === t.id);
-              const isCurrent = currentTrack?.id === t.id;
-              const coverImg = getTrackCover(t);
-              return (
-                <div
-                  key={t.id || idx}
-                  onClick={() => playTrack(t, realIndex !== -1 ? realIndex : idx)}
-                  className={`p-3 rounded-2xl flex items-center justify-between cursor-pointer transition-all ${
-                    isCurrent
-                      ? 'bg-white/20 border border-white/30 text-white font-semibold shadow-lg'
-                      : 'hover:bg-white/5 text-purple-200/80 hover:text-white border border-transparent'
-                  }`}
-                >
-                  <div className="flex items-center space-x-3 min-w-0 flex-1 pr-2">
-                    <img
-                      src={coverImg}
-                      alt={t.title}
-                      className="w-12 h-12 rounded-xl object-cover flex-shrink-0 shadow-md border border-white/10"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs sm:text-sm font-medium text-white leading-snug break-words line-clamp-2">
-                        {formatTitle(t.title)}
-                      </p>
-                      <div className="flex items-center flex-wrap gap-1.5 text-[11px] opacity-75 mt-1">
-                        <span className="truncate max-w-[100px] text-purple-300">{t.artist}</span>
+          {/* Grid de 3 por fila en desktop */}
+          <div className="flex-1 overflow-y-auto mt-3 no-scrollbar pr-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pb-8">
+              {filteredPlaylist.map((t, idx) => {
+                const realIndex = playlist.findIndex((item) => item.id === t.id);
+                const isCurrent = currentTrack?.id === t.id;
+                const coverImg = getTrackCover(t);
+                return (
+                  <div
+                    key={t.id || idx}
+                    onClick={() => playTrack(t, realIndex !== -1 ? realIndex : idx)}
+                    className={`group relative p-3 rounded-2xl flex flex-col justify-between cursor-pointer transition-all duration-200 border ${
+                      isCurrent
+                        ? 'bg-purple-600/25 border-purple-400/60 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] ring-1 ring-purple-400/50'
+                        : 'bg-white/[0.04] hover:bg-white/[0.09] border-white/10 hover:border-purple-400/40 text-purple-200/90 hover:text-white'
+                    }`}
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 rounded-xl overflow-hidden shadow-md border border-white/10 bg-purple-900/40">
+                        <img
+                          src={coverImg}
+                          alt={t.title}
+                          loading="lazy"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        {isCurrent && (
+                          <div className="absolute inset-0 bg-purple-950/60 backdrop-blur-[1px] flex items-center justify-center">
+                            {isPlaying ? (
+                              <div className="flex items-end space-x-0.5 h-4">
+                                <span className="w-1 bg-purple-300 rounded-full animate-[bounce_1s_infinite_100ms] h-3" />
+                                <span className="w-1 bg-purple-300 rounded-full animate-[bounce_1s_infinite_300ms] h-4" />
+                                <span className="w-1 bg-purple-300 rounded-full animate-[bounce_1s_infinite_200ms] h-2" />
+                              </div>
+                            ) : (
+                              <svg className="w-5 h-5 fill-purple-300 ml-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs sm:text-sm font-semibold text-white leading-snug break-words line-clamp-2 group-hover:text-purple-100 transition-colors">
+                          {formatTitle(t.title)}
+                        </p>
+                        <p className="text-[11px] text-purple-300/80 truncate mt-0.5">
+                          {t.artist || 'Musicaneta'}
+                        </p>
                         {(t.folder || (t.album && t.album !== 'Álbum Local' && t.album !== 'Colección')) && (
-                          <span className="bg-white/10 px-1.5 py-0.5 rounded text-[10px] truncate max-w-[130px] text-purple-200">
+                          <span className="inline-block mt-1 bg-white/10 px-1.5 py-0.5 rounded text-[10px] truncate max-w-[130px] text-purple-200/90 border border-white/5">
                             📁 {t.folder || t.album}
                           </span>
                         )}
                       </div>
                     </div>
+
+                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-xs">
+                      <div className="flex items-center space-x-1 text-[11px] text-purple-300/70">
+                        {isCurrent && isPlaying ? (
+                          <span className="flex items-center space-x-1 text-emerald-400 font-medium text-[10px]">
+                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
+                            <span>En vivo</span>
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-purple-300/50">Audio MP3</span>
+                        )}
+                      </div>
+
+                      <a
+                        href={encodeURI(t.audioUrl)}
+                        download={`${formatTitle(t.title) || 'audio'}.mp3`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/15 border border-white/10 text-purple-200 hover:text-white text-[11px] font-medium flex items-center space-x-1 transition-all active:scale-95 shadow-sm"
+                        title={`Descargar ${formatTitle(t.title)}`}
+                      >
+                        <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                        </svg>
+                        <span className="text-[10px]">Descargar</span>
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-1 flex-shrink-0">
-                    <a
-                      href={encodeURI(t.audioUrl)}
-                      download={`${formatTitle(t.title) || 'audio'}.mp3`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="p-2 rounded-xl text-purple-300/60 hover:text-purple-100 hover:bg-white/10 transition-all"
-                      title={`Descargar ${formatTitle(t.title)}`}
-                    >
-                      <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                      </svg>
-                    </a>
-                    {isCurrent && isPlaying && (
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping ml-1" />
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
