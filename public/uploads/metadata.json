@@ -1,5 +1,25 @@
 [
   {
+    "id": "podcasts/Manuel Hornos - el caudillo de los Unitarios.mp3",
+    "title": "Manuel Hornos - el caudillo de los Unitarios",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Manuel Hornos - el caudillo de los Unitarios.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/El enigma masónico tras Manuel Hornos.mp3",
+    "title": "El enigma masónico tras Manuel Hornos",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/El enigma masónico tras Manuel Hornos.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
     "id": "podcasts/Trilogia del Reino__Jung_eter y la Geometria de la Conciencia.mp3",
     "title": "Trilogia del Reino – Jung eter y la Geometria de la Conciencia",
     "artist": "podcasts",
