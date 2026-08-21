@@ -698,5 +698,25 @@
     "duration": 180,
     "audioUrl": "/uploads/podcasts/El_sistema_operativo_de_la_conquista.mp3",
     "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/Gemini vs Gnosis.mp3",
+    "title": "Gemini vs Gnosis",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Gemini vs Gnosis.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/San Martín - el Agente y el Plan Maitland.mp3",
+    "title": "San Martín - el Agente y el Plan Maitland",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/San Martín - el Agente y el Plan Maitland.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
   }
 ]
