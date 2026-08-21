@@ -182,7 +182,7 @@ for (const filePath of files) {
   if (existingIdx !== -1) {
     metaList[existingIdx] = { ...metaList[existingIdx], ...trackObj };
   } else {
-    metaList.push(trackObj);
+    metaList.unshift(trackObj);
     addedOrUpdated++;
     console.log(`  🎵 Nueva pista: "${title}" -> Lista: "${folderPath}"`);
   }
