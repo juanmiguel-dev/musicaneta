@@ -728,5 +728,15 @@
     "duration": 180,
     "audioUrl": "/uploads/podcasts/Tu mente como sistema operativo cuántico.mp3",
     "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/Milagro Sala.mp3",
+    "title": "Milagro Sala",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Milagro Sala.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
   }
 ]
