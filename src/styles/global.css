@@ -55,6 +55,82 @@
   animation: pulseGlow 8s ease-in-out infinite;
 }
 
+/* Gradiente eterno suave que rota entre violetas, púrpuras, índigos, azules, cianes y esmeraldas (sin rojo) */
+@keyframes eternalGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  20% {
+    background-position: 50% 100%;
+  }
+  40% {
+    background-position: 100% 50%;
+  }
+  60% {
+    background-position: 80% 0%;
+  }
+  80% {
+    background-position: 20% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes slowRotate1 {
+  0% {
+    transform: rotate(0deg) scale(1) translate(0px, 0px);
+  }
+  33% {
+    transform: rotate(120deg) scale(1.18) translate(50px, -40px);
+  }
+  66% {
+    transform: rotate(240deg) scale(0.92) translate(-40px, 50px);
+  }
+  100% {
+    transform: rotate(360deg) scale(1) translate(0px, 0px);
+  }
+}
+
+@keyframes slowRotate2 {
+  0% {
+    transform: rotate(0deg) scale(1) translate(0px, 0px);
+  }
+  33% {
+    transform: rotate(-120deg) scale(0.88) translate(-60px, 40px);
+  }
+  66% {
+    transform: rotate(-240deg) scale(1.15) translate(40px, -60px);
+  }
+  100% {
+    transform: rotate(-360deg) scale(1) translate(0px, 0px);
+  }
+}
+
+.eternal-gradient-bg {
+  background: linear-gradient(
+    135deg,
+    #07041a 0%,
+    #240d4f 15%,
+    #131a48 30%,
+    #052c3f 45%,
+    #04332c 60%,
+    #0e1e4a 75%,
+    #3b0764 90%,
+    #07041a 100%
+  );
+  background-size: 350% 350%;
+  animation: eternalGradient 32s ease-in-out infinite;
+}
+
+.orb-primary {
+  animation: slowRotate1 24s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.orb-secondary {
+  animation: slowRotate2 28s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 /* Custom Seekbar */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;

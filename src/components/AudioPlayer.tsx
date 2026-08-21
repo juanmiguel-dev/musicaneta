@@ -297,10 +297,7 @@ export default function AudioPlayer() {
 
   return (
     <div
-      className="relative min-h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-4 sm:px-6 sm:py-6 select-none text-white"
-      style={{
-        background: 'radial-gradient(circle at 50% 30%, #5b21b6 0%, #2e1065 40%, #0f0728 85%, #050311 100%)',
-      }}
+      className="relative min-h-[100dvh] w-full flex flex-col justify-between items-center px-4 py-4 sm:px-6 sm:py-6 select-none text-white eternal-gradient-bg overflow-x-hidden"
     >
       {/* Audio element: purely managed by effects above */}
       <audio
@@ -316,13 +313,20 @@ export default function AudioPlayer() {
         onEnded={handleEnded}
       />
 
-      {/* Ambient glow */}
+      {/* Ambient glowing color orbs (rotando suavemente entre violeta, azul, cian, esmeralda, índigo - sin rojo) */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center -z-10 overflow-hidden">
         <div
-          className="w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] rounded-full blur-[110px] opacity-60 transition-all duration-1000"
+          className="orb-primary w-[320px] h-[320px] sm:w-[560px] sm:h-[560px] rounded-full blur-[110px] sm:blur-[140px] opacity-75 transition-all duration-1000"
           style={{
             background:
-              'radial-gradient(circle, rgba(168, 85, 247, 0.5) 0%, rgba(124, 58, 237, 0.25) 50%, rgba(0, 0, 0, 0) 75%)',
+              'radial-gradient(circle, rgba(168, 85, 247, 0.55) 0%, rgba(59, 130, 246, 0.35) 45%, rgba(6, 182, 212, 0.2) 75%, transparent 90%)',
+          }}
+        />
+        <div
+          className="orb-secondary absolute w-[280px] h-[280px] sm:w-[500px] sm:h-[500px] rounded-full blur-[120px] sm:blur-[150px] opacity-65 transition-all duration-1000"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, rgba(99, 102, 241, 0.35) 50%, rgba(14, 165, 233, 0.25) 75%, transparent 90%)',
           }}
         />
       </div>
