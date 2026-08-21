@@ -718,5 +718,15 @@
     "duration": 180,
     "audioUrl": "/uploads/podcasts/San Martín - el Agente y el Plan Maitland.mp3",
     "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/Tu mente como sistema operativo cuántico.mp3",
+    "title": "Tu mente como sistema operativo cuántico",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Tu mente como sistema operativo cuántico.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
   }
 ]
