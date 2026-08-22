@@ -1,17 +1,21 @@
 import { atom } from 'nanostores';
 import type { Track } from '../types/music';
+import localMetadata from '../../public/uploads/metadata.json';
 
 export type RepeatMode = 'all' | 'one';
 
+const initialPlaylist: Track[] = Array.isArray(localMetadata) && localMetadata.length > 0 ? (localMetadata as Track[]) : [];
+const initialTrack: Track | null = initialPlaylist.length > 0 ? initialPlaylist[0] : null;
+
 // Estado reactivo atómico global con Nanostores
-export const $currentTrack = atom<Track | null>(null);
+export const $currentTrack = atom<Track | null>(initialTrack);
 export const $isPlaying = atom<boolean>(false);
 export const $currentTime = atom<number>(0);
 export const $duration = atom<number>(0);
 export const $volume = atom<number>(0.8);
 export const $isMuted = atom<boolean>(false);
-export const $playlist = atom<Track[]>([]);
-export const $currentIndex = atom<number>(-1);
+export const $playlist = atom<Track[]>(initialPlaylist);
+export const $currentIndex = atom<number>(initialTrack ? 0 : -1);
 export const $repeatMode = atom<RepeatMode>('all'); // 'all' = Reproducción continua por defecto
 
 export function toggleRepeat() {

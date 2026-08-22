@@ -302,7 +302,7 @@ export default function AudioPlayer() {
       {/* Audio element: purely managed by effects above */}
       <audio
         ref={audioRef}
-        preload="auto"
+        preload="none"
         playsInline
         onTimeUpdate={handleTimeUpdate}
         onDurationChange={handleDurationChange}
@@ -397,12 +397,18 @@ export default function AudioPlayer() {
             <img
               src={activeCover}
               alt={formatTitle(currentTrack?.title) || 'Musicaneta'}
+              width="224"
+              height="224"
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
               className={`w-full h-full object-cover transition-transform duration-1000 ${isPlaying ? 'scale-105' : 'scale-100'}`}
             />
             <div className="absolute inset-0 bg-purple-950/40 backdrop-blur-[2px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               <button
                 type="button"
                 onClick={togglePlay}
+                aria-label={isPlaying ? 'Pausar reproducción' : 'Iniciar reproducción'}
                 className="w-14 h-14 rounded-full bg-white/20 border border-white/40 flex items-center justify-center text-white shadow-xl"
               >
                 {isPlaying ? (
@@ -467,6 +473,7 @@ export default function AudioPlayer() {
             {/* Slider */}
             <input
               type="range"
+              aria-label="Progreso de la reproducción de audio"
               min={0}
               max={displayDuration > 0 ? displayDuration : 100}
               step={0.5}

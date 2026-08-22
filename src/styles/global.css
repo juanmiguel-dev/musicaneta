@@ -55,80 +55,52 @@
   animation: pulseGlow 8s ease-in-out infinite;
 }
 
-/* Gradiente eterno suave que rota entre violetas, púrpuras, índigos, azules, cianes y esmeraldas (sin rojo) */
-@keyframes eternalGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  20% {
-    background-position: 50% 100%;
-  }
-  40% {
-    background-position: 100% 50%;
-  }
-  60% {
-    background-position: 80% 0%;
-  }
-  80% {
-    background-position: 20% 100%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
+/* Gradiente eterno suave con orbes aceleradas por GPU (sin rojo) */
 @keyframes slowRotate1 {
   0% {
-    transform: rotate(0deg) scale(1) translate(0px, 0px);
+    transform: rotate(0deg) scale(1) translate3d(0px, 0px, 0);
   }
   33% {
-    transform: rotate(120deg) scale(1.18) translate(50px, -40px);
+    transform: rotate(120deg) scale(1.15) translate3d(40px, -30px, 0);
   }
   66% {
-    transform: rotate(240deg) scale(0.92) translate(-40px, 50px);
+    transform: rotate(240deg) scale(0.95) translate3d(-30px, 40px, 0);
   }
   100% {
-    transform: rotate(360deg) scale(1) translate(0px, 0px);
+    transform: rotate(360deg) scale(1) translate3d(0px, 0px, 0);
   }
 }
 
 @keyframes slowRotate2 {
   0% {
-    transform: rotate(0deg) scale(1) translate(0px, 0px);
+    transform: rotate(0deg) scale(1) translate3d(0px, 0px, 0);
   }
   33% {
-    transform: rotate(-120deg) scale(0.88) translate(-60px, 40px);
+    transform: rotate(-120deg) scale(0.9) translate3d(-50px, 30px, 0);
   }
   66% {
-    transform: rotate(-240deg) scale(1.15) translate(40px, -60px);
+    transform: rotate(-240deg) scale(1.12) translate3d(30px, -50px, 0);
   }
   100% {
-    transform: rotate(-360deg) scale(1) translate(0px, 0px);
+    transform: rotate(-360deg) scale(1) translate3d(0px, 0px, 0);
   }
 }
 
 .eternal-gradient-bg {
-  background: linear-gradient(
-    135deg,
-    #07041a 0%,
-    #240d4f 15%,
-    #131a48 30%,
-    #052c3f 45%,
-    #04332c 60%,
-    #0e1e4a 75%,
-    #3b0764 90%,
-    #07041a 100%
-  );
-  background-size: 350% 350%;
-  animation: eternalGradient 32s ease-in-out infinite;
+  background: radial-gradient(circle at 50% 30%, #2e1065 0%, #17153b 40%, #0a0d24 75%, #050311 100%);
+  position: relative;
 }
 
 .orb-primary {
-  animation: slowRotate1 24s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: slowRotate1 26s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 .orb-secondary {
-  animation: slowRotate2 28s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: slowRotate2 30s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 /* Custom Seekbar */
