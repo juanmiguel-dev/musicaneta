@@ -192,7 +192,6 @@ export default function AudioPlayer() {
     if (srcChanged) {
       lastTrackIdRef.current = currentTrack.id;
       audio.src = encodeURI(currentTrack.audioUrl);
-      audio.load();
       setDisplayTime(0);
       setDisplayDuration(0);
       setSeekValue(0);
@@ -203,8 +202,7 @@ export default function AudioPlayer() {
       if (playPromise !== undefined) {
         playPromise.catch((err) => {
           if (err.name !== 'AbortError') {
-            console.warn('Audio playback error:', err);
-            $isPlaying.set(false);
+            console.warn('Audio play error:', err.name, err.message);
           }
         });
       }
@@ -298,8 +296,6 @@ export default function AudioPlayer() {
         onDurationChange={handleDurationChange}
         onLoadedMetadata={handleDurationChange}
         onCanPlay={handleDurationChange}
-        onPlay={() => $isPlaying.set(true)}
-        onPause={() => $isPlaying.set(false)}
         onEnded={handleEnded}
       />
 

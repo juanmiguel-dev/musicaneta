@@ -72,8 +72,13 @@ export function togglePlay() {
 
 export function playNext() {
   const playlist = $playlist.get();
-  const index = $currentIndex.get();
   if (playlist.length === 0) return;
+
+  let index = $currentIndex.get();
+  if (index === -1 && $currentTrack.get()) {
+    index = playlist.findIndex((t) => t.id === $currentTrack.get()?.id);
+  }
+  if (index === -1) index = 0;
 
   const nextIndex = (index + 1) % playlist.length;
   $currentIndex.set(nextIndex);
@@ -84,8 +89,13 @@ export function playNext() {
 
 export function playPrevious() {
   const playlist = $playlist.get();
-  const index = $currentIndex.get();
   if (playlist.length === 0) return;
+
+  let index = $currentIndex.get();
+  if (index === -1 && $currentTrack.get()) {
+    index = playlist.findIndex((t) => t.id === $currentTrack.get()?.id);
+  }
+  if (index === -1) index = 0;
 
   const prevIndex = index > 0 ? index - 1 : playlist.length - 1;
   $currentIndex.set(prevIndex);

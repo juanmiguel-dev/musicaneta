@@ -149,8 +149,9 @@ for (const filePath of files) {
   let finalAudioUrl = '';
   let trackId = '';
 
-  if (isDirectUploads) {
-    const webPath = relativePath.split(path.sep).join('/');
+  if (filePath.startsWith(uploadsDir)) {
+    const relToUploads = path.relative(uploadsDir, filePath);
+    const webPath = relToUploads.split(path.sep).join('/');
     finalAudioUrl = `/uploads/${webPath}`;
     trackId = webPath;
   } else {
