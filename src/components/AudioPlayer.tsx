@@ -6,12 +6,10 @@ import {
   $volume,
   $isMuted,
   $playlist,
-  $repeatMode,
   togglePlay,
   playNext,
   playPrevious,
   toggleMute,
-  toggleRepeat,
   playTrack,
   setPlaylist,
 } from '../stores/playerStore';
@@ -95,12 +93,21 @@ export default function AudioPlayer() {
   const volume = useStore($volume);
   const isMuted = useStore($isMuted);
   const playlist = useStore($playlist);
-  const repeatMode = useStore($repeatMode);
 
   // ── Local state (UI only) ────────────────────────────────────────────────────
   const [showPlaylist, setShowPlaylist] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // Cerrar catálogo con tecla Escape
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showPlaylist) {
+        setShowPlaylist(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showPlaylist]);
 
   // ── Audio time/duration: ONLY local React state, no nanostores ───────────────
   // The audio element is the single source of truth for playback position.
@@ -150,18 +157,9 @@ export default function AudioPlayer() {
         (t.folder && t.folder.startsWith(selectedCategory)) ||
         t.artist === selectedCategory ||
         t.album === selectedCategory;
-      const q = searchQuery.toLowerCase().trim();
-      const cleanT = formatTitle(t.title).toLowerCase();
-      const matchesSearch =
-        !q ||
-        t.title.toLowerCase().includes(q) ||
-        cleanT.includes(q) ||
-        t.artist.toLowerCase().includes(q) ||
-        (t.album && t.album.toLowerCase().includes(q)) ||
-        (t.folder && t.folder.toLowerCase().includes(q));
-      return matchesCategory && matchesSearch;
+      return matchesCategory;
     });
-  }, [playlist, selectedCategory, searchQuery]);
+  }, [playlist, selectedCategory]);
 
   // ── Load initial catalogue ───────────────────────────────────────────────────
   useEffect(() => {
@@ -238,17 +236,9 @@ export default function AudioPlayer() {
   }, []);
 
   const handleEnded = useCallback(() => {
-    if (repeatMode === 'one') {
-      const audio = audioRef.current;
-      if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(() => {});
-      }
-    } else {
-      // Reproducción automática continua por defecto
-      playNext();
-    }
-  }, [repeatMode]);
+    // Reproducción automática continua por defecto
+    playNext();
+  }, []);
 
   // ── Seek slider handlers ─────────────────────────────────────────────────────
   const handleSeekStart = useCallback(() => {
@@ -333,38 +323,6 @@ export default function AudioPlayer() {
 
       {/* Header */}
       <header className="w-full max-w-md sm:max-w-xl flex items-center justify-between z-20 pt-1">
-        {/* Botón de reproducción continua / repetir tema */}
-        <button
-          type="button"
-          onClick={toggleRepeat}
-          className={`h-9 px-3 rounded-full glass-pill flex items-center space-x-1.5 transition-all transform hover:scale-105 active:scale-95 shadow-md border ${
-            repeatMode === 'one'
-              ? 'text-white bg-purple-500/50 border-purple-300/60 shadow-[0_0_15px_rgba(168,85,247,0.5)] font-bold'
-              : 'text-purple-200/80 hover:text-white border-white/10 bg-white/5'
-          }`}
-          title={
-            repeatMode === 'one'
-              ? 'Modo activo: Repetir canción actual'
-              : 'Modo activo: Reproducción continua automática'
-          }
-        >
-          {repeatMode === 'one' ? (
-            <>
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z" />
-              </svg>
-              <span className="text-[10px] font-extrabold tracking-wider">1 Tema</span>
-            </>
-          ) : (
-            <>
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z" />
-              </svg>
-              <span className="text-[10px] font-semibold opacity-90 hidden xs:inline">Auto</span>
-            </>
-          )}
-        </button>
-
         <div className="flex items-center space-x-2">
           <div className="w-2 h-2 rounded-full bg-purple-400 animate-ping" />
           <span className="text-xs font-extrabold tracking-widest uppercase text-purple-200/90">MUSICANETA</span>
@@ -582,6 +540,15 @@ export default function AudioPlayer() {
         </div>
       </main>
 
+      {/* Backdrop overlay para cerrar al hacer click afuera en desktop y mobile */}
+      {showPlaylist && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 transition-opacity"
+          onClick={() => setShowPlaylist(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Enlace Zenodo: abajo de todo a la izquierda */}
       <footer className="w-full sm:w-auto flex justify-start sm:fixed sm:bottom-4 sm:left-6 z-20 mt-4 sm:mt-0 mb-1 sm:mb-0 px-2 sm:px-0">
         <a
@@ -631,29 +598,10 @@ export default function AudioPlayer() {
             </button>
           </div>
 
-          {/* Search & Categories */}
-          <div className="py-3 space-y-2.5 border-b border-white/10">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="🔍 Buscar por título, podcast, lista o artista..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-3.5 pr-8 py-2 text-xs text-white placeholder-purple-300/40 focus:outline-none focus:border-purple-400 focus:bg-white/10 transition-all"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-purple-300/60 hover:text-white text-xs"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-
-            {categories.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 pt-0.5 max-h-24 overflow-y-auto no-scrollbar">
+          {/* Categorías limpias (sin barra de búsqueda) */}
+          {categories.length > 0 && (
+            <div className="py-3 border-b border-white/10">
+              <div className="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto no-scrollbar">
                 <button
                   type="button"
                   onClick={() => setSelectedCategory('all')}
@@ -689,8 +637,8 @@ export default function AudioPlayer() {
                   );
                 })}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Grid de 3 por fila en desktop */}
           <div className="flex-1 overflow-y-auto mt-3 no-scrollbar pr-1">
