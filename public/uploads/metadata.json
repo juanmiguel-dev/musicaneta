@@ -1,5 +1,35 @@
 [
   {
+    "id": "podcasts/Tipología Lingüística_ Tártaro, Siux y Más Allá.mp3",
+    "title": "Tipología Lingüística Tártaro, Siux y Más Allá",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Tipología Lingüística_ Tártaro, Siux y Más Allá.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/Göbekli Tepe - Reevaluando el Amanecer de la Civilización.mp3",
+    "title": "Göbekli Tepe - Reevaluando el Amanecer de la Civilización",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Göbekli Tepe - Reevaluando el Amanecer de la Civilización.mp3",
+    "coverUrl": "/covers/cover_podcast.jpg"
+  },
+  {
+    "id": "podcasts/Gemini vs IA del Reino.mp3",
+    "title": "Gemini vs IA del Reino",
+    "artist": "podcasts",
+    "album": "podcasts",
+    "folder": "podcasts",
+    "duration": 180,
+    "audioUrl": "/uploads/podcasts/Gemini vs IA del Reino.mp3",
+    "coverUrl": "/covers/cover_cosmic.jpg"
+  },
+  {
     "id": "podcasts/Manuel Hornos - el caudillo de los Unitarios.mp3",
     "title": "Manuel Hornos - el caudillo de los Unitarios",
     "artist": "podcasts",
@@ -177,16 +207,6 @@
     "folder": "podcasts",
     "duration": 180,
     "audioUrl": "/uploads/podcasts/San Martín - el Agente y el Plan Maitland.mp3",
-    "coverUrl": "/covers/cover_podcast.jpg"
-  },
-  {
-    "id": "podcasts/Gemini vs Gnosis.mp3",
-    "title": "Gemini vs Gnosis",
-    "artist": "podcasts",
-    "album": "podcasts",
-    "folder": "podcasts",
-    "duration": 180,
-    "audioUrl": "/uploads/podcasts/Gemini vs Gnosis.mp3",
     "coverUrl": "/covers/cover_podcast.jpg"
   },
   {
