@@ -173,10 +173,11 @@ export default function AudioPlayer() {
     }
   }, []);
 
-  // ── Effect: load new track src (only when track changes) ────────────────────
+  // ── Effect: manage audio src and playback atomically on track / isPlaying change ──
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+
     if (!currentTrack) {
       audio.pause();
       audio.removeAttribute('src');
@@ -186,24 +187,23 @@ export default function AudioPlayer() {
       setSeekValue(0);
       return;
     }
-    if (lastTrackIdRef.current === currentTrack.id) return; // same track, skip
-    lastTrackIdRef.current = currentTrack.id;
-    audio.src = encodeURI(currentTrack.audioUrl);
-    audio.load();
-    setDisplayTime(0);
-    setDisplayDuration(0);
-    setSeekValue(0);
-  }, [currentTrack]);
 
-  // ── Effect: sync play/pause (only when isPlaying flag changes) ───────────────
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio || !currentTrack) return;
+    const srcChanged = lastTrackIdRef.current !== currentTrack.id;
+    if (srcChanged) {
+      lastTrackIdRef.current = currentTrack.id;
+      audio.src = encodeURI(currentTrack.audioUrl);
+      audio.load();
+      setDisplayTime(0);
+      setDisplayDuration(0);
+      setSeekValue(0);
+    }
+
     if (isPlaying) {
-      const p = audio.play();
-      if (p) {
-        p.catch((err) => {
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
           if (err.name !== 'AbortError') {
+            console.warn('Audio playback error:', err);
             $isPlaying.set(false);
           }
         });
@@ -211,7 +211,7 @@ export default function AudioPlayer() {
     } else {
       audio.pause();
     }
-  }, [isPlaying]);
+  }, [currentTrack, isPlaying]);
 
   // ── Effect: volume ───────────────────────────────────────────────────────────
   useEffect(() => {
@@ -568,7 +568,7 @@ export default function AudioPlayer() {
 
       {/* Playlist / Catálogo drawer */}
       {showPlaylist && (
-        <div className="fixed inset-y-0 right-0 w-full sm:w-[540px] md:w-[740px] lg:w-[940px] xl:w-[1100px] max-w-full glass-panel border-l border-white/15 z-40 p-4 sm:p-6 flex flex-col bg-purple-950/95 backdrop-blur-3xl shadow-[-20px_0_50px_rgba(0,0,0,0.6)]">
+        <div className="fixed inset-y-0 right-0 w-full sm:w-[90vw] md:w-[80vw] lg:w-[80vw] xl:w-[80vw] max-w-full md:max-w-[80vw] glass-panel border-l border-white/15 z-40 p-4 sm:p-6 flex flex-col bg-purple-950/95 backdrop-blur-3xl shadow-[-20px_0_50px_rgba(0,0,0,0.6)] animate-in fade-in slide-in-from-right duration-300">
           {/* Header */}
           <div className="flex items-center justify-between pb-3 border-b border-white/10">
             <div className="flex items-center space-x-3">
